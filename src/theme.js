@@ -6,22 +6,27 @@ const theme = {
     },
     fontSizes: {
         buttons: 20,
-        subheading: 16
+        subheading: 16,
+        subText:13,
+        tittle:33
     },
     fontWeight: {
-        buttons: 700
+        buttons: 700, 
+        bold: 'bold'
     },
     width: {
         buttonCont: 190,
+        input:300
     },
     height: {
-        buttonCont: 50,
+        buttonCont: 40
     },
     alingment: {
         center: 'center',
     },
-    maring:{
-        marging: 16
+    margin:{
+        margin: 20,
+        marginLeft:15
     }
 }
 

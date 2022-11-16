@@ -1,9 +1,9 @@
 import React from "react";
-import Login from "./src/screens/loginScreen"
+import MainStack from "./Navigation/MainStack.js";
 
 export default function App() {
   return (
-    <Login/>
+    <MainStack/>
   );
 }
 

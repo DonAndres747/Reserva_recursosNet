@@ -5,7 +5,7 @@ import theme from '../theme.js'
 
 
 
-export default function ButtonStyle({ children, view, text, RestOfProps }) {
+export default function ButtonStyle({ children, view, RestOfProps }) {
     const buttonStyle = [
         styles.container,
         view == 'container' && styles.container
@@ -26,11 +26,11 @@ const styles = StyleSheet.create({
         width: theme.width.buttonCont,
         height: theme.height.buttonCont,
         backgroundColor: theme.colors.azulNet,
-        borderRadius: 10,
+        borderRadius: 20,
         color:theme.colors.blanco,
         textAlign: theme.alingment.center,
         textAlignVertical: theme.alingment.center,
         fontSize: theme.fontSizes.buttons,
-        marginBottom: theme.maring.marging
+        marginBottom: theme.margin.margin
     }
 })
