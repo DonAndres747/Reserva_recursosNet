@@ -3,7 +3,8 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MainScreen from "../src/screens/MainScreen.jsx";
-import LoginScreen from "../src/screens/loginScreen.jsx"
+import LoginScreen from "../src/screens/LoginScreen";
+import RegistryScreen from "../src/screens/RegistryScreen.jsx";
 import theme from "../src/theme.js";
 
 
@@ -31,6 +32,10 @@ const MainStack = () => {
                     <Stack.Screen 
                         name='Login'
                         component={LoginScreen}
+                    />
+                    <Stack.Screen 
+                        name='Registry'
+                        component={RegistryScreen}
                     />
                 </Stack.Group>
 

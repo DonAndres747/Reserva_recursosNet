@@ -1,11 +1,13 @@
 import React from "react";
 import TittleStyle from "../componentes/tittlesStyle";
-import { View, TextInput, StyleSheet, Text } from "react-native";
+import { View, TextInput, StyleSheet, Text, TouchableWithoutFeedback, Alert } from "react-native";
 import theme from "../theme";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { useNavigation } from '@react-navigation/native';
 
 
 export default function BodyLogin() {
+    const navigation = useNavigation();
     return (
         <View>
             <TittleStyle text='tittle'>
@@ -28,14 +30,17 @@ export default function BodyLogin() {
                     returnKeyType="next"
                     placeholder="Password"
                     keyboardType='Password'
-                    style={styles.input}
+                    style={[styles.input]}
+                    secureTextEntry={true}
                 />
             </View>
-            <View>
-                <Text style={styles.remember}>
-                    Remember Password?
-                </Text>
-            </View>
+            <TouchableWithoutFeedback onPress={() => Alert.alert('jodido')}>
+                <View>
+                    <Text style={styles.remember}>
+                        Remember Password?
+                    </Text>
+                </View>
+            </TouchableWithoutFeedback>
         </View>
     )
 }
@@ -52,9 +57,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    remember:{
-        alignSelf:'flex-end',
+    remember: {
+        alignSelf: 'flex-end',
         color: theme.colors.naranjaNet,
         fontWeight: theme.fontWeight.bold
+    },
+    asd: {
+        borderTopWidth: 1
     }
 })
