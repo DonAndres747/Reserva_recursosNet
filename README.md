@@ -1,11 +1,13 @@
 # -Prueba-trabajo
 
+npm install
 
 
-npm install @react-navigation/native @react-navigation/native-stack 
 expo install react-native-screens react-native-safe-area-context
 npm install @react-navigation/native-stack
 para navegar
 
 npm i react-native-vector-icons
 iconos
+
+npm start
