@@ -18,7 +18,7 @@ export default function BodyLogin() {
                 <TextInput
                     label="Email"
                     returnKeyType="next"
-                    placeholder="  YourEmail@hotmail.com"
+                    placeholder="  YourEmail@netlogistik.com"
                     keyboardType='email-address'
                     style={styles.input}
                 />

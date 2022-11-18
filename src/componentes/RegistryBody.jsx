@@ -1,6 +1,6 @@
 import React from "react";
 import TittleStyle from "../componentes/tittlesStyle";
-import { View, TextInput, StyleSheet } from "react-native";
+import { View, TextInput, StyleSheet, KeyboardAvoidingView, ScrollView } from "react-native";
 import theme from "../theme";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from '@react-navigation/native';
@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 export default function BodyRegistry() {
     const navigation = useNavigation();
     return (
+
         <View>
             <TittleStyle text='tittle'>
                 Register
@@ -44,22 +45,22 @@ export default function BodyRegistry() {
                 />
             </View>
             <View style={styles.row}>
-                <Icon name='alternate-email' color={theme.colors.azulNet} size={22}></Icon>
-                <TextInput
-                    label="email"
-                    returnKeyType="next"
-                    placeholder="  YourEmail@hotmail.com"
-                    keyboardType='email'
-                    style={styles.input}
-                />
-            </View>
-            <View style={styles.row}>
                 <Icon name='call' color={theme.colors.azulNet} size={22}></Icon>
                 <TextInput
                     label="celular"
                     returnKeyType="next"
                     placeholder="  Celular"
                     keyboardType='phone-pad'
+                    style={styles.input}
+                />
+            </View>
+            <View style={styles.row}>
+                <Icon name='alternate-email' color={theme.colors.azulNet} size={22}></Icon>
+                <TextInput
+                    label="email"
+                    returnKeyType="next"
+                    placeholder="  YourEmail@netlogistik.com"
+                    keyboardType='email'
                     style={styles.input}
                 />
             </View>

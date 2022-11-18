@@ -10,4 +10,5 @@ para navegar
 npm i react-native-vector-icons
 iconos
 
+npm i react-native-keyboard-aware-view --save
 npm start
