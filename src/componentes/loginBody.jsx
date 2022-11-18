@@ -19,7 +19,7 @@ export default function BodyLogin() {
                     label="Email"
                     returnKeyType="next"
                     placeholder="  YourEmail@hotmail.com"
-                    keyboardType='email'
+                    keyboardType='email-address'
                     style={styles.input}
                 />
             </View>
@@ -28,7 +28,7 @@ export default function BodyLogin() {
                 <TextInput
                     label="Password"
                     returnKeyType="next"
-                    placeholder="Password"
+                    placeholder="  Password"
                     keyboardType='Password'
                     style={[styles.input]}
                     secureTextEntry={true}

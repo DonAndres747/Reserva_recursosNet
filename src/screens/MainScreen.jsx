@@ -1,8 +1,8 @@
 import React from "react";
 import { View } from "react-native";
-import {LoginBtn} from "../componentes/loginBtn"
+import { LoginBtn } from "../componentes/loginBtn"
 import Logo from "../componentes/logo";
-import RegisterBtn from "../componentes/RegistryBtn";
+import { RegisterBtn } from "../componentes/RegistryBtn";
 import Footer from "../componentes/footer.jsx";
 import LoginText from "../componentes/loginText.jsx";
 

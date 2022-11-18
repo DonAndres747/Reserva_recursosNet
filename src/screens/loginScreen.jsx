@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet, Text, TouchableWithoutFeedback } from "react-native";
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { LoginBtn2 } from "../componentes/loginBtn"
 import Footer from "../componentes/footer.jsx";
 import BodyLogin from "../componentes/loginBody";
