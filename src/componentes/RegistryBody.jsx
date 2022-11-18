@@ -71,6 +71,8 @@ export default function BodyRegistry() {
                     returnKeyType="next"
                     placeholder="  Contraseña"
                     style={[styles.input]}
+                    autoCapitalize="none"
+                    autoCorrect={false}
                 />
             </View>
             <View style={styles.row}>
@@ -80,6 +82,8 @@ export default function BodyRegistry() {
                     returnKeyType="next"
                     placeholder="  Confirma contraseña"
                     style={[styles.input]}
+                    autoCapitalize="none"
+                    autoCorrect={false}
                 />
             </View>
         </View>

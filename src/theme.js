@@ -16,7 +16,8 @@ const theme = {
     },
     width: {
         buttonCont: 190,
-        input:300
+        input:300,
+        input2:280
     },
     height: {
         buttonCont: 40
