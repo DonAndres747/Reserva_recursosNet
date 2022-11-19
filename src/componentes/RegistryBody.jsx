@@ -49,7 +49,7 @@ export default function BodyRegistry() {
                 <TextInput
                     label="celular"
                     returnKeyType="next"
-                    placeholder="  Celular"
+                    placeholder="  000000000"
                     keyboardType='phone-pad'
                     style={styles.input}
                 />
