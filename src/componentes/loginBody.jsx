@@ -5,7 +5,7 @@ import theme from "../theme";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import Icon2 from "react-native-vector-icons/Ionicons";
 import { useNavigation } from '@react-navigation/native';
-import { showPassword } from "./password";
+import { showPassword } from "../helpers/password";
 
 
 export default function BodyLogin() {
