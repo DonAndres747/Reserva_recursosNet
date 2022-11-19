@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import TittleStyle from "../componentes/tittlesStyle";
 import { View, TextInput, StyleSheet, Text, TouchableWithoutFeedback, Alert } from "react-native";
 import theme from "../theme";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import Icon2 from "react-native-vector-icons/Ionicons";
 import { useNavigation } from '@react-navigation/native';
+import { showPassword } from "./password";
 
 
 export default function BodyLogin() {
+
     const navigation = useNavigation();
+    const { passwordVisibility, rightIcon, handlePasswordVisibility } =
+        showPassword();
+    const [password, setPassword] = useState('');
+
     return (
         <View>
             <TittleStyle text='tittle'>
@@ -18,24 +25,29 @@ export default function BodyLogin() {
                 <TextInput
                     label="Email"
                     returnKeyType="next"
-                    placeholder="  YourEmail@hotmail.com"
-                    keyboardType='email'
+                    placeholder="  YourEmail@netlogistik.com"
+                    keyboardType='email-address'
                     style={styles.input}
                 />
             </View>
             <View style={styles.row}>
-                <Icon name='lock' color='black' size={22}></Icon>
+                <Icon name='lock' color='black' size={22} style={{marginLeft:12}}></Icon>
                 <TextInput
                     label="Password"
                     returnKeyType="next"
-                    placeholder="Password"
+                    placeholder="  Password"
                     keyboardType='Password'
-                    style={[styles.input]}
-                    secureTextEntry={true}
+                    style={[styles.input2]}
+                    secureTextEntry={passwordVisibility}
+                    autoCapitalize="none"
+                    autoCorrect={false}
                 />
+               <TouchableWithoutFeedback onPress={handlePasswordVisibility}>
+                    <Icon2 name={rightIcon} size={22} color={theme.colors.azulNet}  style={{borderBottomWidth:1, marginRight:12}}/>
+                </TouchableWithoutFeedback>
             </View>
             <TouchableWithoutFeedback onPress={() => Alert.alert('jodido')}>
-                <View>
+                <View style={{marginRight:10}}>
                     <Text style={styles.remember}>
                         Remember Password?
                     </Text>
@@ -49,6 +61,12 @@ const styles = StyleSheet.create({
     input: {
         marginBottom: 15,
         width: theme.width.input,
+        height: theme.height.buttonCont,
+        borderBottomWidth: 1
+    },
+    input2: {
+        marginBottom: 15,
+        width: theme.width.input2,
         height: theme.height.buttonCont,
         borderBottomWidth: 1
     },
