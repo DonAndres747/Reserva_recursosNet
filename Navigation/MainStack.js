@@ -3,7 +3,7 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MainScreen from "../src/screens/MainScreen.jsx";
-import LoginScreen from "../src/screens/loginScreen"
+import LoginScreen from "../src/screens/LoginScreen"
 import RegistryScreen from "../src/screens/RegistryScreen.jsx";
 import theme from "../src/theme.js";
 

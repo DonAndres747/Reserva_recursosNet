@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Text, TouchableWithoutFeedback } from "react-native";
+import { View, StyleSheet, Text, TouchableWithoutFeedback, KeyboardAvoidingView } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { LoginBtn2 } from "../componentes/loginBtn"
 import Footer from "../componentes/footer.jsx";
@@ -10,31 +10,38 @@ import theme from "../theme";
 const LoginScreen = () => {
   const navigation = useNavigation();
   return (
-    <View style={{ flex: 4, justifyContent: 'space-between', alignItems: 'center' }}>
-      <View style={{ flex: 2.5, justifyContent: 'center' }}>
-        <LoginIcon />
-      </View>
-      <View style={{ flex: 2, justifyContent: 'space-between' }}>
-        <View style={{ flex: 1.3, justifyContent: 'flex-end' }}>
-          <BodyLogin />
+
+
+    <View style={{ flex: 1, alignItems: 'center' }}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        enabled='false'
+      >
+        <View style={{ flex: 2.5, justifyContent: 'center', alignItems: 'center' }}>
+          <LoginIcon />
         </View>
-        <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
-          <LoginBtn2 />
-          <View style={styles.text}>
-            <Text>
-              New to Netlogistik?
-            </Text>
-            <TouchableWithoutFeedback onPress={() => navigation.navigate('Registry')}>
-              <Text style={styles.HiperLinks}>
-                Register
+        <View style={{ flex: 2, justifyContent: 'space-between' }}>
+          <View style={{ flex: 1.3, justifyContent: 'flex-end' }}>
+            <BodyLogin />
+          </View>
+          <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
+            <LoginBtn2 />
+            <View style={styles.text}>
+              <Text>
+                New to Netlogistik?
               </Text>
-            </TouchableWithoutFeedback>
+              <TouchableWithoutFeedback onPress={() => navigation.navigate('Registry')}>
+                <Text style={styles.HiperLinks}>
+                  Register
+                </Text>
+              </TouchableWithoutFeedback>
+            </View>
           </View>
         </View>
-      </View>
-      <View style={{ flex: 0.9, justifyContent: 'flex-end' }}>
-        <Footer />
-      </View>
+        <View style={{ flex: 0.9, justifyContent: 'flex-end' }}>
+          <Footer />
+        </View>
+      </KeyboardAvoidingView>
     </View>
   )
 }

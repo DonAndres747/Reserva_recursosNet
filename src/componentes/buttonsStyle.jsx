@@ -27,10 +27,11 @@ const styles = StyleSheet.create({
         height: theme.height.buttonCont,
         backgroundColor: theme.colors.azulNet,
         borderRadius: 20,
-        color:theme.colors.blanco,
+        color: theme.colors.blanco,
         textAlign: theme.alingment.center,
         textAlignVertical: theme.alingment.center,
         fontSize: theme.fontSizes.buttons,
-        marginBottom: theme.margin.margin
+        marginBottom: theme.margin.margin, 
+        overflow: 'hidden',
     }
 })
