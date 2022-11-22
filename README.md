@@ -11,4 +11,9 @@ npm i react-native-vector-icons
 iconos
 
 npm i react-native-keyboard-aware-view --save
+teclado
+
+npm install --g  @react-native-picker/picker 
+picker
+
 npm start
