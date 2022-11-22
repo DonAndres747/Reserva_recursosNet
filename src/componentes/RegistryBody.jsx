@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useState, setState } from "react";
 import TittleStyle from "../componentes/tittlesStyle";
 import { View, TextInput, StyleSheet, KeyboardAvoidingView, ScrollView } from "react-native";
 import theme from "../theme";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from '@react-navigation/native';
+import { Picker } from '@react-native-picker/picker';
 
 
 export default function BodyRegistry() {
     const navigation = useNavigation();
+    const [selectedCountry, setSelectedCountry] = useState();
+
     return (
 
         <View>
@@ -64,6 +67,21 @@ export default function BodyRegistry() {
                     style={styles.input}
                 />
             </View>
+            <View style={styles.row} >
+                <Icon name='alternate-email' color={theme.colors.azulNet} size={22}></Icon>
+                <View style={styles.input}>
+
+
+                    <Picker
+                        selectedValue={selectedCountry}
+                        onValueChange={setSelectedCountry}
+                    >
+                        <Picker.Item label="Pais" style={styles.picker} value={null} key={'unselectable'} />
+                        <Picker.Item label="Colombia" value="Col" />
+                        <Picker.Item label="España" value="Es" />
+                    </Picker>
+                </View>
+            </View>
             <View style={styles.row}>
                 <Icon name='lock' color='black' size={22}></Icon>
                 <TextInput
@@ -92,7 +110,7 @@ export default function BodyRegistry() {
 
 const styles = StyleSheet.create({
     input: {
-        marginBottom: 15,
+        marginBottom: 10,
         width: theme.width.input,
         height: theme.height.buttonCont,
         borderBottomWidth: 1
@@ -101,5 +119,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    picker: {
+        color: 'grey'
     }
 })
