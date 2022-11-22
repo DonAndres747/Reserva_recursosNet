@@ -1,14 +1,12 @@
 import React, { useState, setState } from "react";
 import TittleStyle from "../componentes/tittlesStyle";
-import { View, TextInput, StyleSheet, KeyboardAvoidingView, ScrollView } from "react-native";
+import { View, TextInput, StyleSheet } from "react-native";
 import theme from "../theme";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { useNavigation } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
 
 
 export default function BodyRegistry() {
-    const navigation = useNavigation();
     const [selectedCountry, setSelectedCountry] = useState();
 
     return (
