@@ -68,7 +68,7 @@ export default function BodyRegistry() {
                 />
             </View>
             <View style={styles.row} >
-                <Icon name='alternate-email' color={theme.colors.azulNet} size={22}></Icon>
+                <Icon name='emoji-flags' color={theme.colors.azulNet} size={22}></Icon>
                 <View style={styles.input}>
 
 
