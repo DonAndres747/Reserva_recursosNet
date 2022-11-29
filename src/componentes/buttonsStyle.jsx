@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet, Text, Platform } from 'react-native'
 import theme from '../theme.js'
 
 
@@ -11,7 +11,7 @@ export default function ButtonStyle({ children, view, RestOfProps }) {
         view == 'container' && styles.container
     ]
     return (
-        <View style={buttonStyle.container}>
+        <View style={[buttonStyle.container, buttonStyle.iosText]}>
             <Text style={buttonStyle}{...RestOfProps}>
                 {children}
             </Text>
@@ -31,7 +31,14 @@ const styles = StyleSheet.create({
         textAlign: theme.alingment.center,
         textAlignVertical: theme.alingment.center,
         fontSize: theme.fontSizes.buttons,
-        marginBottom: theme.margin.margin, 
+        marginBottom: theme.margin.margin,
         overflow: 'hidden',
+        ...Platform.select({
+            ios: {
+                padding:5
+            }
+        })
+
     }
+
 })

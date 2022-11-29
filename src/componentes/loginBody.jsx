@@ -79,8 +79,5 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
         color: theme.colors.naranjaNet,
         fontWeight: theme.fontWeight.bold
-    },
-    asd: {
-        borderTopWidth: 1
     }
 })

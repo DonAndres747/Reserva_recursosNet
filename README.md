@@ -15,5 +15,7 @@ teclado
 
 npm install --g  @react-native-picker/picker 
 picker
+npm i --save react-native-modal-dropdown
+dropdown
 
 npm start
