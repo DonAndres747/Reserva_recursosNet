@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import TittleStyle from "../componentes/tittlesStyle";
+import TittleStyle from "../tittlesStyle";
 import { View, TextInput, StyleSheet, Platform } from "react-native";
-import theme from "../theme";
+import theme from "../../theme";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Picker } from '@react-native-picker/picker';
 import ModalDropdown from 'react-native-modal-dropdown';

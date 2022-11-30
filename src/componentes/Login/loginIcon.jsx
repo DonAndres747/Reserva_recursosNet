@@ -2,7 +2,7 @@ import React from "react";
 import { Image, StyleSheet } from "react-native";
 
 export default function LoginIcon() {
-    return <Image source={require('../assets/login.png')} style={styles.image} />
+    return <Image source={require('../../assets/login.png')} style={styles.image} />
 }
 
 

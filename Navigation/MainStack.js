@@ -5,6 +5,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MainScreen from "../src/screens/MainScreen.jsx";
 import LoginScreen from "../src/screens/LoginScreen"
 import RegistryScreen from "../src/screens/RegistryScreen.jsx";
+import RecoverScreen from "../src/screens/RecoverScreen.jsx";
+import HomeScreen from "../src/screens/Home.jsx";
 import theme from "../src/theme.js";
 
 
@@ -37,8 +39,15 @@ const MainStack = () => {
                         name='Registry'
                         component={RegistryScreen}
                     />
+                    <Stack.Screen 
+                        name='Recover'
+                        component={RecoverScreen}
+                    />
                 </Stack.Group>
-
+                <Stack.Screen 
+                        name='Home'
+                        component={HomeScreen}
+                    />    
             </Stack.Navigator>
         </NavigationContainer>
     )

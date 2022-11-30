@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import TittleStyle from "../componentes/tittlesStyle";
-import { View, TextInput, StyleSheet, Text, TouchableWithoutFeedback, Alert } from "react-native";
-import theme from "../theme";
+import TittleStyle from "../tittlesStyle";
+import { View, TextInput, StyleSheet, Text, TouchableWithoutFeedback} from "react-native";
+import theme from "../../theme";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import Icon2 from "react-native-vector-icons/Ionicons";
 import { useNavigation } from '@react-navigation/native';
-import { showPassword } from "../helpers/password";
+import { showPassword } from "../../helpers/password";
 
 
 export default function BodyLogin() {
@@ -46,9 +46,9 @@ export default function BodyLogin() {
                     <Icon2 name={rightIcon} size={22} color={theme.colors.azulNet}  style={{borderBottomWidth:1, marginRight:12}}/>
                 </TouchableWithoutFeedback>
             </View>
-            <TouchableWithoutFeedback onPress={() => Alert.alert('jodido')}>
+            <TouchableWithoutFeedback onPress={() => navigation.navigate('Recover')}>
                 <View style={{marginRight:10}}>
-                    <Text style={styles.remember}>
+                    <Text style={styles.remember} >
                         Remember Password?
                     </Text>
                 </View>

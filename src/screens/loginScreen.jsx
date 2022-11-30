@@ -1,10 +1,10 @@
 import React from "react";
 import { View, StyleSheet, Text, TouchableWithoutFeedback, KeyboardAvoidingView } from "react-native";
 import { useNavigation } from '@react-navigation/native';
-import { LoginBtn2 } from "../componentes/loginBtn"
+import LoginBtn  from "../componentes/NavigationButton"
 import Footer from "../componentes/footer.jsx";
-import BodyLogin from "../componentes/loginBody";
-import LoginIcon from "../componentes/loginIcon";
+import BodyLogin from "../componentes/Login/loginBody";
+import LoginIcon from "../componentes/Login/loginIcon";
 import theme from "../theme";
 
 const LoginScreen = () => {
@@ -25,7 +25,7 @@ const LoginScreen = () => {
             <BodyLogin />
           </View>
           <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
-            <LoginBtn2 />
+            <LoginBtn name='Home'>Login</LoginBtn>
             <View style={styles.text}>
               <Text>
                 New to Netlogistik?

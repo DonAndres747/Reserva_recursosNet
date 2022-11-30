@@ -1,10 +1,10 @@
 import React from "react";
-import { View, StyleSheet, Text, TouchableWithoutFeedback, KeyboardAvoidingView, ScrollView } from "react-native";
+import { View, StyleSheet, Text, TouchableWithoutFeedback, ScrollView } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import Footer from "../componentes/footer.jsx";
 import theme from "../theme";
-import { RegisterBtn2 } from "../componentes/RegistryBtn";
-import BodyRegistry from "../componentes/RegistryBody.jsx";
+import NavigationButton from "../componentes/NavigationButton.jsx";
+import BodyRegistry from "../componentes/Registry/RegistryBody.jsx";
 
 const RegistryScreen = () => {
     const navigation = useNavigation();
@@ -15,7 +15,7 @@ const RegistryScreen = () => {
                 <View>
                     <BodyRegistry />
                     <View style={{ alignItems: 'center', marginTop: 45 }}>
-                        <RegisterBtn2 />
+                        <NavigationButton name='Home'>Register</NavigationButton>
                         <View style={styles.text}>
                             <Text>
                                 Already have an account with us?

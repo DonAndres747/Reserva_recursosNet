@@ -1,10 +1,9 @@
 import React from "react";
 import { View } from "react-native";
-import { LoginBtn } from "../componentes/loginBtn"
+import NavigationButton from "../componentes/NavigationButton";
 import Logo from "../componentes/logo";
-import { RegisterBtn } from "../componentes/RegistryBtn";
 import Footer from "../componentes/footer.jsx";
-import LoginText from "../componentes/loginText.jsx";
+import LoginText from "../componentes/Login/loginText";
 
 const MainScreen = () => {
   return (
@@ -14,8 +13,8 @@ const MainScreen = () => {
         <LoginText />
       </View>
       <View>
-        <LoginBtn />
-        <RegisterBtn />
+        <NavigationButton name='Login'>Login</NavigationButton>
+        <NavigationButton name='Registry'>Registry</NavigationButton>
       </View>
       <View>
         <Footer />
