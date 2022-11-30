@@ -1,15 +1,26 @@
 import React, { useState } from "react";
 import TittleStyle from "../tittlesStyle";
-import { View, TextInput, StyleSheet, Platform } from "react-native";
+import { View, TextInput, StyleSheet, Platform, Text, TouchableWithoutFeedback, Alert } from "react-native";
 import theme from "../../theme";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Picker } from '@react-native-picker/picker';
 import ModalDropdown from 'react-native-modal-dropdown';
-
+import RegisterUser from "../../services/registerUser";
+import NavigationButton from "../NavigationButton";
+import Footer from "../footer";
+import { useNavigation } from '@react-navigation/native';
+import ButtonStyle from "../buttonsStyle";
 
 
 export default function BodyRegistry() {
-
+    const navigation = useNavigation();
+    const { onChangeName,
+        onChangeLastName,
+        onChangeCompany,
+        onChangePhone,
+        onChangeEmail,
+        onChangePassword,
+        saveData } = RegisterUser();
     return (
 
         <View>
@@ -24,6 +35,7 @@ export default function BodyRegistry() {
                     placeholder="  Nombre"
                     keyboardType='default'
                     style={[styles.input, styles.marginInput]}
+                    onChangeText={(value) => onChangeName(value)}
                 />
             </View>
             <View style={styles.row}>
@@ -34,6 +46,7 @@ export default function BodyRegistry() {
                     placeholder="  Apellido"
                     keyboardType='default'
                     style={[styles.input, styles.marginInput]}
+                    onChangeText={(value) => onChangeLastName(value)}
                 />
             </View>
             <View style={styles.row}>
@@ -44,6 +57,7 @@ export default function BodyRegistry() {
                     placeholder="  Compañia"
                     keyboardType='default'
                     style={[styles.input, styles.marginInput]}
+                    onChangeText={(value) => onChangeCompany(value)}
                 />
             </View>
             <View style={styles.row}>
@@ -54,6 +68,7 @@ export default function BodyRegistry() {
                     placeholder="  000000000"
                     keyboardType='phone-pad'
                     style={[styles.input, styles.marginInput]}
+                    onChangeText={(value) => onChangePhone(value)}
                 />
             </View>
             <View style={styles.row}>
@@ -64,6 +79,7 @@ export default function BodyRegistry() {
                     placeholder="  YourEmail@netlogistik.com"
                     keyboardType='email'
                     style={[styles.input, styles.marginInput]}
+                    onChangeText={(value) => onChangeEmail(value)}
                 />
             </View>
             <View style={styles.row} >
@@ -82,6 +98,7 @@ export default function BodyRegistry() {
                     secureTextEntry={true}
                     autoCapitalize="none"
                     autoCorrect={false}
+                    onChangeText={(value) => onChangePassword(value)}
                 />
             </View>
             <View style={styles.row}>
@@ -95,6 +112,27 @@ export default function BodyRegistry() {
                     autoCapitalize="none"
                     autoCorrect={false}
                 />
+            </View>
+            <View style={{ alignItems: 'center', marginTop: 45 }}>
+
+                <ButtonStyle name='Home'>
+                    <TouchableWithoutFeedback onPress={saveData}>
+                        <Text>Register</Text>
+                    </TouchableWithoutFeedback>
+                </ButtonStyle>
+
+                <View style={styles.text}>
+                    <Text>
+                        Already have an account with us?
+                    </Text>
+                    <TouchableWithoutFeedback onPress={() => navigation.navigate('Login')}>
+                        <Text style={styles.HiperLinks}>
+                            Login
+                        </Text>
+                    </TouchableWithoutFeedback>
+                    
+                </View>
+                <Footer />
             </View>
         </View>
     )
@@ -181,6 +219,15 @@ const styles = StyleSheet.create({
     },
     picker: {
         color: 'grey'
+    },
+    HiperLinks: {
+        color: theme.colors.naranjaNet,
+        marginLeft: 5,
+        fontWeight: theme.fontWeight.bold
+    },
+    text: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     }
 })
 
