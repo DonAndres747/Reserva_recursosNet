@@ -28,7 +28,9 @@ const theme = {
     },
     margin:{
         margin: 20,
-        marginLeft:15
+        marginLeft:15,
+        maringTop:12,
+        marginRight:10
     }
 }
 
