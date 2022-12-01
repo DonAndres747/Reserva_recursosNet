@@ -20,7 +20,8 @@ export default function BodyRegistry() {
         onChangePhone,
         onChangeEmail,
         onChangePassword,
-        saveData } = RegisterUser();
+        saveData,
+        loading } = RegisterUser();
     return (
 
         <View>
@@ -117,7 +118,9 @@ export default function BodyRegistry() {
 
                 <ButtonStyle name='Home'>
                     <TouchableWithoutFeedback onPress={saveData}>
-                        <Text>Register</Text>
+                        <Text>
+                            {loading? "Loading": "Register"}
+                        </Text>
                     </TouchableWithoutFeedback>
                 </ButtonStyle>
 
@@ -130,7 +133,7 @@ export default function BodyRegistry() {
                             Login
                         </Text>
                     </TouchableWithoutFeedback>
-                    
+
                 </View>
                 <Footer />
             </View>

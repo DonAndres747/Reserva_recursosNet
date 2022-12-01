@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { Alert } from "react-native";
+import { useNavigation } from '@react-navigation/native';
 
 export default function RegisterUser() {
+    const navigation = useNavigation();
+
     const [user, setUser] = useState({
         firstName: '',
         lastName: '',
@@ -59,14 +62,22 @@ export default function RegisterUser() {
         })
             .then((response) => {
                 setLoading(false)
-                response.text()
+                response.json()
+                console.log("response:  { ", response, " }-----------------------------", JSON.stringify(response._bodyInit._data.__collector))
+                if(response.status==201){
+                    navigation.navigate('Home')
+                }else if(JSON.stringify(response._bodyInit.size)=="41"){
+                    Alert.alert("El email ya esta registrado")
+                }else{
+                    Alert.alert("Algo ha salido mal  :(")
+                }
             })
-            .then((result) => /*console.log(result)*/console.log(result))
-            .catch((error) => /*console.log(error)*/Alert.alert(error));
+            .then((result) => /*console.log(result)*/console.log(result.json()))
+            .catch((error) => /*console.log(error)*/console.log(error));
 
 
     };
 
-    return { onChangeName, onChangeLastName, onChangeCompany, onChangePhone, onChangeEmail, onChangePassword, saveData }
+    return { onChangeName, onChangeLastName, onChangeCompany, onChangePhone, onChangeEmail, onChangePassword, saveData, loading }
 
 }
