@@ -47,6 +47,7 @@ const MainStack = () => {
                 <Stack.Screen 
                         name='Home'
                         component={HomeScreen}
+                        options={({ route }) => ({ title: route.params.name })}
                     />    
             </Stack.Navigator>
         </NavigationContainer>

@@ -65,7 +65,7 @@ export default function RegisterUser() {
                 response.json()
                 console.log("response:  { ", response, " }-----------------------------", JSON.stringify(response._bodyInit._data.__collector))
                 if(response.status==201){
-                    navigation.navigate('Home')
+                    navigation.navigate('Home', { name: (firstName+" "+ lastName) })
                 }else if(JSON.stringify(response._bodyInit.size)=="41"){
                     Alert.alert("El email ya esta registrado")
                 }else{

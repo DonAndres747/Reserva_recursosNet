@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Text, TouchableWithoutFeedback, KeyboardAvoidingView } from "react-native";
 import { useNavigation } from '@react-navigation/native';
-import LoginBtn  from "../componentes/NavigationButton"
+import LoginBtn from "../componentes/NavigationButton"
 import Footer from "../componentes/footer.jsx";
 import BodyLogin from "../componentes/Login/loginBody";
 import LoginIcon from "../componentes/Login/loginIcon";
@@ -25,7 +25,9 @@ const LoginScreen = () => {
             <BodyLogin />
           </View>
           <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center' }}>
-            <LoginBtn name='Home'>Login</LoginBtn>
+            <LoginBtn name='Home' profile={"Pedro "+ "Navaja"}>
+              Login 
+            </LoginBtn>
             <View style={styles.text}>
               <Text>
                 New to Netlogistik?
