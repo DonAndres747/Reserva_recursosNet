@@ -48,7 +48,7 @@ export default function RegisterUser() {
 
         myHeaders.append('Content-Type', 'application/json');
 
-        fetch('http://192.168.11.114:4000/api/user/registro/', {
+        fetch('http://192.168.11.69:4000/api/user/registro/', {
             method: 'POST',
             headers: myHeaders,
             body: JSON.stringify({
@@ -64,17 +64,16 @@ export default function RegisterUser() {
                 setLoading(false)
                 response.json()
                 console.log("response:  { ", response, " }-----------------------------", JSON.stringify(response._bodyInit._data.__collector))
-                if(response.status==201){
-                    navigation.navigate('Home', { name: (firstName+" "+ lastName) })
-                }else if(JSON.stringify(response._bodyInit.size)=="41"){
+                if (response.status == 201) {
+                    navigation.navigate('Home', {name: user.firstName+" "+ user.lastName})
+                } else if (JSON.stringify(response._bodyInit.size) == "41") {
                     Alert.alert("El email ya esta registrado")
-                }else{
+                } else {
                     Alert.alert("Algo ha salido mal  :(")
                 }
             })
             .then((result) => /*console.log(result)*/console.log(result.json()))
             .catch((error) => /*console.log(error)*/console.log(error));
-
 
     };
 
