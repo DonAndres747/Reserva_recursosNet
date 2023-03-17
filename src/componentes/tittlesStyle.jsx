@@ -5,10 +5,13 @@ import theme from '../theme.js'
 
 
 
-export default function TittleStyle({ children, text, RestOfProps }) {
+export default function TittleStyle({ children, text, fontColor, RestOfProps }) {
     const TittleStyle = [
         styles.container,
-        text == 'tittle' && styles.tittle
+        text == 'tittle' && styles.tittle,
+        text == 'subtittle' && styles.subtittle,
+        fontColor == 'Orange' && styles.fontColorN,
+        fontColor == 'blue' && styles.fontColorA
     ]
     return (
         <Text style={TittleStyle}{...RestOfProps}>
@@ -23,8 +26,18 @@ const styles = StyleSheet.create({
     tittle:{
         fontSize: theme.fontSizes.tittle,
         fontWeight: theme.fontWeight.bold,
-        color:theme.colors.azulNet,
         marginBottom: theme.margin.margin,
         marginLeft:theme.margin.marginLeft
+    },
+    subtittle:{
+        fontSize: theme.fontSizes.subtittle,
+        marginTop: theme.margin.margin,
+        marginLeft:theme.margin.marginLeft
+    },
+    fontColorA:{
+        color: theme.colors.naranjaNet
+    },
+    fontColorN:{
+        color: theme.colors.naranjaNet
     }
 })

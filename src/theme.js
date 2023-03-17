@@ -9,7 +9,8 @@ const theme = {
         buttons: 20,
         subheading: 16,
         subText:13,
-        tittle:33
+        tittle:33,
+        subtittle:23
     },
     fontWeight: {
         buttons: 700, 

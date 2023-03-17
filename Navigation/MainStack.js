@@ -20,35 +20,46 @@ const MainStack = () => {
                     // headerShown:false
                 }}>
                 <Stack.Group
-                     // screenOptions={{navigationOptions:{ headerLeft: null }, headerStyle: { backgroundColor: theme.colors.naranjaNet }, headerTitleStyle:{color:theme.colors.blanco}, headerTitleAlign: 'center'}} 
-                    screenOptions={{ headerShown:false }}
-                     >
+                    // screenOptions={{navigationOptions:{ headerLeft: null }, headerStyle: { backgroundColor: theme.colors.naranjaNet }, headerTitleStyle:{color:theme.colors.blanco}, headerTitleAlign: 'center'}} 
+                    screenOptions={{ headerShown: false }}
+                >
                     <Stack.Screen
                         name='Main'
-                        component={MainScreen} 
-                        /*options={{
-                            title:'Reserva recursos',
-                            color:'white',
-                        }}*/
+                        component={MainScreen}
+                    /*options={{
+                        title:'Reserva recursos',
+                        color:'white',
+                    }}*/
                     />
-                    <Stack.Screen 
+                    <Stack.Screen
                         name='Login'
                         component={LoginScreen}
                     />
-                    <Stack.Screen 
+                    <Stack.Screen
                         name='Registry'
                         component={RegistryScreen}
                     />
-                    <Stack.Screen 
+                    <Stack.Screen
                         name='Recover'
                         component={RecoverScreen}
                     />
                 </Stack.Group>
-                <Stack.Screen 
-                        name='Home'
-                        component={HomeScreen}
-                        options={({ route }) => ({ title: route.params.name })}
-                    />    
+                <Stack.Screen
+                    name='Home'
+                    component={HomeScreen}
+                    options={({ route }) => ({
+                        title: route.params.name,
+                        headerStyle: {
+                            shadowOpacity: 0,
+                            shadowOffset: {
+                                height: 0,
+                            },
+                            shadowRadius: 0,
+                            shadowColor : '#5bc4ff'
+                        },
+                        //headerTintColor:'red'
+                    })}
+                />
             </Stack.Navigator>
         </NavigationContainer>
     )
