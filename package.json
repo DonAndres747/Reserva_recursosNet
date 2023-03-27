@@ -18,6 +18,7 @@
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-native": "0.70.5",
+    "react-native-elements": "^3.4.3",
     "react-native-keyboard-avoiding-scroll-view": "^1.0.1",
     "react-native-modal-dropdown": "^1.0.2",
     "react-native-safe-area-context": "4.4.1",
@@ -28,7 +29,6 @@
   "devDependencies": {
     "@babel/core": "^7.12.9"
   },
-  
   "private": true,
   "expo": {
     "jsEngine": "hermes",
@@ -39,5 +39,4 @@
       "jsEngine": "jsc"
     }
   }
-  
 }

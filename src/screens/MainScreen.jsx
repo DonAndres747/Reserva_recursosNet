@@ -9,7 +9,7 @@ const MainScreen = () => {
   return (
     <View style={{ flex: 1, justifyContent: 'space-between', alignItems: 'center' }}>
       <View>
-        <Logo />
+        <Logo logoTyp='logo'/>
         <LoginText />
       </View>
       <View>

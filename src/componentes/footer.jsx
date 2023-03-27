@@ -2,9 +2,13 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import theme from '../theme.js'
 
-export default function Footer() {
+export default function Footer({ margin }) {
+    const marginStyle = [
+        styles.view,
+        margin != 'false' && styles.margins
+    ]
     return (
-        <View style={styles.view}>
+        <View style={marginStyle}>
             <Text style={styles.text}>
                 Todos los derechos reservados. Bogota, Marzo 2022
             </Text>
@@ -15,14 +19,17 @@ export default function Footer() {
     );
 }
 
-const styles = StyleSheet.create({
-    view: {
-        marginTop:40,
-        marginBottom:30,
-        alignItems: 'center',
-    },
-    text: {
-        fontSize: theme.fontSizes.subText,
-        color: theme.colors.azulNet,
-    }
-})
+
+    const styles = StyleSheet.create({
+        view: {
+            alignItems: 'center',
+        },
+        margins: {
+            marginTop: 40,
+            marginBottom: 30,
+        },
+        text: {
+            fontSize: theme.fontSizes.subText,
+            color: theme.colors.azulNet,
+        }
+    })
