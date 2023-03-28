@@ -55,7 +55,8 @@ const styles = StyleSheet.create({
     fontWeight: theme.fontWeight.bold
   },
   text: {
-    flexDirection: 'row', justifyContent: 'space-evenly'
+    flexDirection: 'row', 
+    justifyContent: 'space-evenly'
   }
 })
 

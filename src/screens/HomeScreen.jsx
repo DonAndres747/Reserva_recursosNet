@@ -8,7 +8,7 @@ import theme from "../theme";
 const HomeScreen = () => {
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, alignItems: 'center' }}>
       <HomeBody />
       <View style={{ flex: 1, alignItems: 'center' }}>
         <Logo logoTyp='subLogo' />

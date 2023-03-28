@@ -24,7 +24,7 @@ const HomeBody = () => {
                 </Text>
             </View>
 
-            <View style={{marginTop:5}}>
+            <View style={{marginTop:5, padding:1}}>
                 <View style={[styles.segmentsRows]}>
                     <HomeSegments
                         tittle='Disponibilidad'
@@ -60,7 +60,6 @@ const HomeBody = () => {
                     <HomeSegments
                         circleV='false'
                     />
-                    <View style={styles.separator} />
                 </View>
             </View>
 
@@ -85,8 +84,8 @@ const styles = StyleSheet.create({
     }, 
     segmentsRows: {
         flexDirection: 'row', 
-        padding: 5, 
-        marginTop: 5
+        height:'43%', 
+        marginTop: 3
     },
     separator: {
         borderRightWidth: 1,

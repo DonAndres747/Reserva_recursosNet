@@ -7,11 +7,11 @@ export default function HomeSegments({ circleV, tittle, segText, iconSrc }) {
         styles.circle,
         circleV != 'false' && styles.circleColor,
     ]
-   
+
     return (
         <View style={[styles.container]}>
             <View style={circle}>
-                <Image  source={iconSrc} style={[styles.icon]} >
+                <Image source={iconSrc} style={[styles.icon]} >
                 </Image>
             </View>
             <Text style={[styles.segTittle]}>
@@ -30,35 +30,38 @@ export default function HomeSegments({ circleV, tittle, segText, iconSrc }) {
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
-        //backgroundColor: 'lightblue',
-        width: 117,
-        height: 190,
+        // backgroundColor: 'lightblue',
+        width: '33%',
+        height: '100%',
         justifyContent: 'center',
+        
         // borderColor: 'black',
         // borderWidth: 1
     },
     circle: {
-        width: 80,
-        height: 80,
+        width: '65%',
+        height: '37%',
         borderRadius: 50,
         justifyContent: 'center',
         alignItems: 'center'
     },
-    circleColor:{
+    circleColor: {
         backgroundColor: 'lightgray'
     },
     icon: {
-        width: 50,
-        height: 40
+        width: '60%',
+        height: '50%'
     },
     segTittle: {
         fontWeight: theme.fontWeight.bold,
         marginTop: 10,
-        fontSize: 16
+        marginBottom: 5,
+        fontSize:  Platform.OS === 'ios' ? '14%' : 16
+        
     },
     segText: {
-        paddingLeft: 5 ,
-        paddingRight: 5 ,
+        paddingLeft: "5%",
+        paddingRight: "5%",
         textAlign: 'center',
         fontSize: 12
     }
