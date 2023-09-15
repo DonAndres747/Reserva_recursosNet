@@ -48,32 +48,36 @@ export default function RegisterUser() {
 
         myHeaders.append('Content-Type', 'application/json');
 
-        fetch('http://192.168.11.69:4000/api/user/registro/', {
+        fetch('http://192.168.11.70:8090/user/', {
             method: 'POST',
             headers: myHeaders,
             body: JSON.stringify({
-                firstName: user.firstName,
-                lastName: user.lastName,
                 company: user.company,
-                phone: user.phone,
                 email: user.email,
-                password: user.password
+                first_name: user.firstName,
+                last_name: user.lastName,
+                password: user.password,
+                phone: user.phone,
             }),
         })
             .then((response) => {
-                setLoading(false)
-                response.json()
-                console.log("response:  { ", response, " }-----------------------------", JSON.stringify(response._bodyInit._data.__collector))
-                if (response.status == 201) {
-                    navigation.navigate('Home', {name: user.firstName+" "+ user.lastName})
-                } else if (JSON.stringify(response._bodyInit.size) == "41") {
-                    Alert.alert("El email ya esta registrado")
+                setLoading(false);
+                return response.json(); // Analiza la respuesta JSON
+            })
+            .then((result) => {
+                console.log("response: { ", result.result.status, " }-----------------------------", JSON.stringify(result.result.message));
+
+                if (result.result.status == 201) {
+                    navigation.navigate('Home', { name: user.firstName + " " + user.lastName });
+                } else if (result.result.message === 1062) {
+                    Alert.alert("El email ya está registrado");
                 } else {
-                    Alert.alert("Algo ha salido mal  :(")
+                    Alert.alert("Algo ha salido mal  :(");
                 }
             })
-            .then((result) => /*console.log(result)*/console.log(result.json()))
-            .catch((error) => /*console.log(error)*/console.log(error));
+            .catch((error) => {
+                console.error(error);
+            });
 
     };
 

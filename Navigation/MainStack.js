@@ -1,9 +1,8 @@
 
 import React from "react";
-import { NavigationContainer, } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Header } from 'react-native-elements/dist/header/Header';
-
+import { View } from 'react-native';
 
 import MainScreen from "../src/screens/MainScreen.jsx";
 import LoginScreen from '../src/screens/loginScreen.jsx';
@@ -12,6 +11,7 @@ import RecoverScreen from "../src/screens/RecoverScreen.jsx";
 import HomeScreen from "../src/screens/HomeScreen.jsx";
 import theme from "../src/theme.js";
 
+const EmptyComponent = () => <View style={{width: 0, height: 0}} />;
 
 const Stack = createNativeStackNavigator()
 
@@ -24,7 +24,7 @@ const MainStack = () => {
                 }}>
                 <Stack.Group
                     // screenOptions={{navigationOptions:{ headerLeft: null }, headerStyle: { backgroundColor: theme.colors.naranjaNet }, headerTitleStyle:{color:theme.colors.blanco}, headerTitleAlign: 'center'}} 
-                    screenOptions={{ headerShown: false, headerShadowVisible: false }}
+                    screenOptions={{ headerShown: false }}
                 >
                     <Stack.Screen
                         name='Main'
@@ -53,9 +53,10 @@ const MainStack = () => {
                     options={({ route }) => ({
                         title: route.params.name,
                         headerStyle: {
-                            backgroundColor:'#f2f2f2'
+                            backgroundColor: '#f2f2f2'
                         },
                         headerShadowVisible: false,
+                        headerLeft: () => <EmptyComponent />
                     })}
                 />
 
