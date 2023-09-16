@@ -20,6 +20,7 @@ export default function BodyRegistry() {
         onChangePhone,
         onChangeEmail,
         onChangePassword,
+        onChangePassword2,
         saveData,
         loading } = RegisterUser();
     return (
@@ -55,7 +56,7 @@ export default function BodyRegistry() {
                 <TextInput
                     label="empresa"
                     returnKeyType="next"
-                    placeholder="  Compañia"
+                    placeholder="  Compañia*"
                     keyboardType='default'
                     style={[styles.input, styles.marginInput]}
                     onChangeText={(value) => onChangeCompany(value)}
@@ -66,7 +67,7 @@ export default function BodyRegistry() {
                 <TextInput
                     label="celular"
                     returnKeyType="next"
-                    placeholder="  000000000"
+                    placeholder="  000000000*"
                     keyboardType='phone-pad'
                     style={[styles.input, styles.marginInput]}
                     onChangeText={(value) => onChangePhone(value)}
@@ -77,8 +78,9 @@ export default function BodyRegistry() {
                 <TextInput
                     label="email"
                     returnKeyType="next"
-                    placeholder="  YourEmail@netlogistik.com"
+                    placeholder="  YourEmail@netlogistik.com*"
                     keyboardType='email'
+                    autoCapitalize="none"
                     style={[styles.input, styles.marginInput]}
                     onChangeText={(value) => onChangeEmail(value)}
                 />
@@ -94,7 +96,7 @@ export default function BodyRegistry() {
                 <TextInput
                     label="password"
                     returnKeyType="next"
-                    placeholder="  Contraseña"
+                    placeholder="  Contraseña*"
                     style={[styles.input, styles.marginInput]}
                     secureTextEntry={true}
                     autoCapitalize="none"
@@ -107,11 +109,12 @@ export default function BodyRegistry() {
                 <TextInput
                     label="confirmPassword"
                     returnKeyType="next"
-                    placeholder="  Confirma contraseña"
+                    placeholder="  Confirma contraseña*"
                     style={[styles.input, styles.marginInput]}
                     secureTextEntry={true}
                     autoCapitalize="none"
                     autoCorrect={false}
+                    onChangeText={(value) => onChangePassword2(value)}
                 />
             </View>
             <View style={{ alignItems: 'center', marginTop: 45 }}>
@@ -133,7 +136,6 @@ export default function BodyRegistry() {
                             Login
                         </Text>
                     </TouchableWithoutFeedback>
-
                 </View>
                 <Footer />
             </View>
