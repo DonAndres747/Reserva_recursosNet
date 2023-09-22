@@ -5,7 +5,7 @@ import theme from "../../theme";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Picker } from '@react-native-picker/picker';
 import ModalDropdown from 'react-native-modal-dropdown';
-import RegisterUser from "../../services/registerUser";
+import RegisterUser from "../../services/controllers/userController";
 import NavigationButton from "../NavigationButton";
 import Footer from "../footer";
 import { useNavigation } from '@react-navigation/native';
@@ -14,13 +14,7 @@ import ButtonStyle from "../buttonsStyle";
 
 export default function BodyRegistry() {
     const navigation = useNavigation();
-    const { onChangeName,
-        onChangeLastName,
-        onChangeCompany,
-        onChangePhone,
-        onChangeEmail,
-        onChangePassword,
-        onChangePassword2,
+    const { onChange, 
         saveData,
         loading } = RegisterUser();
     return (
@@ -37,7 +31,7 @@ export default function BodyRegistry() {
                     placeholder="  Nombre"
                     keyboardType='default'
                     style={[styles.input, styles.marginInput]}
-                    onChangeText={(value) => onChangeName(value)}
+                    onChangeText={(value) => onChange("firstName", value)}
                 />
             </View>
             <View style={styles.row}>
@@ -48,7 +42,7 @@ export default function BodyRegistry() {
                     placeholder="  Apellido"
                     keyboardType='default'
                     style={[styles.input, styles.marginInput]}
-                    onChangeText={(value) => onChangeLastName(value)}
+                    onChangeText={(value) => onChange("lastName", value)}
                 />
             </View>
             <View style={styles.row}>
@@ -59,7 +53,7 @@ export default function BodyRegistry() {
                     placeholder="  Compañia*"
                     keyboardType='default'
                     style={[styles.input, styles.marginInput]}
-                    onChangeText={(value) => onChangeCompany(value)}
+                    onChangeText={(value) => onChange("company", value)}
                 />
             </View>
             <View style={styles.row}>
@@ -70,7 +64,7 @@ export default function BodyRegistry() {
                     placeholder="  000000000*"
                     keyboardType='phone-pad'
                     style={[styles.input, styles.marginInput]}
-                    onChangeText={(value) => onChangePhone(value)}
+                    onChangeText={(value) => onChange("phone", value)}
                 />
             </View>
             <View style={styles.row}>
@@ -82,7 +76,7 @@ export default function BodyRegistry() {
                     keyboardType='email'
                     autoCapitalize="none"
                     style={[styles.input, styles.marginInput]}
-                    onChangeText={(value) => onChangeEmail(value)}
+                    onChangeText={(value) => onChange("email", value)}
                 />
             </View>
             <View style={styles.row} >
@@ -101,7 +95,7 @@ export default function BodyRegistry() {
                     secureTextEntry={true}
                     autoCapitalize="none"
                     autoCorrect={false}
-                    onChangeText={(value) => onChangePassword(value)}
+                    onChangeText={(value) => onChange("password", value)}
                 />
             </View>
             <View style={styles.row}>
@@ -114,7 +108,7 @@ export default function BodyRegistry() {
                     secureTextEntry={true}
                     autoCapitalize="none"
                     autoCorrect={false}
-                    onChangeText={(value) => onChangePassword2(value)}
+                    onChangeText={(value) => onChange("password2", value)}
                 />
             </View>
             <View style={{ alignItems: 'center', marginTop: 45 }}>
@@ -122,7 +116,7 @@ export default function BodyRegistry() {
                 <ButtonStyle name='Home'>
                     <TouchableWithoutFeedback onPress={saveData}>
                         <Text>
-                            {loading? "Loading": "Register"}
+                            {loading ? "Loading" : "Register"}
                         </Text>
                     </TouchableWithoutFeedback>
                 </ButtonStyle>

@@ -1,43 +1,17 @@
 import { useState } from "react";
 import { Alert } from "react-native";
 import { useNavigation } from '@react-navigation/native';
-import { url, port } from "./conection";
+import { url, port } from "../conection";
+import { usermodel } from "../../models/userModel"; 
 
 export default function RegisterUser() {
     const navigation = useNavigation();
-    const [user, setUser] = useState({
-        firstName: '',
-        lastName: '',
-        company: '',
-        phone: '',
-        email: '',
-        password: '',
-        password2: '',
-    })
-
+    const [user, setUser] = useState(usermodel);
     const [loading, setLoading] = useState(false);
 
-    const onChangeName = (value) => {
-        setUser({ ...user, firstName: value });
+    const onChange = (field, value) => {
+        setUser({ ...user, [field]: value });
     };
-    const onChangeLastName = (value) => {
-        setUser({ ...user, lastName: value });
-    };
-    const onChangeCompany = (value) => {
-        setUser({ ...user, company: value });
-    };
-    const onChangePhone = (value) => {
-        setUser({ ...user, phone: value });
-    };
-    const onChangeEmail = (value) => {
-        setUser({ ...user, email: value });
-    };
-    const onChangePassword = (value) => {
-        setUser({ ...user, password: value });
-    };
-    const onChangePassword2 = (value) => {
-        setUser({ ...user, password2: value })
-    }
 
 
     const saveData = () => {
@@ -74,12 +48,8 @@ export default function RegisterUser() {
                     console.log("response: { ", result.result.status, " }-----------------------------", result.result.message);
                     if (result.result.status == 201) {
                         navigation.navigate('Home', { name: user.firstName.charAt(0).toUpperCase() + user.firstName.slice(1).toLowerCase() + " " + user.lastName.charAt(0).toUpperCase() + user.lastName.slice(1).toLowerCase() });
-                    } else if (result.result.message === 1062) {
-                        Alert.alert("El email ya está registrado");
-                    } else if (result.result.message === 400 && user.password !== user.password2) {
-                        Alert.alert("Las contraseñas no coinciden");
-                    } else if (result.result.message === 402) {
-                        Alert.alert("El formato de correo electrónico no es válido.");
+                    } else if (result.result.status == 500) {
+                        Alert.alert(result.result.message);
                     } else {
                         Alert.alert("Algo ha salido mal  :(");
                     }
@@ -94,6 +64,6 @@ export default function RegisterUser() {
 
     };
 
-    return { onChangeName, onChangeLastName, onChangeCompany, onChangePhone, onChangeEmail, onChangePassword, onChangePassword2, saveData, loading }
+    return { onChange, saveData, loading }
 
 }
