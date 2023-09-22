@@ -6,7 +6,6 @@ import Icon from "react-native-vector-icons/MaterialIcons";
 import { Picker } from '@react-native-picker/picker';
 import ModalDropdown from 'react-native-modal-dropdown';
 import RegisterUser from "../../services/controllers/userController";
-import NavigationButton from "../NavigationButton";
 import Footer from "../footer";
 import { useNavigation } from '@react-navigation/native';
 import ButtonStyle from "../buttonsStyle";
