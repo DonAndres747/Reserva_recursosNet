@@ -73,7 +73,7 @@ export default function RegisterUser() {
                 .then((result) => {
                     console.log("response: { ", result.result.status, " }-----------------------------", result.result.message);
                     if (result.result.status == 201) {
-                        navigation.navigate('Home', { name: user.firstName.charAt(0).toUpperCase() + user.firstName.slice(1).toLowerCase() + " " + user.lastName.charAt(0).toUpperCase() + user.lastNamex.slice(1).toLowerCase() });
+                        navigation.navigate('Home', { name: user.firstName.charAt(0).toUpperCase() + user.firstName.slice(1).toLowerCase() + " " + user.lastName.charAt(0).toUpperCase() + user.lastName.slice(1).toLowerCase() });
                     } else if (result.result.message === 1062) {
                         Alert.alert("El email ya está registrado");
                     } else if (result.result.message === 400 && user.password !== user.password2) {
