@@ -7,7 +7,7 @@ import Icon2 from "react-native-vector-icons/Ionicons";
 import { useNavigation } from '@react-navigation/native';
 import { showPassword } from "../../helpers/password";
 import userController from "../../services/controllers/userController";
-import ButtonStyle from "../buttonsStyle.jsx";
+import ButtonStyle from "../buttonsStyle.jsx"; 
 
 export default function BodyLogin() {
 

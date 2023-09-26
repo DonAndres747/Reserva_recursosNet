@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Alert } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import UserModel from "../models/userModel";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function userController() {
     const navigation = useNavigation();
@@ -22,7 +23,6 @@ export default function userController() {
             setLoading(false);
         } else {
             try {
-
                 const userModel = new UserModel(
                     userModelData.firstName,
                     userModelData.lastName,
@@ -34,16 +34,19 @@ export default function userController() {
                 );
 
                 const response = await userModel.registerUser(userModelData);
+                const result = await response.json();
 
                 if (response.status === 201) {
+
+                    await AsyncStorage.setItem("token", result.result.message)
+
                     navigation.navigate('Home',
                         {
-                            name: userModelData.firstName.charAt(0).toUpperCase() + userModelData.firstName.slice(1).toLowerCase() + " " +
-                                userModelData.lastName.charAt(0).toUpperCase() + userModelData.lastName.slice(1).toLowerCase()
+                            name: userModelData.firstName,
+                            lastName: userModelData.lastName
                         }
                     )
                 } else if (response.status === 500) {
-                    const result = await response.json();
                     Alert.alert(result.result.message);
                 } else {
                     Alert.alert("Algo ha salido mal :(");
@@ -76,8 +79,8 @@ export default function userController() {
             if (response.status === 200) {
                 navigation.navigate('Home',
                     {
-                        name: result.result.data.first_name.charAt(0).toUpperCase() + result.result.data.first_name.slice(1).toLowerCase() + " " +
-                            result.result.data.last_name.charAt(0).toUpperCase() + result.result.data.last_name.slice(1).toLowerCase()
+                        name: result.result.data.first_name,
+                        lastName: result.result.data.last_name
                     }
                 )
             } else if (response.status === 401) {

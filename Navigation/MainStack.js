@@ -11,7 +11,7 @@ import RecoverScreen from "../src/screens/RecoverScreen.jsx";
 import HomeScreen from "../src/screens/HomeScreen.jsx";
 import theme from "../src/theme.js";
 
-const EmptyComponent = () => <View style={{width: 0, height: 0}} />;
+const EmptyComponent = () => <View style={{ width: 0, height: 0 }} />;
 
 const Stack = createNativeStackNavigator()
 
@@ -51,7 +51,10 @@ const MainStack = () => {
                     name='Home'
                     component={HomeScreen}
                     options={({ route }) => ({
-                        title: route.params.name,
+                        title: (
+                            route.params.name.charAt(0).toUpperCase() + route.params.name.slice(1).toLowerCase() + " " +
+                            route.params.lastName.charAt(0).toUpperCase() + route.params.lastName.slice(1).toLowerCase()
+                        ),
                         headerStyle: {
                             backgroundColor: '#f2f2f2'
                         },
