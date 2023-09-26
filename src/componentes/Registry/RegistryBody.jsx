@@ -5,7 +5,7 @@ import theme from "../../theme";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { Picker } from '@react-native-picker/picker';
 import ModalDropdown from 'react-native-modal-dropdown';
-import RegisterUser from "../../services/controllers/userController";
+import userController from "../../services/controllers/userController";
 import Footer from "../footer";
 import { useNavigation } from '@react-navigation/native';
 import ButtonStyle from "../buttonsStyle";
@@ -13,9 +13,9 @@ import ButtonStyle from "../buttonsStyle";
 
 export default function BodyRegistry() {
     const navigation = useNavigation();
-    const { onChange, 
+    const { onChange,
         saveData,
-        loading } = RegisterUser();
+        loading } = userController();
     return (
 
         <View>
@@ -112,13 +112,16 @@ export default function BodyRegistry() {
             </View>
             <View style={{ alignItems: 'center', marginTop: 45 }}>
 
-                <ButtonStyle name='Home'>
-                    <TouchableWithoutFeedback onPress={saveData}>
-                        <Text>
-                            {loading ? "Loading" : "Register"}
-                        </Text>
-                    </TouchableWithoutFeedback>
-                </ButtonStyle>
+
+                <TouchableWithoutFeedback onPress={saveData}>
+                    <View>
+                        <ButtonStyle name='Home'>
+                            <Text>
+                                {loading ? "Loading" : "Register"}
+                            </Text>
+                        </ButtonStyle>
+                    </View>
+                </TouchableWithoutFeedback>
 
                 <View style={styles.text}>
                     <Text>
