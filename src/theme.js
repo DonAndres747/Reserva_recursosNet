@@ -18,6 +18,7 @@ const theme = {
     },
     width: {
         buttonCont: 190,
+        buttonAction: 90,
         input:300,
         input2:280
     },

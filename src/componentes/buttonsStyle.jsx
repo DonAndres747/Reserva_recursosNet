@@ -7,8 +7,8 @@ import theme from '../theme.js'
 
 export default function ButtonStyle({ children, view, RestOfProps }) {
     const buttonStyle = [
-        styles.container,
-        view == 'container' && styles.container
+        view == null && styles.container,
+        view == 'action' && styles.action
     ]
     return (
         <View style={[buttonStyle.container, buttonStyle.iosText]}>
@@ -35,7 +35,26 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         ...Platform.select({
             ios: {
-                padding:5
+                padding: 5
+            }
+        })
+
+    },
+    action: {
+        width: theme.width.buttonAction,
+        height: theme.height.buttonCont, 
+        borderRadius: 5,
+        borderWidth:1,
+        borderColor:"grey",
+        color: theme.colors.azulNet,
+        textAlign: theme.alingment.center,
+        textAlignVertical: theme.alingment.center,
+        fontSize: theme.fontSizes.buttons,
+        marginBottom: theme.margin.margin,
+        overflow: 'hidden',
+        ...Platform.select({
+            ios: {
+                padding: 5
             }
         })
 

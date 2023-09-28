@@ -1,15 +1,19 @@
 import React from "react";
-import { View, Text, TouchableWithoutFeedback, StyleSheet, ScrollView } from "react-native";
-import TittleStyle from "../tittlesStyle";
+import { View, Text, TouchableWithoutFeedback, StyleSheet, Alert } from "react-native";
 import theme from "../../theme";
 import { Dimensions } from 'react-native';
 import BookingSolSeg from "./BookingSolSeg";
 import BookingTextSeg from "./BookingTextSeg";
 import BookingSerTypSeg from "./BookingSerTypSeg";
+import BookingDatesSeg from "./BookingDatesSeg";
+import ButtonStyle from "../buttonsStyle";
+
+const emptySpace = `
+`
 
 const BookingBody = () => {
     return (
-        <View >
+        <View style={{ alignItems: "center" }}>
             <Text style={styles.headerText}>
                 Permitanos ayudarle con su requerimiento en {' '}
                 <Text style={{ fontSize: 20 }}>
@@ -31,13 +35,22 @@ const BookingBody = () => {
                     text='Selecciona el tipo de servicio que deseas y el nivel de experiencia del recurso requerido.' />
             </View>
             <View style={styles.separator} />
+
             <View style={styles.container}>
+                <Text style={styles.hrLabel}>
+                    Total Horas:
+                </Text>
                 <BookingTextSeg
                     number='3'
-                    text='Selecciona las fechas en que deseas reservar el servicio.' />
-                <BookingSolSeg />
+                    text={'Selecciona las fechas en que deseas reservar el servicio. ' + emptySpace} />
+                <BookingDatesSeg />
             </View>
             <View style={styles.separator} />
+            <TouchableWithoutFeedback onPress={()=>Alert.alert("Oli")}>
+                <View style={{ marginTop: 8 }}>
+                    <ButtonStyle view="action" >Buscar</ButtonStyle>
+                </View>
+            </TouchableWithoutFeedback>
         </View >
     )
 }
@@ -64,6 +77,11 @@ const styles = StyleSheet.create({
         marginVertical: 3,
         alignSelf: 'center',
     },
+    hrLabel: {
+        position: "absolute",
+        left: '30%',
+        top: "68%",
+    }
 
 })
 

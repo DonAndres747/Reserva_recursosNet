@@ -37,7 +37,7 @@ export default function BookingList({ data }) {
             <View style={styles.list}>
                 <ScrollView>
                     {data.map((elemento, index) => (
-                        <View>
+                        <View key={index}>
                             <TouchableWithoutFeedback key={index} onPress={() => { listSelectedItem(index) }}>
                                 <Text style={[styles.listText, selectedItems[index] && styles.colorN]}>{elemento.name}</Text>
                             </TouchableWithoutFeedback>

@@ -60,7 +60,7 @@ const MainStack = () => {
                         },
                         headerShadowVisible: false,
                         headerLeft: () => <EmptyComponent />,
-                        headerRight: () => <Text>asdasd</Text>
+                        // headerRight: () => <Text>asdasd</Text>
                     })}
                 />
                 <Stack.Screen

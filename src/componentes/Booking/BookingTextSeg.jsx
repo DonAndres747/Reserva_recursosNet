@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import theme from "../../theme"; 
+import theme from "../../theme";
 
 export default function BookingTextSeg({ number, text }) {
     return (
@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
     segText: {
         paddingLeft: "5%",
         paddingRight: "5%",
-        width: 145,
-        fontSize: 13,
+        width: 140,
+        fontSize: 14,
     }
 })
 
