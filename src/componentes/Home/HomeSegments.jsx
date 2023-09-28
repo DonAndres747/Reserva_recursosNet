@@ -1,26 +1,31 @@
 import React from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import theme from "../../theme";
+import { useNavigation } from '@react-navigation/native';
 
-export default function HomeSegments({ circleV, tittle, segText, iconSrc }) {
+export default function HomeSegments({ circleV, tittle, segText, iconSrc, name, firstName, lastName }) {
+
+    const navigation = useNavigation();
     const circle = [
         styles.circle,
         circleV != 'false' && styles.circleColor,
     ]
 
     return (
-        <View style={[styles.container]}>
-            <View style={circle}>
-                <Image source={iconSrc} style={[styles.icon]} >
-                </Image>
+        <TouchableWithoutFeedback onPress={() => { [navigation.navigate(name, { name: firstName, lastName: lastName })]}}>
+            <View style={[styles.container]}>
+                <View style={circle}>
+                    <Image source={iconSrc} style={[styles.icon]} >
+                    </Image>
+                </View>
+                <Text style={[styles.segTittle]}>
+                    {tittle}
+                </Text>
+                <Text style={[styles.segText]}>
+                    {segText}
+                </Text>
             </View>
-            <Text style={[styles.segTittle]}>
-                {tittle}
-            </Text>
-            <Text style={[styles.segText]}>
-                {segText}
-            </Text>
-        </View>
+        </TouchableWithoutFeedback>
     )
 }
 
@@ -34,7 +39,7 @@ const styles = StyleSheet.create({
         width: '33%',
         height: '100%',
         justifyContent: 'center',
-        
+
         // borderColor: 'black',
         // borderWidth: 1
     },
@@ -56,8 +61,8 @@ const styles = StyleSheet.create({
         fontWeight: theme.fontWeight.bold,
         marginTop: 10,
         marginBottom: 5,
-        fontSize:  Platform.OS === 'ios' ? '14%' : 16
-        
+        fontSize: Platform.OS === 'ios' ? '14%' : 16
+
     },
     segText: {
         paddingLeft: "5%",

@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         marginLeft:theme.margin.marginLeft
     },
     fontColorA:{
-        color: theme.colors.naranjaNet
+        color: theme.colors.azulNet
     },
     fontColorN:{
         color: theme.colors.naranjaNet

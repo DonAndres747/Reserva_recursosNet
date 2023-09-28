@@ -30,18 +30,27 @@ const HomeBody = () => {
                         tittle='Disponibilidad'
                         segText='Conoce la disponibilidad de los recursos para tus proyectos'
                         iconSrc={disponibilidadLogo}
+                        name={'Booking'}
+                        firstName = {'Prov'}
+                        lastName = {'1'}
                     />
                     <View style={styles.separator} />
                     <HomeSegments
                         tittle='Reserva recursos'
                         segText='Reserva recursos definiendo las caracteristicas y habilidades que necesitas'
                         iconSrc={ReservaLogo}
+                        name={'Booking'}
+                        firstName = {'Prov'}
+                        lastName = {'1'}
                     />
                     <View style={styles.separator} />
                     <HomeSegments
                         tittle='Componentes'
                         segText='Conoce y adquiere componentes, servicios y addons para tus soluciones'
                         iconSrc={componentesLogo}
+                        name={'Booking'}
+                        firstName = {'Prov'}
+                        lastName = {'1'}
                     />
                 </View>
                 <View style={[styles.segmentsRows]}>
@@ -49,12 +58,18 @@ const HomeBody = () => {
                         tittle='netRewards'
                         segText='conoce tu estatus y puntos asignados a tu cuenta'
                         iconSrc={netRewardsLogo}
+                        name={'Booking'}
+                        firstName = {'Prov'}
+                        lastName = {'1'}
                     />
                     <View style={styles.separator} />
                     <HomeSegments
                         tittle='planificacion'
                         segText='Realiza la planificacion de recursos'
                         iconSrc={planificacionLogo}
+                        name={'Booking'}
+                        firstName = {'Prov'}
+                        lastName = {'1'}
                     />
                     <View style={styles.separator} />
                     <HomeSegments

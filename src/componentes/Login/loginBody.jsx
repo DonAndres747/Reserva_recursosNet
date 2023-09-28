@@ -7,7 +7,7 @@ import Icon2 from "react-native-vector-icons/Ionicons";
 import { useNavigation } from '@react-navigation/native';
 import { showPassword } from "../../helpers/password";
 import userController from "../../services/controllers/userController";
-import ButtonStyle from "../buttonsStyle.jsx"; 
+import ButtonStyle from "../buttonsStyle.jsx";
 
 export default function BodyLogin() {
 
@@ -75,7 +75,7 @@ export default function BodyLogin() {
                     <Text>
                         New to Netlogistik?
                     </Text>
-                    <TouchableWithoutFeedback onPress={() => navigation.navigate('Registry')}>
+                    <TouchableWithoutFeedback onPress={() => /*navigation.navigate('Registry') temporal*/navigation.navigate('Home', {name: "a",lastName: "a"})}>
                         <Text style={styles.HiperLinks}>
                             Register
                         </Text>

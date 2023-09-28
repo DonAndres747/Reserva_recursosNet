@@ -2,14 +2,14 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 
 import MainScreen from "../src/screens/MainScreen.jsx";
 import LoginScreen from '../src/screens/loginScreen.jsx';
 import RegistryScreen from "../src/screens/RegistryScreen.jsx";
 import RecoverScreen from "../src/screens/RecoverScreen.jsx";
 import HomeScreen from "../src/screens/HomeScreen.jsx";
-import theme from "../src/theme.js";
+import BookingScreen from "../src/screens/BookingScreen.jsx";
 
 const EmptyComponent = () => <View style={{ width: 0, height: 0 }} />;
 
@@ -59,7 +59,23 @@ const MainStack = () => {
                             backgroundColor: '#f2f2f2'
                         },
                         headerShadowVisible: false,
-                        headerLeft: () => <EmptyComponent />
+                        headerLeft: () => <EmptyComponent />,
+                        headerRight: () => <Text>asdasd</Text>
+                    })}
+                />
+                <Stack.Screen
+                    name='Booking'
+                    component={BookingScreen}
+                    options={({ route }) => ({
+                        title: (
+                            route.params.name.charAt(0).toUpperCase() + route.params.name.slice(1).toLowerCase() + " " +
+                            route.params.lastName.charAt(0).toUpperCase() + route.params.lastName.slice(1).toLowerCase()
+                        ),
+                        headerStyle: {
+                            backgroundColor: '#f2f2f2'
+                        },
+                        headerShadowVisible: false,
+                        // headerLeft: () => <EmptyComponent />
                     })}
                 />
 
