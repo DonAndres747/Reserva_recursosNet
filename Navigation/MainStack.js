@@ -10,6 +10,7 @@ import RegistryScreen from "../src/screens/RegistryScreen.jsx";
 import RecoverScreen from "../src/screens/RecoverScreen.jsx";
 import HomeScreen from "../src/screens/HomeScreen.jsx";
 import BookingScreen from "../src/screens/BookingScreen.jsx";
+import ComponentsScreen from "../src/screens/ComponentsScreen.jsx";
 
 const EmptyComponent = () => <View style={{ width: 0, height: 0 }} />;
 
@@ -47,10 +48,8 @@ const MainStack = () => {
                         component={RecoverScreen}
                     />
                 </Stack.Group>
-                <Stack.Screen
-                    name='Home'
-                    component={HomeScreen}
-                    options={({ route }) => ({
+                <Stack.Group
+                    screenOptions={({ route }) => ({
                         title: (
                             route.params.name.charAt(0).toUpperCase() + route.params.name.slice(1).toLowerCase() + " " +
                             route.params.lastName.charAt(0).toUpperCase() + route.params.lastName.slice(1).toLowerCase()
@@ -59,25 +58,24 @@ const MainStack = () => {
                             backgroundColor: '#f2f2f2'
                         },
                         headerShadowVisible: false,
-                        headerLeft: () => <EmptyComponent />,
-                        // headerRight: () => <Text>asdasd</Text>
+                        headerLeft: () => Platform.OS === 'android' ? <EmptyComponent /> : null,
+                        headerBackTitle: '',
+                        headerTintColor: "black"
                     })}
-                />
-                <Stack.Screen
-                    name='Booking'
-                    component={BookingScreen}
-                    options={({ route }) => ({
-                        title: (
-                            route.params.name.charAt(0).toUpperCase() + route.params.name.slice(1).toLowerCase() + " " +
-                            route.params.lastName.charAt(0).toUpperCase() + route.params.lastName.slice(1).toLowerCase()
-                        ),
-                        headerStyle: {
-                            backgroundColor: '#f2f2f2'
-                        },
-                        headerShadowVisible: false,
-                        // headerLeft: () => <EmptyComponent />
-                    })}
-                />
+                >
+                    <Stack.Screen
+                        name='Home'
+                        component={HomeScreen}
+                    />
+                    <Stack.Screen
+                        name='Booking'
+                        component={BookingScreen}
+                    />
+                    <Stack.Screen
+                        name='Components'
+                        component={ComponentsScreen}
+                    />
+                </Stack.Group>
 
             </Stack.Navigator>
         </NavigationContainer>

@@ -112,10 +112,10 @@ const styles = StyleSheet.create({
     listContainer: {
         alignSelf: "center",
         justifyContent: "center",
-        width: 80,
-        height: 30,
+        width:  Platform.OS === 'ios' ? "50%": 80,
+        height: Platform.OS === 'ios' ? 38: 30,
         borderWidth: 1,
-        borderColor: 'gray',
+        borderColor: 'grey',
         marginTop: 5
     },
 });

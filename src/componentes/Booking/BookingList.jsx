@@ -21,7 +21,7 @@ export default function BookingList({ data }) {
     async function listSelectedItem(index) {
         const updatedSelectedItems = await toggleItem(index);
         const selectedItemsList = [];
-        
+
         updatedSelectedItems.forEach((selectedItem, index) => {
             if (selectedItem) {
                 selectedItemsList.push(data[index].id);
@@ -59,13 +59,13 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: "column",
         width: 145,
-        justifyContent: "flex-end"
+        justifyContent: "flex-end",
     },
     list: {
-        height: 30,
+        height: Platform.OS === 'ios' ? 38 : 30,
     },
     listText: {
-        fontSize: 20
+        fontSize: Platform.OS === 'ios' ? "20%" : 20
     },
     colorN: {
         color: theme.colors.naranjaNet

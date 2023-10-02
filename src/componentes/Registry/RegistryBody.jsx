@@ -171,7 +171,7 @@ const pickerOS = Platform.select({
                 key={paises.map(n => (
                     n.id
                 ))}
-                dropdownStyle={[styles.pickerIos, { width: theme.width.input }]}
+                dropdownStyle={[styles.pickerIos, { width: Platform.OS === 'ios' ? "70%" : theme.width.input, height: "auto" }]}
                 textStyle={[styles.pickerIos]}
                 style={[styles.input, styles.pickerIos]} />
         )

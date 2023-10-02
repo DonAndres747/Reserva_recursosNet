@@ -46,7 +46,7 @@ const BookingBody = () => {
                 <BookingDatesSeg />
             </View>
             <View style={styles.separator} />
-            <TouchableWithoutFeedback onPress={()=>Alert.alert("Oli")}>
+            <TouchableWithoutFeedback onPress={() => Alert.alert("Oli")}>
                 <View style={{ marginTop: 8 }}>
                     <ButtonStyle view="action" >Buscar</ButtonStyle>
                 </View>
@@ -68,14 +68,17 @@ const styles = StyleSheet.create({
     headerText: {
         color: theme.colors.azulNet,
         marginVertical: 10,
-        alignSelf: "center"
+        alignSelf: "center",
+        fontSize: Platform.OS === 'ios' ? "12%" : 14
     },
     separator: {
-        borderBottomWidth: 2,
-        borderStyle: 'dotted',
+        borderBottomWidth: Platform.OS === 'ios' ? 1 : 2,  
+        borderStyle:  Platform.OS === 'ios' ? 'dashed' :'dotted',
+        overflow: 'visible',
         width: autoWidth,
         marginVertical: 3,
         alignSelf: 'center',
+        borderWidth: Platform.OS === 'ios' ? 1 : 0,
     },
     hrLabel: {
         position: "absolute",

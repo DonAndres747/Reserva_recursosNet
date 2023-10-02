@@ -48,7 +48,7 @@ const HomeBody = () => {
                         tittle='Componentes'
                         segText='Conoce y adquiere componentes, servicios y addons para tus soluciones'
                         iconSrc={componentesLogo}
-                        name={'Booking'}
+                        name={'Components'}
                         firstName = {'Prov'}
                         lastName = {'1'}
                     />

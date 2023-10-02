@@ -6,8 +6,7 @@ import theme from '../theme.js'
 
 
 export default function TittleStyle({ children, text, fontColor, RestOfProps }) {
-    const TittleStyle = [
-        styles.container,
+    const TittleStyle = [ 
         text == 'tittle' && styles.tittle,
         text == 'subtittle' && styles.subtittle,
         fontColor == 'Orange' && styles.fontColorN,
