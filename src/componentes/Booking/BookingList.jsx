@@ -3,10 +3,10 @@ import { View, Text, TouchableWithoutFeedback, StyleSheet, ScrollView } from "re
 import theme from "../../theme";
 
 
-
-export default function BookingList({ data }) {
+export default function BookingList({ data, onSelectedItemsChange }) {
     const [selectedItems, setSelectedItems] = useState(Array(data.length).fill(false));
     const [selectedItemsStr, setSelectedItemsStr] = useState("");
+     
 
 
     const toggleItem = (index) => {
@@ -21,14 +21,17 @@ export default function BookingList({ data }) {
         const updatedSelectedItems = await toggleItem(index);
         const selectedItemsList = [];
 
+
         updatedSelectedItems.forEach((selectedItem, index) => {
             if (selectedItem) {
-                selectedItemsList.push(data[index].id);
+                selectedItemsList.push(data[index].id); 
             }
         });
 
         const selectedItemsString = selectedItemsList.join(", ");
         setSelectedItemsStr(selectedItemsString);
+
+        onSelectedItemsChange(selectedItemsString);
     }
 
     return (

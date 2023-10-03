@@ -3,9 +3,10 @@ import { View, Text, TouchableWithoutFeedback, StyleSheet, ScrollView } from "re
 import BookingList from "./BookingList";
 import solTypController from "../../services/controllers/solTypController";
 
-function BookingSolSeg() {
+function BookingSolSeg({ onchange }) {
     const { getAllSolTypes } = solTypController();
-    const [solTypes, setSolTypes] = useState([]); 
+    const [solTypes, setSolTypes] = useState([]);
+    const [selectedItems, setSelectedItems] = useState([]);
 
     useEffect(() => {
         getAllSolTypes()
@@ -17,14 +18,20 @@ function BookingSolSeg() {
             .catch((error) => {
                 console.error('Error:', error);
             });
-    }, []);
+
+    },);
+
+
+    const handleSelectedItems = (selectedItems) => {
+        onchange(selectedItems)
+    };
 
 
     return (
         <View style={styles.container}>
             <Text style={styles.solText}>Solucion(es)</Text>
-            <BookingList data={solTypes} />
-        </View>
+            <BookingList data={solTypes} onSelectedItemsChange={handleSelectedItems} />
+        </View >
     );
 }
 

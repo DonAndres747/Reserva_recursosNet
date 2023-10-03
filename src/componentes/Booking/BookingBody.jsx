@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import { View, Text, TouchableWithoutFeedback, StyleSheet, Alert } from "react-native";
 import theme from "../../theme";
 import { Dimensions } from 'react-native';
@@ -12,6 +12,17 @@ const emptySpace = `
 `
 
 const BookingBody = () => {
+    const [selectedSols, setselectedSols] = useState([]);
+    const [selectedLevels, setSelectedLevels] = useState([]);
+
+    const handleselectedSols = (items) => {
+        setselectedSols(items)
+    };
+    const handleselectedLevels = (items) => {
+        console.log("body: ", items);
+        setSelectedLevels(items)
+    };
+
     return (
         <View style={{ alignItems: "center" }}>
             <Text style={styles.headerText}>
@@ -25,11 +36,11 @@ const BookingBody = () => {
                 <BookingTextSeg
                     number='1'
                     text='Selecciona la solución o soluciones sobre la cual requieres nuestro apoyo.' />
-                <BookingSolSeg />
+                <BookingSolSeg onchange={handleselectedSols} />
             </View>
             <View style={styles.separator} />
             <View style={styles.container}>
-                <BookingSerTypSeg />
+                <BookingSerTypSeg onchange={handleselectedLevels} />
                 <BookingTextSeg
                     number='2'
                     text='Selecciona el tipo de servicio que deseas y el nivel de experiencia del recurso requerido.' />
@@ -46,7 +57,7 @@ const BookingBody = () => {
                 <BookingDatesSeg />
             </View>
             <View style={styles.separator} />
-            <TouchableWithoutFeedback onPress={() => Alert.alert("Oli")}>
+            <TouchableWithoutFeedback onPress={() => Alert.alert((selectedSols + " | " + selectedLevels))}>
                 <View style={{ marginTop: 8 }}>
                     <ButtonStyle view="action" >Buscar</ButtonStyle>
                 </View>
@@ -72,8 +83,8 @@ const styles = StyleSheet.create({
         fontSize: Platform.OS === 'ios' ? "12%" : 14
     },
     separator: {
-        borderBottomWidth: Platform.OS === 'ios' ? 1 : 2,  
-        borderStyle:  Platform.OS === 'ios' ? 'dashed' :'dotted',
+        borderBottomWidth: Platform.OS === 'ios' ? 1 : 2,
+        borderStyle: Platform.OS === 'ios' ? 'dashed' : 'dotted',
         overflow: 'visible',
         width: autoWidth,
         marginVertical: 3,

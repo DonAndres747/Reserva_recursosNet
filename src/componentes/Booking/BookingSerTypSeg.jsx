@@ -5,38 +5,52 @@ import theme from "../../theme";
 import BookingList from "./BookingList";
 import recLevelController from "../../services/controllers/recLevelController";
 
-export default function BookingSerTypSeg() {
+
+let levels = ''
+let servs = ''
+
+export default function BookingSerTypSeg({ onchange }) {
+
+    useEffect(() => {
+        levels = ''
+        servs = ''
+    }, []);
+
     const [checkboxStates, setCheckboxStates] = useState(Array(array.length).fill(false));
 
     const { getAllRecLevels } = recLevelController();
     const [recLevels, setrecLevels] = useState([]);
 
-    const handleCheckboxChange = (index) => {
+    const handleSelectedItems = (selectedItems) => {
+        levels = ''
+        onchange(selectedItems + " | " + servs)
+        return levels = selectedItems
+    };
+
+    async function handleCheckboxChange(index) {
+        servs = ''
         const updatedStates = [...checkboxStates];
         updatedStates[index] = !updatedStates[index];
         setCheckboxStates(updatedStates);
-        return updatedStates
-    };
-
-    async function listSelectedItem(index) {
-        const updatedSelectedItems = handleCheckboxChange(index);
         const checkItems = [];
 
-        updatedSelectedItems.forEach((selectedItem, index) => {
+        updatedStates.forEach((selectedItem, index) => {
             if (selectedItem) {
                 checkItems.push(array[index].id);
             }
         });
+        onchange(levels + " | " + checkItems)
 
-        console.log(checkItems);
-    }
+        return servs = checkItems
+    };
+
 
     useEffect(() => {
         getAllRecLevels()
             .then((data) => {
                 const response = JSON.stringify(data);
                 const parsedData = JSON.parse(response);
-                const renamedData= parsedData.levels[0].map((item) => ({
+                const renamedData = parsedData.levels[0].map((item) => ({
                     ...item,
                     description: item.short_dsc,
                 }));
@@ -62,12 +76,12 @@ export default function BookingSerTypSeg() {
                         containerStyle={styles.checkbox}
                         title={elemento.description}
                         textStyle={styles.label}
-                        onPress={() => listSelectedItem(index)}
+                        onPress={() => handleCheckboxChange(index)}
                     />
                 </View>
             ))}
             <View style={styles.listContainer}>
-                <BookingList data={recLevels} />
+                <BookingList data={recLevels} onSelectedItemsChange={handleSelectedItems} />
             </View>
         </View>
     );
@@ -90,20 +104,6 @@ const array = [
 ];
 
 
-const arrayLevels = [
-    {
-        description: "Ing. Jr",
-        id: "JR"
-    },
-    {
-        description: "Ing. Sr",
-        id: "SR"
-    },
-    {
-        description: "Ing. Lider",
-        id: "LIDER"
-    },
-];
 
 const styles = StyleSheet.create({
     container: {
