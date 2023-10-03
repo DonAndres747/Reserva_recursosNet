@@ -19,7 +19,6 @@ const BookingBody = () => {
         setselectedSols(items)
     };
     const handleselectedLevels = (items) => {
-        console.log("body: ", items);
         setSelectedLevels(items)
     };
 

@@ -1,19 +1,64 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import { View, Text, TouchableWithoutFeedback, StyleSheet, Alert } from "react-native";
 import { Dimensions } from 'react-native';
 import TittleStyle from "../tittlesStyle";
 import ComponentCBSeg from "./ComponentCBSeg";
 import ComponentTypSeg from "./ComponentTypSeg";
 import ButtonStyle from "../buttonsStyle";
+import solTypController from "../../services/controllers/solTypController"
+import recLevelController from "../../services/controllers/recLevelController"
+
+function ComponentsBody() {
+    const { getAllSolTypes } = solTypController();
+    const [solTypes, setSolTypes] = useState([]);
+    const { getAllRecLevels } = recLevelController();
+    const [solRecLevels, setRecLevels] = useState([]);
+
+    const [selectedSol, setSelectedSol] = useState([]);
+    const [selectedRec, setSelectedRec] = useState([]);
+
+    function handleSelectSol(value) {
+        setSelectedSol(value);
+        console.log(value);
+    }
+    function handleSelectRec(value) {
+        setSelectedRec(value);
+        console.log(value);
+    }
+
+    useEffect(() => {
+        getAllSolTypes()
+            .then((data) => {
+                const response = JSON.stringify(data);
+                const parsedData = JSON.parse(response);
+                setSolTypes(parsedData.solutionsTypes[0]);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        getAllRecLevels()
+            .then((data) => {
+                const response = JSON.stringify(data);
+                const parsedData = JSON.parse(response);
+                const renamedData = parsedData.levels[0].map((item) => ({
+                    ...item,
+                    description: item.long_dsc,
+                }));
+                setRecLevels(renamedData);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }, []);
 
 
-const ComponentsBody = () => {
+
     return (
         <View style={styles.container}>
             <TittleStyle text='subtittle' fontColor='Orange'>Disponibilidad de recursos{`                      
             `}</TittleStyle>
-            <ComponentCBSeg text='Selecciona la solución:' data={array} />
-            <ComponentCBSeg text='Selecciona el tipo de Recurso:' data={arrayLevels} />
+            <ComponentCBSeg text='Selecciona la solución:' data={solTypes} onSelect={handleSelectSol} />
+            <ComponentCBSeg text='Selecciona el tipo de Recurso:' data={solRecLevels} onSelect={handleSelectRec} />
             <View style={styles.checkbox}>
                 <Text >
                     Caracteristicas Adcionales:
@@ -21,7 +66,7 @@ const ComponentsBody = () => {
                 <ComponentTypSeg />
             </View>
             <View style={styles.separator} />
-            <TouchableWithoutFeedback onPress={() => Alert.alert("Oli")}>
+            <TouchableWithoutFeedback onPress={() => Alert.alert(selectedRec + " | " + selectedSol)}>
                 <View style={{ marginTop: 8 }}>
                     <ButtonStyle view="action" >Buscar</ButtonStyle>
                 </View>
@@ -29,37 +74,6 @@ const ComponentsBody = () => {
         </View >
     )
 }
-
-const array = [
-    {
-        name: "BY WMS",
-        id: "WMS"
-    },
-    {
-        name: "BY TMS",
-        id: "TMS"
-    },
-    {
-        name: "BY TPD",
-        id: "TPD"
-    },
-];
-
-const arrayLevels = [
-    {
-        name: "Ingeniero Junior",
-        id: "JR"
-    },
-    {
-        name: "Ingeniero Senior",
-        id: "SR"
-    },
-    {
-        name: "Ingeniero Senior",
-        id: "LIDER"
-    },
-];
-
 
 
 const autoWidth = (Dimensions.get('window').width * 0.8);

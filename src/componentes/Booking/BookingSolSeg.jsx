@@ -6,20 +6,19 @@ import solTypController from "../../services/controllers/solTypController";
 function BookingSolSeg({ onchange }) {
     const { getAllSolTypes } = solTypController();
     const [solTypes, setSolTypes] = useState([]);
-    const [selectedItems, setSelectedItems] = useState([]);
 
     useEffect(() => {
         getAllSolTypes()
             .then((data) => {
                 const response = JSON.stringify(data);
-                const parsedData = JSON.parse(response);
+                const parsedData = JSON.parse(response); 
                 setSolTypes(parsedData.solutionsTypes[0]);
             })
             .catch((error) => {
                 console.error('Error:', error);
             });
 
-    },);
+    }, []);
 
 
     const handleSelectedItems = (selectedItems) => {
