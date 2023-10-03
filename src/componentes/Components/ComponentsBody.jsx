@@ -55,7 +55,7 @@ const arrayLevels = [
         id: "SR"
     },
     {
-        name: "Ingeniero Lider",
+        name: "Ingeniero Senior",
         id: "LIDER"
     },
 ];

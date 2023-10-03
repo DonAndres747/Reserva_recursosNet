@@ -8,19 +8,19 @@ const theme = {
     fontSizes: {
         buttons: 20,
         subheading: 16,
-        subText:13,
-        tittle:33,
-        subtittle:23
+        subText: 13,
+        tittle: 33,
+        subtittle: Platform.OS === 'ios' ? "20%" : 23
     },
     fontWeight: {
-        buttons: 700, 
+        buttons: 700,
         bold: 'bold'
     },
     width: {
         buttonCont: 190,
         buttonAction: 90,
-        input:300,
-        input2:280
+        input: 300,
+        input2: 280
     },
     height: {
         buttonCont: 40
@@ -28,11 +28,11 @@ const theme = {
     alingment: {
         center: 'center',
     },
-    margin:{
+    margin: {
         margin: 20,
-        marginLeft:15,
-        maringTop:12,
-        marginRight:10
+        marginLeft: 15,
+        maringTop: 12,
+        marginRight: 10
     }
 }
 

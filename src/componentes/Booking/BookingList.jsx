@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { View, Text, TouchableWithoutFeedback, StyleSheet, ScrollView } from "react-native";
-import TittleStyle from "../tittlesStyle";
 import theme from "../../theme";
 
 
@@ -39,7 +38,7 @@ export default function BookingList({ data }) {
                     {data.map((elemento, index) => (
                         <View key={index}>
                             <TouchableWithoutFeedback key={index} onPress={() => { listSelectedItem(index) }}>
-                                <Text style={[styles.listText, selectedItems[index] && styles.colorN]}>{elemento.name}</Text>
+                                <Text style={[styles.listText, selectedItems[index] && styles.colorN]}>{elemento.description}</Text>
                             </TouchableWithoutFeedback>
                         </View>
                     ))}

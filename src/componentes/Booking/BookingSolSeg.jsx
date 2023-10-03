@@ -1,34 +1,32 @@
-import React from "react";
+import { useState, useEffect } from 'react';
 import { View, Text, TouchableWithoutFeedback, StyleSheet, ScrollView } from "react-native";
-import TittleStyle from "../tittlesStyle";
-import theme from "../../theme";
 import BookingList from "./BookingList";
+import solTypController from "../../services/controllers/solTypController";
 
-const BookingSolSeg = () => {
+function BookingSolSeg() {
+    const { getAllSolTypes } = solTypController();
+    const [solTypes, setSolTypes] = useState([]); 
+
+    useEffect(() => {
+        getAllSolTypes()
+            .then((data) => {
+                const response = JSON.stringify(data);
+                const parsedData = JSON.parse(response);
+                setSolTypes(parsedData.solutionsTypes[0]);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }, []);
+
+
     return (
         <View style={styles.container}>
-            <Text style={styles.solText}>
-                Solucion(es)
-            </Text>
-            <BookingList data={array} />
-        </View >
-    )
+            <Text style={styles.solText}>Solucion(es)</Text>
+            <BookingList data={solTypes} />
+        </View>
+    );
 }
-
-const array = [
-    {
-        name: "BY WMS",
-        id: "WMS"
-    },
-    {
-        name: "BY TMS",
-        id: "TMS"
-    },
-    {
-        name: "BY TPD",
-        id: "TPD"
-    },
-];
 
 
 const styles = StyleSheet.create({
