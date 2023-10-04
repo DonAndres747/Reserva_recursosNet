@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
         paddingLeft: "5%",
         paddingRight: "5%",
         textAlign: 'center',
-        fontSize: 12
+        fontSize: 13
     }
 
 })

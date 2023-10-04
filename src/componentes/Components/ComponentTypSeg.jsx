@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { CheckBox } from "react-native-elements";
 import theme from "../../theme";
 
-export default function ComponentTypSeg() {
+export default function ComponentTypSeg({ onChange }) {
 
     const [checkboxStates, setCheckboxStates] = useState(Array(6).fill(false));
 
@@ -11,104 +11,99 @@ export default function ComponentTypSeg() {
         const updatedStates = [...checkboxStates];
         updatedStates[index] = !updatedStates[index];
         setCheckboxStates(updatedStates);
-        return updatedStates
-    };
-
-    async function listSelectedItem(index) {
-        const updatedSelectedItems = handleCheckboxChange(index);
         const checkItems = [];
 
-        updatedSelectedItems.forEach((selectedItem, index) => {
+        updatedStates.forEach((selectedItem, index) => {
             if (selectedItem) {
                 checkItems.push(array[index].id);
             }
         });
+        onChange(checkItems)
+    };
 
-        console.log(checkItems);
-    }
 
     return (
         <View style={styles.container}>
             <View style={styles.checkboxContainer}>
                 <CheckBox
+                    checked={checkboxStates[0]}
+                    size={20}
+                    iconType="material"
+                    checkedIcon="check-circle"
+                    uncheckedIcon="circle"
+                    checkedColor={theme.colors.naranjaNet}
+                    unCheckedColor={{ backgroundColor: "#d3d3d3" }}
+                    containerStyle={styles.checkbox}
+                    title="Indicador"
+                    textStyle={styles.label}
+                    onPress={() => handleCheckboxChange(0)}
+                />
+                <CheckBox
                     checked={checkboxStates[1]}
                     size={20}
                     iconType="material"
                     checkedIcon="check-circle"
-                    uncheckedIcon= "circle"
-                    checkedColor={theme.colors.naranjaNet} 
-                    unCheckedColor={{backgroundColor: "#d3d3d3"}} 
+                    uncheckedIcon="circle"
+                    checkedColor={theme.colors.naranjaNet}
+                    unCheckedColor={{ backgroundColor: "#d3d3d3" }}
                     containerStyle={styles.checkbox}
-                    title="Indicador"
+                    title="Entrenamiento"
                     textStyle={styles.label}
-                    onPress={() => listSelectedItem(1)}
+                    onPress={() => handleCheckboxChange(1)}
                 />
                 <CheckBox
                     checked={checkboxStates[2]}
                     size={20}
                     iconType="material"
                     checkedIcon="check-circle"
-                    uncheckedIcon= "circle"
+                    uncheckedIcon="circle"
                     checkedColor={theme.colors.naranjaNet}
-                    unCheckedColor={{backgroundColor: "#d3d3d3"}}
+                    unCheckedColor={{ backgroundColor: "#d3d3d3" }}
                     containerStyle={styles.checkbox}
-                    title="Entrenamiento"
+                    title="Evento EMS"
                     textStyle={styles.label}
-                    onPress={() => listSelectedItem(2)}
+                    onPress={() => handleCheckboxChange(2)}
                 />
+            </View>
+            <View style={styles.checkboxContainer}>
                 <CheckBox
                     checked={checkboxStates[3]}
                     size={20}
                     iconType="material"
                     checkedIcon="check-circle"
-                    uncheckedIcon= "circle"
+                    uncheckedIcon="circle"
                     checkedColor={theme.colors.naranjaNet}
-                    unCheckedColor={{backgroundColor: "#d3d3d3"}}
+                    unCheckedColor={{ backgroundColor: "#d3d3d3" }}
                     containerStyle={styles.checkbox}
-                    title="Evento EMS"
+                    title="Reporte"
                     textStyle={styles.label}
-                    onPress={() => listSelectedItem(3)}
+                    onPress={() => handleCheckboxChange(3)}
                 />
-            </View>
-            <View style={styles.checkboxContainer}>
                 <CheckBox
                     checked={checkboxStates[4]}
                     size={20}
                     iconType="material"
                     checkedIcon="check-circle"
-                    uncheckedIcon= "circle"
+                    uncheckedIcon="circle"
                     checkedColor={theme.colors.naranjaNet}
-                    unCheckedColor={{backgroundColor: "#d3d3d3"}}
+                    unCheckedColor={{ backgroundColor: "#d3d3d3" }}
                     containerStyle={styles.checkbox}
-                    title="Reporte"
+                    title="Pantalla"
                     textStyle={styles.label}
-                    onPress={() => listSelectedItem(4)}
+                    onPress={() => handleCheckboxChange(4)}
                 />
                 <CheckBox
                     checked={checkboxStates[5]}
                     size={20}
                     iconType="material"
                     checkedIcon="check-circle"
-                    uncheckedIcon= "circle"
+                    uncheckedIcon="circle"
                     checkedColor={theme.colors.naranjaNet}
-                    unCheckedColor={{backgroundColor: "#d3d3d3"}}
-                    containerStyle={styles.checkbox}
-                    title="Pantalla"
-                    textStyle={styles.label}
-                    onPress={() => listSelectedItem(5)}
-                />
-                <CheckBox
-                    checked={checkboxStates[6]}
-                    size={20}
-                    iconType="material"
-                    checkedIcon="check-circle"
-                    uncheckedIcon= "circle"
-                    checkedColor={theme.colors.naranjaNet}
-                    unCheckedColor={{backgroundColor: "#d3d3d3"}}
+                    unCheckedColor={{ backgroundColor: "#d3d3d3" }}
                     containerStyle={styles.checkbox}
                     title="Interfaz"
                     textStyle={styles.label}
-                    onPress={() => listSelectedItem(6)}
+                    onPress={() => handleCheckboxChange(5)}
                 />
             </View>
         </View>
@@ -134,7 +129,7 @@ const array = [
     },
     {
         name: "Pantalla",
-        id: "Pnt"
+        id: "PNT"
     },
     {
         name: "INT",
@@ -155,7 +150,7 @@ const styles = StyleSheet.create({
     },
     label: {
         marginLeft: 8,
-        fontSize: Platform.OS === 'ios' ? "14%" :17
+        fontSize: Platform.OS === 'ios' ? "14%" : 17
     },
     checkbox: {
         margin: 0,

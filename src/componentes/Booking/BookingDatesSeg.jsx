@@ -1,12 +1,53 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, StyleSheet, TextInput, Alert } from "react-native";
 import { Slider } from "react-native-elements";
 import theme from "../../theme";
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
+const currentDate = new Date();
+const ToDate = new Date();
+currentDate.setDate(currentDate.getDate() + 5);
+ToDate.setDate(ToDate.getDate() + 6)
 
-
-export default function BookingDatesSeg() {
+export default function BookingDatesSeg({ onChange }) {
     const [sliderValue, setSliderValue] = useState(0);
+    const [isFromDatePickerVisible, setFromDatePickerVisibility] = useState(false);
+    const [isToDatePickerVisible, setToDatePickerVisibility] = useState(false);
+    const [selectedFromDate, setSelectedFromDate] = useState(null);
+    const [selectedToDate, setSelectedToDate] = useState(null);
+
+    const showDatePicker = (as) => {
+        as == "from" ? setFromDatePickerVisibility(true) : setToDatePickerVisibility(true);
+    };
+
+    const hideDatePicker = () => {
+        setFromDatePickerVisibility(false);
+        setToDatePickerVisibility(false);
+    };
+
+    const handleConfirm = (date, as) => {
+        const isValid = isSunday(date)
+        if (!isValid) {
+            if (as == "from") {
+                setSelectedFromDate(date);
+                ToDate.setDate(date.getDate() + 1);
+            } else {
+                setSelectedToDate(date);
+            }
+        } else {
+            Alert.alert("Por favor seleccione un día hábil")
+        }
+
+        hideDatePicker();
+        as == "from" ?
+            onChange(date.toDateString() + " , " + (selectedToDate == null ? "" : selectedToDate.toDateString())) :
+            onChange((selectedFromDate == null ? "" : selectedFromDate.toDateString()) + " , " + date.toDateString())
+    };
+
+    const isSunday = (date) => {
+        const dayOfWeek = date.getDay();
+        return dayOfWeek === 0;
+    };
 
     return (
         <View style={styles.container}>
@@ -14,16 +55,36 @@ export default function BookingDatesSeg() {
                 <Text style={styles.textSeg}>
                     Desde:
                 </Text>
-                <TextInput
+                <Text
                     style={styles.date}
+                    onPress={() => showDatePicker("from")}
+                >
+                    {selectedFromDate == null ? "" : selectedFromDate.toDateString()}
+                </Text>
+                <DateTimePickerModal
+                    isVisible={isFromDatePickerVisible}
+                    mode="date"
+                    onConfirm={value => { handleConfirm(value, "from") }}
+                    onCancel={() => hideDatePicker()}
+                    minimumDate={currentDate}
                 />
             </View>
             <View style={styles.containerSeg}>
                 <Text style={styles.textSeg}>
                     Hasta:{" "}
                 </Text>
-                <TextInput
+                <Text
                     style={styles.date}
+                    onPress={() => showDatePicker("to")}
+                >
+                    {selectedToDate == null ? "" : selectedToDate.toDateString()}
+                </Text>
+                <DateTimePickerModal
+                    isVisible={isToDatePickerVisible}
+                    mode="date"
+                    onConfirm={value => { handleConfirm(value, "to") }}
+                    onCancel={() => hideDatePicker()}
+                    minimumDate={ToDate}
                 />
             </View >
             <View>
@@ -40,7 +101,7 @@ export default function BookingDatesSeg() {
                     40 hrs
                 </Text>
             </View>
-        </View>
+        </View >
     );
 }
 

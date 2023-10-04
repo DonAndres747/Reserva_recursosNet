@@ -72,7 +72,7 @@ export default function BodyRegistry() {
                     label="email"
                     returnKeyType="next"
                     placeholder="  YourEmail@netlogistik.com*"
-                    keyboardType='email'
+                    keyboardType='email-address'
                     autoCapitalize="none"
                     style={[styles.input, styles.marginInput]}
                     onChangeText={(value) => onChange("email", value)}

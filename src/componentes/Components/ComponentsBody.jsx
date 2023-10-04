@@ -14,17 +14,23 @@ function ComponentsBody() {
     const { getAllRecLevels } = recLevelController();
     const [solRecLevels, setRecLevels] = useState([]);
 
+    const [caracteristics, setCaracteristics] = useState([]);
+
     const [selectedSol, setSelectedSol] = useState([]);
     const [selectedRec, setSelectedRec] = useState([]);
 
     function handleSelectSol(value) {
         setSelectedSol(value);
         console.log(value);
-    }
+    };
     function handleSelectRec(value) {
         setSelectedRec(value);
         console.log(value);
-    }
+    };
+    function handleSelectCaract(value) {
+        setCaracteristics(value);
+    };
+
 
     useEffect(() => {
         getAllSolTypes()
@@ -63,10 +69,10 @@ function ComponentsBody() {
                 <Text >
                     Caracteristicas Adcionales:
                 </Text>
-                <ComponentTypSeg />
+                <ComponentTypSeg onChange={handleSelectCaract} />
             </View>
             <View style={styles.separator} />
-            <TouchableWithoutFeedback onPress={() => Alert.alert(selectedRec + " | " + selectedSol)}>
+            <TouchableWithoutFeedback onPress={() => Alert.alert(selectedRec + " | " + selectedSol + " | " + caracteristics)}>
                 <View style={{ marginTop: 8 }}>
                     <ButtonStyle view="action" >Buscar</ButtonStyle>
                 </View>

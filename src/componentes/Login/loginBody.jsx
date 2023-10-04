@@ -16,6 +16,7 @@ export default function BodyLogin() {
     const { passwordVisibility, rightIcon, handlePasswordVisibility } = showPassword();
     const [password, setPassword] = useState('');
     const { onChange, userLogin, loading } = userController();
+    
 
     return (
         <View style={{ flex: 2, justifyContent: 'space-between' }}>
@@ -41,7 +42,7 @@ export default function BodyLogin() {
                     label="Password"
                     returnKeyType="next"
                     placeholder="  Password"
-                    keyboardType='Password'
+                    keyboardType='default'
                     style={[styles.input2]}
                     secureTextEntry={passwordVisibility}
                     autoCapitalize="none"

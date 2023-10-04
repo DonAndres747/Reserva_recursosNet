@@ -14,12 +14,16 @@ const emptySpace = `
 const BookingBody = () => {
     const [selectedSols, setselectedSols] = useState([]);
     const [selectedLevels, setSelectedLevels] = useState([]);
+    const [selectedDates, setSelectedDates] = useState([]);
 
     const handleselectedSols = (items) => {
         setselectedSols(items)
     };
     const handleselectedLevels = (items) => {
         setSelectedLevels(items)
+    };
+    const handleselectedDates = (items) => {
+        setSelectedDates(items)
     };
 
     return (
@@ -53,10 +57,10 @@ const BookingBody = () => {
                 <BookingTextSeg
                     number='3'
                     text={'Selecciona las fechas en que deseas reservar el servicio. ' + emptySpace} />
-                <BookingDatesSeg />
+                <BookingDatesSeg onChange={handleselectedDates} />
             </View>
             <View style={styles.separator} />
-            <TouchableWithoutFeedback onPress={() => Alert.alert((selectedSols + " | " + selectedLevels))}>
+            <TouchableWithoutFeedback onPress={() => Alert.alert((selectedSols + " | " + selectedLevels + " | " + selectedDates))}>
                 <View style={{ marginTop: 8 }}>
                     <ButtonStyle view="action" >Buscar</ButtonStyle>
                 </View>
