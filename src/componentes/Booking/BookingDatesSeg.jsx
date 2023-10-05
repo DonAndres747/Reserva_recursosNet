@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TextInput, Alert } from "react-native";
-import { Slider } from "react-native-elements";
+import Slider from "@react-native-assets/slider";
 import theme from "../../theme";
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
@@ -40,14 +40,38 @@ export default function BookingDatesSeg({ onChange }) {
 
         hideDatePicker();
         as == "from" ?
-            onChange(date.toDateString() + " , " + (selectedToDate == null ? "" : selectedToDate.toDateString())) :
-            onChange((selectedFromDate == null ? "" : selectedFromDate.toDateString()) + " , " + date.toDateString())
+            onChange(date.toDateString() + " , " + (selectedToDate == null ? "" : selectedToDate.toDateString())) + console.log(contarHoras(date, selectedToDate)) :
+            onChange((selectedFromDate == null ? "" : selectedFromDate.toDateString() + " , " + date.toDateString())) + console.log(contarHoras(selectedFromDate, date));
     };
+
+    function contarDomingos(desde, hasta) {
+        let count = 0;
+        const unDiaEnMs = 24 * 60 * 60 * 1000;
+
+        let currentDate = new Date(desde);
+        while (currentDate <= hasta) {
+            if (currentDate.getDay() === 0) {
+                count++;
+            }
+            currentDate.setTime(currentDate.getTime() + unDiaEnMs);
+        }
+
+        return count;
+    }
+
+    function contarHoras(desde, hasta) {
+        const domingos = contarDomingos(desde, hasta)
+        const totalHoras = (((hasta.getDate() - desde.getDate()) + 1) - domingos) * 8;
+        setSliderValue(totalHoras)
+        return totalHoras
+
+    }
 
     const isSunday = (date) => {
         const dayOfWeek = date.getDay();
         return dayOfWeek === 0;
     };
+
 
     return (
         <View style={styles.container}>
@@ -64,7 +88,9 @@ export default function BookingDatesSeg({ onChange }) {
                 <DateTimePickerModal
                     isVisible={isFromDatePickerVisible}
                     mode="date"
-                    onConfirm={value => { handleConfirm(value, "from") }}
+                    onConfirm={value => {
+                        handleConfirm(value, "from");
+                    }}
                     onCancel={() => hideDatePicker()}
                     minimumDate={currentDate}
                 />
@@ -82,7 +108,9 @@ export default function BookingDatesSeg({ onChange }) {
                 <DateTimePickerModal
                     isVisible={isToDatePickerVisible}
                     mode="date"
-                    onConfirm={value => { handleConfirm(value, "to") }}
+                    onConfirm={value => {
+                        handleConfirm(value, "to");
+                    }}
                     onCancel={() => hideDatePicker()}
                     minimumDate={ToDate}
                 />
@@ -91,10 +119,13 @@ export default function BookingDatesSeg({ onChange }) {
                 <Slider
                     style={styles.slider}
                     minimumValue={0}
-                    maximumValue={100}
-                    step={1}
+                    maximumValue={80}
                     value={sliderValue}
                     thumbStyle={styles.thumbStyle}
+                    enabled={false}
+                    trackHeight={2}
+                    trackStyle={{ backgroundColor: "black" }}
+
                 />
                 <View style={styles.middleLine} />
                 <Text style={styles.middleLineLabel}>
@@ -139,11 +170,12 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
     slider: {
-        width: 160,
+        width: 155,
+        marginHorizontal: 5,
     },
     thumbStyle: {
-        width: 9,
-        height: 18,
+        width: 7,
+        height: 15,
         backgroundColor: 'white',
         borderRadius: 15,
         borderColor: "black",
