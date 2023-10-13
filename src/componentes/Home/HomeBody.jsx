@@ -30,7 +30,7 @@ const HomeBody = () => {
                         tittle='Disponibilidad'
                         segText='Conoce la disponibilidad de los recursos para tus proyectos'
                         iconSrc={disponibilidadLogo}
-                        name={'Booking'}
+                        name={'Disponibilidad'}
                         firstName = {'Prov'}
                         lastName = {'1'}
                     />

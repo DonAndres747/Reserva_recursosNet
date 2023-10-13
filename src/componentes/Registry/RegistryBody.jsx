@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TittleStyle from "../tittlesStyle";
 import { View, TextInput, StyleSheet, Platform, Text, TouchableWithoutFeedback, Alert } from "react-native";
 import theme from "../../theme";
@@ -9,13 +9,82 @@ import userController from "../../services/controllers/userController";
 import Footer from "../footer";
 import { useNavigation } from '@react-navigation/native';
 import ButtonStyle from "../buttonsStyle";
+import RegistryComboBox from "./RegistryComboBox";
+import companyController from "../../services/controllers/companyController.jsx"
+import countryController from "../../services/controllers/countryController"
 
 
 export default function BodyRegistry() {
     const navigation = useNavigation();
+    const [selectedCoun, setSelectedCoun] = useState([]);
+    const [selectedCom, setSelectedCom] = useState([]);
+
+    const { getAllCompanies } = companyController();
+    const [companies, setCompanies] = useState([]);
+
+    const { getAllCountries } = countryController();
+    const [countries, setCountries] = useState([]);
+
+    useEffect(() => {
+        getAllCompanies()
+            .then((data) => {
+                const response = JSON.stringify(data);
+                const parsedData = JSON.parse(response);
+                setCompanies(parsedData.companies[0]);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+    }, []);
+
+    useEffect(() => {
+        getAllCountries()
+            .then((data) => {
+                const response = JSON.stringify(data);
+                const parsedData = JSON.parse(response);
+                setCountries(parsedData.countries[0]);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+    }, []);
+
+    function handleSelectCoun(value) {
+        onChange("country", value)
+        setSelectedCoun(value);
+    };
+    function handleSelectCom(value) {
+        onChange("company", value)
+        setSelectedCom(value);
+    };
+
     const { onChange,
         saveData,
         loading } = userController();
+
+
+
+    // const companies = [
+    //     {
+    //         description: "Netlogistik",
+    //         id: 1
+    //     },
+    //     {
+    //         description: "ABB",
+    //         id: 2
+    //     },
+    //     {
+    //         description: "Alkosto",
+    //         id: 3
+    //     },
+    //     {
+    //         description: "Dinnet",
+    //         id: 4
+    //     }
+    // ]
+
     return (
 
         <View>
@@ -46,14 +115,9 @@ export default function BodyRegistry() {
             </View>
             <View style={styles.row}>
                 <Icon name='copyright' color={theme.colors.azulNet} size={22}></Icon>
-                <TextInput
-                    label="empresa"
-                    returnKeyType="next"
-                    placeholder="  Compañia*"
-                    keyboardType='default'
-                    style={[styles.input, styles.marginInput]}
-                    onChangeText={(value) => onChange("company", value)}
-                />
+                <RegistryComboBox data={companies} onSelect={(value) => {
+                    handleSelectCom(value)
+                }} />
             </View>
             <View style={styles.row}>
                 <Icon name='call' color={theme.colors.azulNet} size={22}></Icon>
@@ -80,9 +144,9 @@ export default function BodyRegistry() {
             </View>
             <View style={styles.row} >
                 <Icon name='emoji-flags' color={theme.colors.azulNet} size={22}></Icon>
-                <View style={[styles.input, styles.marginInput]}>
-                    {pickerOS()}
-                </View>
+                <RegistryComboBox data={countries} onSelect={(value) => {
+                    handleSelectCoun(value)
+                }} />
             </View>
             <View style={styles.row}>
                 <Icon name='lock' color='black' size={22}></Icon>
@@ -139,63 +203,45 @@ export default function BodyRegistry() {
     )
 }
 
-const paises = [
-    {
-        name: "Colombia",
-        id: "Col"
-    },
-    {
-        name: "Mexico",
-        id: "Mex"
-    },
-    {
-        name: "España",
-        id: "Esp"
-    },
-    {
-        name: "Estados Unidos",
-        id: "EEUU"
-    }
-]
 
-const pickerOS = Platform.select({
-    ios: () => {
-        return (
-            <ModalDropdown
-                onValueChange={(value) => console.log(value)}
-                defaultValue='Pais'
-                defaultTextStyle={[styles.picker]}
-                options={paises.map(n => (
-                    n.name
-                ))}
-                key={paises.map(n => (
-                    n.id
-                ))}
-                dropdownStyle={[styles.pickerIos, { width: Platform.OS === 'ios' ? "70%" : theme.width.input, height: "auto" }]}
-                textStyle={[styles.pickerIos]}
-                style={[styles.input, styles.pickerIos]} />
-        )
-    },
-    default: () => {
+// const pickerOS = Platform.select({
+//     ios: () => {
+//         return (
+//             <ModalDropdown
+//                 onValueChange={(value) => console.log(value)}
+//                 defaultValue='Pais'
+//                 defaultTextStyle={[styles.picker]}
+//                 options={paises.map(n => (
+//                     n.name
+//                 ))}
+//                 key={paises.map(n => (
+//                     n.id
+//                 ))}
+//                 dropdownStyle={[styles.pickerIos, { width: Platform.OS === 'ios' ? "70%" : theme.width.input, height: "auto" }]}
+//                 textStyle={[styles.pickerIos]}
+//                 style={[styles.input, styles.pickerIos]} />
+//         )
+//     },
+//     default: () => {
 
-        const [selectedCountry, setSelectedCountry] = useState();
+//         const [selectedCountry, setSelectedCountry] = useState();
 
-        return (
+//         return (
 
-            <Picker
-                selectedValue={selectedCountry}
-                onValueChange={setSelectedCountry}
-            >
-                <Picker.Item label="Pais" style={styles.picker} />
-                {paises.map(n => (
-                    <Picker.Item label={n.name} value={n.id} key={n.id} />
-                ))}
-            </Picker>
+//             <Picker
+//                 selectedValue={selectedCountry}
+//                 onValueChange={setSelectedCountry}
+//             >
+//                 <Picker.Item label="Pais" style={styles.picker} />
+//                 {paises.map(n => (
+//                     <Picker.Item label={n.name} value={n.id} key={n.id} />
+//                 ))}
+//             </Picker>
 
-        )
-    }
+//         )
+//     }
 
-});
+// });
 
 
 const styles = StyleSheet.create({

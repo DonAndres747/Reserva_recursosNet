@@ -11,6 +11,7 @@ import RecoverScreen from "../src/screens/RecoverScreen.jsx";
 import HomeScreen from "../src/screens/HomeScreen.jsx";
 import BookingScreen from "../src/screens/BookingScreen.jsx";
 import ComponentsScreen from "../src/screens/ComponentsScreen.jsx";
+import AvailabilityScreen from "../src/screens/AvailabilityScreen.jsx";
 
 const EmptyComponent = () => <View style={{ width: 0, height: 0 }} />;
 
@@ -74,6 +75,10 @@ const MainStack = () => {
                     <Stack.Screen
                         name='Components'
                         component={ComponentsScreen}
+                    />
+                    <Stack.Screen
+                        name='Disponibilidad'
+                        component={AvailabilityScreen}
                     />
                 </Stack.Group>
 

@@ -2,14 +2,14 @@ import React from "react";
 import { View, Text } from "react-native";
 import Logo from "../componentes/logo.jsx";
 import Footer from "../componentes/footer.jsx";
-import ComponentsBody from "../componentes/Components/ComponentsBody.jsx";
+import AvailabilityBody from "../componentes/Availability/AvailabilityBody.jsx";
 
-const ComponentsScreen = () => {
+const AvailabilityScreen = () => {
 
     return (
         <View style={{ flex: 1, alignItems: "center" }}>
-            <ComponentsBody />
-            <View style={{ alignItems: 'center', marginTop: "30%" }}>
+            <AvailabilityBody />
+            <View style={{ alignItems: 'center', marginTop: "15%" }}>
                 <Logo logoTyp='subLogo' />
                 <Footer margin='false' />
             </View>
@@ -17,4 +17,4 @@ const ComponentsScreen = () => {
     )
 }
 
-export default ComponentsScreen;
+export default AvailabilityScreen;

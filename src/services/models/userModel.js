@@ -1,7 +1,7 @@
 import db from "../../../config.json";
 
 class UserModel {
-  constructor(firstName, lastName, company, phone, email, password, password2) {
+  constructor(firstName, lastName, company, phone, email, password, password2, country) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.company = company;
@@ -9,6 +9,7 @@ class UserModel {
     this.email = email;
     this.password = password
     this.password2 = password2;
+    this.country = country;
   }
 
   async registerUser() {
@@ -19,13 +20,14 @@ class UserModel {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          company: this.company,
+          company_id: this.company,
           email: this.email,
           first_name: this.firstName,
           last_name: this.lastName,
           password: this.password,
           password2: this.password2,
           phone: this.phone,
+          country_id: this.country,
         }),
       });
       return response;

@@ -18,11 +18,13 @@ export default function userController() {
 
     const saveData = async () => {
         setLoading(true);
-        if (!userModelData.firstName || !userModelData.lastName || !userModelData.company || !userModelData.phone || !userModelData.email || !userModelData.password || !userModelData.password2) {
+        if (!userModelData.firstName || !userModelData.lastName || !userModelData.company || !userModelData.phone || !userModelData.email || !userModelData.password || !userModelData.password2 || !userModelData.country || userModelData.country == "select" || userModelData.company == "select") {
+            console.log(userModelData);
             Alert.alert("Por favor complete todos los campos obligatorios");
             setLoading(false);
         } else {
             try {
+                console.log(userModelData);
                 const userModel = new UserModel(
                     userModelData.firstName,
                     userModelData.lastName,
@@ -30,7 +32,8 @@ export default function userController() {
                     userModelData.phone,
                     userModelData.email,
                     userModelData.password,
-                    userModelData.password2
+                    userModelData.password2,
+                    userModelData.country
                 );
 
                 const response = await userModel.registerUser(userModelData);
@@ -70,7 +73,8 @@ export default function userController() {
                 userModelData.phone,
                 userModelData.email,
                 userModelData.password,
-                userModelData.password2
+                userModelData.password2,
+                userModelData.country
             );
 
             const response = await userModel.loginUser(userModelData);
