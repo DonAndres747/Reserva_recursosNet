@@ -1,8 +1,8 @@
-
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import React, { useState, useEffect } from "react";
+import { NavigationContainer, useNavigationContainerRef } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { View, Text } from 'react-native';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import MainScreen from "../src/screens/MainScreen.jsx";
 import LoginScreen from '../src/screens/loginScreen.jsx';
@@ -14,16 +14,57 @@ import ComponentsScreen from "../src/screens/ComponentsScreen.jsx";
 import AvailabilityScreen from "../src/screens/AvailabilityScreen.jsx";
 
 const EmptyComponent = () => <View style={{ width: 0, height: 0 }} />;
-
 const Stack = createNativeStackNavigator()
+AsyncStorage.clear()
 
-const MainStack = () => {
+export default function HomeSegments() {
+    const [userData, setUserData] = useState();
+    const navigationContainerRef = useNavigationContainerRef();
+    navigationContainerRef.addListener()
+
+    const [isDataLoaded, setIsDataLoaded] = useState(false);
+
+    const fetchDataFromAsyncStorage = async () => {
+        try {
+            const data = await AsyncStorage.getItem("result");
+            if (data) {
+                setUserData(JSON.parse(data))
+                setIsDataLoaded(true);
+                console.log(data);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchDataFromAsyncStorage();
+    }, []);
+
+    function formatName(firstName, lastName) {
+        const firstNameParts = firstName.split(' ');
+        const lastNameParts = lastName.split(' ');
+        const formatedfirstName = firstNameParts[0].charAt(0).toUpperCase() + firstNameParts[0].slice(1).toLowerCase();
+        const formattedLastName = lastNameParts[0].charAt(0).toUpperCase() + lastNameParts[0].slice(1).toLowerCase();
+        return `${formatedfirstName} ${formattedLastName}`
+    }
+
     return (
-        <NavigationContainer>
+        <NavigationContainer ref={navigationContainerRef}>
+
             <Stack.Navigator
+                screenListeners={{
+                    state: async (e) => {
+                        // console.log(typeof (e.data.state.routes[1]) == "undefined" ? "main" : e.data.state.routes[1].name);
+                        // setCurrent(typeof (e.data.state.routes[1]) == "undefined" ? "main" : e.data.state.routes[1].name);
+
+                        fetchDataFromAsyncStorage();
+                    }
+                }}
                 screenOptions={{
                     // headerShown:false
                 }}>
+
                 <Stack.Group
                     // screenOptions={{navigationOptions:{ headerLeft: null }, headerStyle: { backgroundColor: theme.colors.naranjaNet }, headerTitleStyle:{color:theme.colors.blanco}, headerTitleAlign: 'center'}} 
                     screenOptions={{ headerShown: false }}
@@ -31,10 +72,6 @@ const MainStack = () => {
                     <Stack.Screen
                         name='Main'
                         component={MainScreen}
-                    /*options={{
-                        title:'Reserva recursos',
-                        color:'white',
-                    }}*/
                     />
                     <Stack.Screen
                         name='Login'
@@ -50,10 +87,10 @@ const MainStack = () => {
                     />
                 </Stack.Group>
                 <Stack.Group
-                    screenOptions={({ route }) => ({
+                    screenOptions={() => ({
                         title: (
-                            route.params.name.charAt(0).toUpperCase() + route.params.name.slice(1).toLowerCase() + " " +
-                            route.params.lastName.charAt(0).toUpperCase() + route.params.lastName.slice(1).toLowerCase()
+                            isDataLoaded ? `${formatName(userData.first_name, userData.last_name)}`
+                                : "Cargando..."
                         ),
                         headerStyle: {
                             backgroundColor: '#f2f2f2'
@@ -61,7 +98,8 @@ const MainStack = () => {
                         headerShadowVisible: false,
                         headerLeft: () => Platform.OS === 'android' ? <EmptyComponent /> : null,
                         headerBackTitle: '',
-                        headerTintColor: "black"
+                        headerTintColor: "black",
+
                     })}
                 >
                     <Stack.Screen
@@ -87,5 +125,3 @@ const MainStack = () => {
     )
 }
 
-
-export default MainStack;

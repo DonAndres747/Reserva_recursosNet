@@ -16,7 +16,7 @@ export default function BodyLogin() {
     const { passwordVisibility, rightIcon, handlePasswordVisibility } = showPassword();
     const [password, setPassword] = useState('');
     const { onChange, userLogin, loading } = userController();
-    
+
 
     return (
         <View style={{ flex: 2, justifyContent: 'space-between' }}>
@@ -76,7 +76,7 @@ export default function BodyLogin() {
                     <Text>
                         New to Netlogistik?
                     </Text>
-                    <TouchableWithoutFeedback onPress={() => /*navigation.navigate('Registry') temporal*/navigation.navigate('Home', {name: "a",lastName: "a"})}>
+                    <TouchableWithoutFeedback onPress={() => [navigation.navigate('Registry')]}>
                         <Text style={styles.HiperLinks}>
                             Register
                         </Text>

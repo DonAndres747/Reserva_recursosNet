@@ -5,12 +5,12 @@ import { useNavigation } from '@react-navigation/native';
 
 
 
-export default function NavigationButton({ children, name, profile }) {
+export default function NavigationButton({ children, name }) {
     {
         const navigation = useNavigation();
         return (
 
-            <TouchableWithoutFeedback onPress={() => [navigation.navigate(name, { name: profile })]} >
+            <TouchableWithoutFeedback onPress={() => [navigation.navigate(name)]} >
                 <View >
                     <ButtonStyle container='container'>
                        {children}

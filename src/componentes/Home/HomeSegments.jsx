@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableWithoutFeedback } from "react-n
 import theme from "../../theme";
 import { useNavigation } from '@react-navigation/native';
 
-export default function HomeSegments({ circleV, tittle, segText, iconSrc, name, firstName, lastName }) {
+export default function HomeSegments({ circleV, tittle, segText, iconSrc, name }) {
 
     const navigation = useNavigation();
     const circle = [
@@ -12,7 +12,7 @@ export default function HomeSegments({ circleV, tittle, segText, iconSrc, name, 
     ]
 
     return (
-        <TouchableWithoutFeedback onPress={() => { [navigation.navigate(name, { name: firstName, lastName: lastName })]}}>
+        <TouchableWithoutFeedback onPress={() => { name == null ? console.log("Not route provided") : [navigation.navigate(name)] }}>
             <View style={[styles.container]}>
                 <View style={circle}>
                     <Image source={iconSrc} style={[styles.icon]} >

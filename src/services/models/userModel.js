@@ -1,15 +1,15 @@
 import db from "../../../config.json";
 
 class UserModel {
-  constructor(firstName, lastName, company, phone, email, password, password2, country) {
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.company = company;
+  constructor(first_name, last_name, company_id, phone, email, password, password2, country_id) {
+    this.first_name = first_name;
+    this.last_name = last_name;
+    this.company_id = company_id;
     this.phone = phone;
     this.email = email;
     this.password = password
     this.password2 = password2;
-    this.country = country;
+    this.country_id = country_id;
   }
 
   async registerUser() {
@@ -20,14 +20,14 @@ class UserModel {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          company_id: this.company,
+          company_id: this.company_id,
           email: this.email,
-          first_name: this.firstName,
-          last_name: this.lastName,
+          first_name: this.first_name,
+          last_name: this.last_name,
           password: this.password,
           password2: this.password2,
           phone: this.phone,
-          country_id: this.country,
+          country_id: this.country_id,
         }),
       });
       return response;

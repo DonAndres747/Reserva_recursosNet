@@ -52,11 +52,11 @@ export default function BodyRegistry() {
     }, []);
 
     function handleSelectCoun(value) {
-        onChange("country", value)
+        onChange("country_id", value)
         setSelectedCoun(value);
     };
     function handleSelectCom(value) {
-        onChange("company", value)
+        onChange("company_id", value)
         setSelectedCom(value);
     };
 
@@ -99,7 +99,7 @@ export default function BodyRegistry() {
                     placeholder="  Nombre"
                     keyboardType='default'
                     style={[styles.input, styles.marginInput]}
-                    onChangeText={(value) => onChange("firstName", value)}
+                    onChangeText={(value) => onChange("first_name", value)}
                 />
             </View>
             <View style={styles.row}>
@@ -110,7 +110,7 @@ export default function BodyRegistry() {
                     placeholder="  Apellido"
                     keyboardType='default'
                     style={[styles.input, styles.marginInput]}
-                    onChangeText={(value) => onChange("lastName", value)}
+                    onChangeText={(value) => onChange("last_name", value)}
                 />
             </View>
             <View style={styles.row}>
@@ -146,6 +146,7 @@ export default function BodyRegistry() {
                 <Icon name='emoji-flags' color={theme.colors.azulNet} size={22}></Icon>
                 <RegistryComboBox data={countries} onSelect={(value) => {
                     handleSelectCoun(value)
+
                 }} />
             </View>
             <View style={styles.row}>
@@ -202,46 +203,6 @@ export default function BodyRegistry() {
         </View>
     )
 }
-
-
-// const pickerOS = Platform.select({
-//     ios: () => {
-//         return (
-//             <ModalDropdown
-//                 onValueChange={(value) => console.log(value)}
-//                 defaultValue='Pais'
-//                 defaultTextStyle={[styles.picker]}
-//                 options={paises.map(n => (
-//                     n.name
-//                 ))}
-//                 key={paises.map(n => (
-//                     n.id
-//                 ))}
-//                 dropdownStyle={[styles.pickerIos, { width: Platform.OS === 'ios' ? "70%" : theme.width.input, height: "auto" }]}
-//                 textStyle={[styles.pickerIos]}
-//                 style={[styles.input, styles.pickerIos]} />
-//         )
-//     },
-//     default: () => {
-
-//         const [selectedCountry, setSelectedCountry] = useState();
-
-//         return (
-
-//             <Picker
-//                 selectedValue={selectedCountry}
-//                 onValueChange={setSelectedCountry}
-//             >
-//                 <Picker.Item label="Pais" style={styles.picker} />
-//                 {paises.map(n => (
-//                     <Picker.Item label={n.name} value={n.id} key={n.id} />
-//                 ))}
-//             </Picker>
-
-//         )
-//     }
-
-// });
 
 
 const styles = StyleSheet.create({
