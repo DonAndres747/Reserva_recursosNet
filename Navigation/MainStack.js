@@ -30,7 +30,6 @@ export default function HomeSegments() {
             if (data) {
                 setUserData(JSON.parse(data))
                 setIsDataLoaded(true);
-                console.log(data);
             }
         } catch (error) {
             console.error('Error:', error);

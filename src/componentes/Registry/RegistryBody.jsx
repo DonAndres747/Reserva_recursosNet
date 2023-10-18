@@ -3,14 +3,12 @@ import TittleStyle from "../tittlesStyle";
 import { View, TextInput, StyleSheet, Platform, Text, TouchableWithoutFeedback, Alert } from "react-native";
 import theme from "../../theme";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { Picker } from '@react-native-picker/picker';
-import ModalDropdown from 'react-native-modal-dropdown';
 import userController from "../../services/controllers/userController";
 import Footer from "../footer";
 import { useNavigation } from '@react-navigation/native';
 import ButtonStyle from "../buttonsStyle";
 import RegistryComboBox from "./RegistryComboBox";
-import companyController from "../../services/controllers/companyController.jsx"
+import companyController from "../../services/controllers/companyController"
 import countryController from "../../services/controllers/countryController"
 
 
@@ -18,6 +16,7 @@ export default function BodyRegistry() {
     const navigation = useNavigation();
     const [selectedCoun, setSelectedCoun] = useState([]);
     const [selectedCom, setSelectedCom] = useState([]);
+    const [newCompany, setNewCompany] = useState("none");
 
     const { getAllCompanies } = companyController();
     const [companies, setCompanies] = useState([]);
@@ -35,10 +34,6 @@ export default function BodyRegistry() {
             .catch((error) => {
                 console.error('Error:', error);
             });
-
-    }, []);
-
-    useEffect(() => {
         getAllCountries()
             .then((data) => {
                 const response = JSON.stringify(data);
@@ -49,6 +44,7 @@ export default function BodyRegistry() {
                 console.error('Error:', error);
             });
 
+
     }, []);
 
     function handleSelectCoun(value) {
@@ -58,32 +54,15 @@ export default function BodyRegistry() {
     function handleSelectCom(value) {
         onChange("company_id", value)
         setSelectedCom(value);
+        value == 9999 ? setNewCompany("flex") : setNewCompany("none");
     };
 
     const { onChange,
         saveData,
+        onNewClient,
         loading } = userController();
 
 
-
-    // const companies = [
-    //     {
-    //         description: "Netlogistik",
-    //         id: 1
-    //     },
-    //     {
-    //         description: "ABB",
-    //         id: 2
-    //     },
-    //     {
-    //         description: "Alkosto",
-    //         id: 3
-    //     },
-    //     {
-    //         description: "Dinnet",
-    //         id: 4
-    //     }
-    // ]
 
     return (
 
@@ -119,6 +98,19 @@ export default function BodyRegistry() {
                     handleSelectCom(value)
                 }} />
             </View>
+            <View style={[styles.row, { display: newCompany }]}>
+                <Icon name='copyright' color={theme.colors.azulNet} size={22}></Icon>
+                <TextInput
+                    label="newCompany"
+                    returnKeyType="next"
+                    placeholder="  Company Name*"
+                    keyboardType='default'
+                    style={[styles.input, styles.marginInput]}
+                    onChangeText={(value) => {
+                        onNewClient("company_name", value);
+                    }}
+                />
+            </View>
             <View style={styles.row}>
                 <Icon name='call' color={theme.colors.azulNet} size={22}></Icon>
                 <TextInput
@@ -139,14 +131,16 @@ export default function BodyRegistry() {
                     keyboardType='email-address'
                     autoCapitalize="none"
                     style={[styles.input, styles.marginInput]}
-                    onChangeText={(value) => onChange("email", value)}
+                    onChangeText={(value) => {
+                        onChange("email", value);
+                        onNewClient("user_email", value);
+                    }}
                 />
             </View>
             <View style={styles.row} >
                 <Icon name='emoji-flags' color={theme.colors.azulNet} size={22}></Icon>
                 <RegistryComboBox data={countries} onSelect={(value) => {
                     handleSelectCoun(value)
-
                 }} />
             </View>
             <View style={styles.row}>
@@ -178,7 +172,10 @@ export default function BodyRegistry() {
             <View style={{ alignItems: 'center', marginTop: 45 }}>
 
 
-                <TouchableWithoutFeedback onPress={saveData}>
+                <TouchableWithoutFeedback onPress={() => {
+                    const newC = (newCompany == "none" ? "false" : true);
+                    saveData(newC)
+                }}>
                     <View>
                         <ButtonStyle name='Home'>
                             <Text>
@@ -200,7 +197,7 @@ export default function BodyRegistry() {
                 </View>
                 <Footer />
             </View>
-        </View>
+        </View >
     )
 }
 

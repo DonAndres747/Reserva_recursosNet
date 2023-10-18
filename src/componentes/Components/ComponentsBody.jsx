@@ -17,7 +17,6 @@ function ComponentsBody() {
 
     function handleSelectSol(value) {
         setSelectedSol(value);
-        console.log(value);
     };
     function handleSelectCaract(value) {
         setCaracteristics(value);

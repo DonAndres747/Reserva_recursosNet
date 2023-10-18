@@ -7,7 +7,6 @@ import { Picker } from '@react-native-picker/picker';
 export default function ComponentCBSeg({ text, data, onSelect}) {
 
     function onChange(value) {
-        console.log('Valor seleccionado:', value);
         onSelect(value)
     }
 

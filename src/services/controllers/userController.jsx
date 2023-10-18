@@ -3,6 +3,7 @@ import { Alert } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import UserModel from "../models/userModel";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import newClientController from "./newClientController";
 
 export default function userController() {
     const navigation = useNavigation();
@@ -14,8 +15,9 @@ export default function userController() {
         setUserModelData({ ...userModelData, [field]: value });
     };
 
+    const { onNewClient, createNewClient } = newClientController();
 
-    const saveData = async () => {
+    const saveData = async (newClient) => {
         setLoading(true);
         if (!userModelData.first_name || !userModelData.last_name || !userModelData.company_id || !userModelData.phone || !userModelData.email || !userModelData.password || !userModelData.password2 || !userModelData.country_id || userModelData.country_id == "select" || userModelData.company_id == "select") {
             Alert.alert("Por favor complete todos los campos obligatorios");
@@ -42,9 +44,11 @@ export default function userController() {
                     delete userModelData.password2;
                     await AsyncStorage.setItem("token", result.result.message)
                     await AsyncStorage.setItem("result", JSON.stringify(userModelData))
-                    const a = await AsyncStorage.getItem("result");
-                    console.log("ahp:", JSON.parse(a));
-                    navigation.navigate('Home')
+
+                    newClient ? (
+                        createNewClient(),
+                        navigation.navigate('Home')
+                    ) : navigation.navigate('Home');
 
                 } else if (response.status === 500) {
                     Alert.alert(result.result.message);
@@ -98,5 +102,5 @@ export default function userController() {
     };
 
 
-    return { onChange, saveData, userLogin, loading };
+    return { onChange, saveData, userLogin, onNewClient, loading };
 };
