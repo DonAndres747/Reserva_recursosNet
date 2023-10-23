@@ -7,12 +7,14 @@ import AvailabilityTypSeg from "./AvailabilityTypSeg";
 import ButtonStyle from "../buttonsStyle";
 import solTypController from "../../services/controllers/solTypController"
 import recLevelController from "../../services/controllers/recLevelController"
+import resourceController from "../../services/controllers/resourceController";
 
 function AvailabilityBody() {
     const { getAllSolTypes } = solTypController();
     const [solTypes, setSolTypes] = useState([]);
     const { getAllRecLevels } = recLevelController();
     const [solRecLevels, setRecLevels] = useState([]);
+    const { getResourcesBySkill } = resourceController();
 
     const [caracteristics, setCaracteristics] = useState([]);
 
@@ -72,7 +74,7 @@ function AvailabilityBody() {
                 <AvailabilityTypSeg onChange={handleSelectCaract} />
             </View>
             <View style={styles.separator} />
-            <TouchableWithoutFeedback onPress={() => Alert.alert(selectedRec + " | " + selectedSol + " | " + caracteristics)}>
+            <TouchableWithoutFeedback onPress={() => getResourcesBySkill((selectedSol + "," + caracteristics), selectedRec)}>
                 <View style={{ marginTop: 8 }}>
                     <ButtonStyle view="action" >Buscar</ButtonStyle>
                 </View>
