@@ -2,9 +2,9 @@ import React from "react";
 import { View, StyleSheet, Text, TouchableWithoutFeedback, KeyboardAvoidingView } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import Footer from "../componentes/footer.jsx";
-import BodyLogin from "../componentes/Login/loginBody";
-import LoginIcon from "../componentes/Login/loginIcon";
-import theme from "../theme";
+import BodyLogin from "../componentes/Login/loginBody.jsx";
+import LoginIcon from "../componentes/Login/loginIcon.jsx";
+import theme from "../theme.js";
 import userController from "../services/controllers/userController.jsx";
 
 const LoginScreen = () => {

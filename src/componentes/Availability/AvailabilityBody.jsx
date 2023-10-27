@@ -1,20 +1,26 @@
 import { useState, useEffect } from "react";
 import { View, Text, TouchableWithoutFeedback, StyleSheet, Alert } from "react-native";
+import { useNavigation } from '@react-navigation/native';
 import { Dimensions } from 'react-native';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+
 import TittleStyle from "../tittlesStyle";
 import AvailabilityCBSeg from "./AvailabilityCBSeg";
 import AvailabilityTypSeg from "./AvailabilityTypSeg";
 import ButtonStyle from "../buttonsStyle";
-import solTypController from "../../services/controllers/solTypController"
-import recLevelController from "../../services/controllers/recLevelController"
-import resourceController from "../../services/controllers/resourceController";
+import solTypController from "../../services/controllers/solTypController";
+import recLevelController from "../../services/controllers/recLevelController"; 
 
 function AvailabilityBody() {
+
+    const navigation = useNavigation();
+ 
+
     const { getAllSolTypes } = solTypController();
     const [solTypes, setSolTypes] = useState([]);
     const { getAllRecLevels } = recLevelController();
     const [solRecLevels, setRecLevels] = useState([]);
-    const { getResourcesBySkill } = resourceController();
 
     const [caracteristics, setCaracteristics] = useState([]);
 
@@ -23,11 +29,9 @@ function AvailabilityBody() {
 
     function handleSelectSol(value) {
         setSelectedSol(value);
-        console.log(value);
     };
     function handleSelectRec(value) {
         setSelectedRec(value);
-        console.log(value);
     };
     function handleSelectCaract(value) {
         setCaracteristics(value);
@@ -74,7 +78,11 @@ function AvailabilityBody() {
                 <AvailabilityTypSeg onChange={handleSelectCaract} />
             </View>
             <View style={styles.separator} />
-            <TouchableWithoutFeedback onPress={() => getResourcesBySkill((selectedSol + "," + caracteristics), selectedRec)}>
+            <TouchableWithoutFeedback onPress={() => {
+                AsyncStorage.setItem("skills", (selectedSol + "," + caracteristics));
+                AsyncStorage.setItem("level", selectedRec); 
+                navigation.navigate("ResourceList");
+            }}>
                 <View style={{ marginTop: 8 }}>
                     <ButtonStyle view="action" >Buscar</ButtonStyle>
                 </View>

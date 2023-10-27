@@ -4,14 +4,18 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { View, Text } from 'react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+
+//pantallas
 import MainScreen from "../src/screens/MainScreen.jsx";
-import LoginScreen from '../src/screens/loginScreen.jsx';
+import LoginScreen from '../src/screens/LoginScreen.jsx';
 import RegistryScreen from "../src/screens/RegistryScreen.jsx";
 import RecoverScreen from "../src/screens/RecoverScreen.jsx";
 import HomeScreen from "../src/screens/HomeScreen.jsx";
 import BookingScreen from "../src/screens/BookingScreen.jsx";
 import ComponentsScreen from "../src/screens/ComponentsScreen.jsx";
 import AvailabilityScreen from "../src/screens/AvailabilityScreen.jsx";
+import ResourceListScreen from "../src/screens/ResourceListScreen.jsx";
+
 
 const EmptyComponent = () => <View style={{ width: 0, height: 0 }} />;
 const Stack = createNativeStackNavigator()
@@ -21,6 +25,7 @@ export default function HomeSegments() {
     const [userData, setUserData] = useState();
     const navigationContainerRef = useNavigationContainerRef();
     navigationContainerRef.addListener()
+
 
     const [isDataLoaded, setIsDataLoaded] = useState(false);
 
@@ -116,6 +121,13 @@ export default function HomeSegments() {
                     <Stack.Screen
                         name='Disponibilidad'
                         component={AvailabilityScreen}
+                    />
+                    <Stack.Screen
+                        name='ResourceList'
+                        component={ResourceListScreen}
+                    // options={({ route }) => (
+
+                    // )}
                     />
                 </Stack.Group>
 

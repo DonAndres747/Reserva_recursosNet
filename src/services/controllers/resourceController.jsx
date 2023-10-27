@@ -1,22 +1,20 @@
-import { useState } from "react";
-import { Alert } from "react-native";
+import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
 import ResourceModel from "../models/resourceModel.js";
 
+
 export default function resourceController() {
+
+
     const resourceModel = new ResourceModel();
     const [resourceModelData, setResourceModelData] = useState({ ...resourceModel });
 
-    const getResourcesBySkill = async (skills, level) => {
+    const onChange = (skills, level) => {
+        setResourceModelData({ ...resourceModelData, ["skills"]: skills, ["level"]: level });
+    };
+
+    const getResourcesBySkill = async () => {
         try {
-            console.log("skill: ", skills);
-            console.log("level: ", level);
-            setResourceModelData({
-                ...resourceModelData,
-                skills: skills,
-                level: level
-            });
 
             const resourceModel = new ResourceModel(
                 resourceModelData.user_id,
@@ -27,12 +25,10 @@ export default function resourceController() {
                 resourceModelData.skills
             );
 
-            console.log(resourceModelData);
-
             const token = await AsyncStorage.getItem("token");
             const response = await resourceModel.getResourcesBySkill(token, resourceModelData);
             const result = await response.json();
-            console.log(result);
+
             return result;
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -40,5 +36,5 @@ export default function resourceController() {
         }
     };
 
-    return { getResourcesBySkill };
+    return { getResourcesBySkill, onChange, setResourceModelData, resourceModelData };
 }
