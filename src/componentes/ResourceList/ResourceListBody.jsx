@@ -3,14 +3,14 @@ import { View, Text, TouchableWithoutFeedback, StyleSheet, Alert, Dimensions } f
 
 import TittleStyle from "../tittlesStyle";
 
-import ResourceCard from "./ResoceCard";
+import ResourceCard from "./ResourceCard";
 import theme from "../../theme";
 import ButtonStyle from "../buttonsStyle";
 
 function ResourceListBody() {
 
     return (
-        <View style={styles.container}>
+        <View style={styles.container}>     
             <TittleStyle text="subtittle" fontColor='blue' fontWeight="bold">
                 La disponibilidad ha sido confirmada{"   "}
             </TittleStyle>
