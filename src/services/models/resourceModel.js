@@ -29,6 +29,27 @@ class ResourceModel {
         }
     }
 
+    async bookResource(token, bookingData) {
+        try {
+            const response = await fetch(`http://${db.database.host}:${db.database.port}/bookResource/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `${token}`
+                },
+                body: JSON.stringify({
+                    bookingData,
+                }),
+            }); 
+            
+            return response;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+
+
 }
 
 
