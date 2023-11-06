@@ -1,13 +1,14 @@
 import db from "../../../config.json";
 
 class ResourceModel {
-    constructor(user_id, first_name, last_name, level, description, skills) {
+    constructor(user_id, first_name, last_name, level, description, skills, boodDays) {
         this.user_id = user_id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.level = level;
         this.description = description;
         this.skills = skills;
+        this.bookDays = boodDays;
     }
 
     async getResourcesBySkill(token) {
@@ -40,15 +41,32 @@ class ResourceModel {
                 body: JSON.stringify({
                     bookingData,
                 }),
-            }); 
-            
+            });
+
             return response;
         } catch (error) {
             throw error;
         }
     }
 
-
+    async getResourceBookDays(token) {
+        try {
+            const response = await fetch(`http://${db.database.host}:${db.database.port}/resourcesBookedDays/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `${token}`
+                },
+                body: JSON.stringify({
+                    rsce_id: this.user_id
+                }),
+            });
+            
+            return response;
+        } catch (error) {
+            throw error;
+        }
+    }
 
 }
 

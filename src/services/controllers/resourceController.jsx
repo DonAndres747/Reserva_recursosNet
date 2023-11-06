@@ -36,14 +36,35 @@ export default function resourceController() {
         }
     };
 
+    const getResourceBookDays = async (resource) => {
+        try {
+            const resourceModel = new ResourceModel(
+                resource.user_id,
+                resource.first_name,
+                resource.last_name,
+                resource.description
+            );
+
+            const token = await AsyncStorage.getItem("token");
+            const response = await resourceModel.getResourceBookDays(token, resource);
+            const result = await response.json();
+
+            return (result.result.data);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+            return error
+        }
+    };
+
     const bookResource = async (resource, selectedRecs) => {
         try {
             const user = JSON.parse(await AsyncStorage.getItem("result"));
             const skills = await AsyncStorage.getItem("skills");
-            let temp = (Array(selectedRecs.length).fill(""))
+            let temp = (Array(selectedRecs.length).fill(""));
             selectedRecs.map((items, index) => {
                 temp[index] = JSON.parse(`{"end": "${items.end}", "rsce_id": "${items.rsce_id}", "start": "${items.start}", "user_id":"${user.id}", "selected_skills":"${skills}"}`)
-            }) 
+            });
+
             const token = await AsyncStorage.getItem("token");
             const response = await resourceModel.bookResource(token, temp);
             const result = await response.json();
@@ -90,7 +111,7 @@ export default function resourceController() {
                     ]);
                     break;
 
-                default: 
+                default:
                     break;
             }
 
@@ -98,7 +119,7 @@ export default function resourceController() {
 
             if (result.failedResults) {
                 const failedResourceNames = result.failedResults.map((res) => {
-                    const matchingResource = resource.find(rec => res.resource_id == rec.resource_id);
+                    const matchingResource = resource.find(rec => res.user_id == rec.resource_id);
                     if (matchingResource) {
                         return matchingResource.first_name + ' ' + matchingResource.last_name;
                     }
@@ -123,6 +144,5 @@ export default function resourceController() {
         }
     }
 
-
-    return { getResourcesBySkill, onChange, setResourceModelData, bookResource, resourceModelData };
+    return { getResourcesBySkill, onChange, setResourceModelData, bookResource, getResourceBookDays, resourceModelData };
 }

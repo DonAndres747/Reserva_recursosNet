@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { View, Text, TouchableWithoutFeedback, StyleSheet, Alert, Dimensions, ScrollView, Image, Modal } from "react-native";
 import { Calendar } from 'react-native-calendars';
 
+import resourceController from "../../services/controllers/resourceController";
+
+
 import ButtonStyle from "../buttonsStyle";
 import theme from "../../theme";
 
@@ -11,8 +14,11 @@ function ResourceCard({ onSelect, data }) {
     const [dataG, seDataG] = useState(true);
     const [calendars, setCalendars] = useState([]);
     const [resourceDates, setResouceDates] = useState([]);
+    const [bookDates, setBookDates] = useState([]);
     const currentDate = new Date();
     currentDate.setDate(currentDate.getDate() + 5);
+
+    const { getResourceBookDays } = resourceController();
 
 
     useEffect(() => {
@@ -26,6 +32,12 @@ function ResourceCard({ onSelect, data }) {
 
     }, [data])
 
+    const toggleItem = (index) => {
+        const updatedSelectedItems = [...calendars];
+        updatedSelectedItems[index] = !updatedSelectedItems[index];
+        setCalendars(updatedSelectedItems);
+        return updatedSelectedItems;
+    };
 
     const saveDates = (index) => {
         if (resourceDates[index].start == "false") {
@@ -50,13 +62,6 @@ function ResourceCard({ onSelect, data }) {
         toggleItem(index)
     }
 
-    const toggleItem = (index) => {
-        const updatedSelectedItems = [...calendars];
-        updatedSelectedItems[index] = !updatedSelectedItems[index];
-        setCalendars(updatedSelectedItems);
-        return updatedSelectedItems;
-    };
-
 
     const selectDates = (index, date, resource_id) => {
         const udpateDates = [...resourceDates];
@@ -71,10 +76,28 @@ function ResourceCard({ onSelect, data }) {
         setResouceDates(udpateDates);
     }
 
+    const getBookDays = async (index) => {
+        setBookDates()
+        let days = await getResourceBookDays(resources[index])
+        const bookDates = {};
+
+        days.forEach((date) => {
+            const startDate = new Date(date.start);
+            const endDate = new Date(date.end);
+
+            for (let currentDate = startDate; currentDate <= endDate; currentDate.setDate(currentDate.getDate() + 1)) {
+                const dateString = currentDate.toISOString().split('T')[0];
+                bookDates[dateString] = { selected: true, disableTouchEvent: true, selectedTextColor: "#cf010b", selectedColor: "white" };
+            }
+        });
+
+        setBookDates(bookDates);
+    }
+
     const card = () => {
         try {
             return resources.map((element, index) => (
-                < View key={element.resource_id} style={styles.card} >
+                < View key={element.user_id} style={styles.card} >
                     <Image source={require('../../assets/profile.png')} style={styles.pict} />
                     <Text style={styles.resourceName}>
                         {element.first_name}
@@ -87,7 +110,10 @@ function ResourceCard({ onSelect, data }) {
                     <Text style={styles.resourceDescription}>
                         {element.description}
                     </Text>
-                    <TouchableWithoutFeedback onPress={() => toggleItem(index)}>
+                    <TouchableWithoutFeedback onPress={() => {
+                        toggleItem(index);
+                        getBookDays(index);
+                    }}>
                         <View  >
                             <ButtonStyle>Agregar</ButtonStyle>
                         </View>
@@ -108,12 +134,13 @@ function ResourceCard({ onSelect, data }) {
                                     minDate={currentDate.toISOString().split('T')[0]}
                                     // markingType="period"
                                     theme={{
-                                        monthTextColor: theme.colors.naranjaNet,
+                                        monthTextColor: theme.colors.naranjaNet
+
                                     }}
                                     disableAllTouchEventsForDisabledDays={true}
-                                    onDayPress={(date) => selectDates(index, date.dateString, element.resource_id)}
+                                    onDayPress={(date) => (selectDates(index, date.dateString, element.user_id))}
                                     markedDates={{
-                                        ...unavailableDates,
+                                        ...bookDates,
                                         ...(resourceDates[index] ? {
                                             [resourceDates[index].start]: { selected: true, selectedColor: theme.colors.naranjaNet },
                                             [resourceDates[index].end]: { selected: true, selectedColor: theme.colors.naranjaNet }
@@ -253,6 +280,6 @@ const styles = StyleSheet.create({
 export default ResourceCard;
 
 
-const unavailableDates = {
-    '2023-11-18': { disabled: true, disableTouchEvent: true },
-};
+// const unavailableDates = {
+//     '2023-11-18': { disabled: true, disableTouchEvent: true },
+// };

@@ -13,7 +13,10 @@ function ResourceListBody() {
     const [selectedRecs, setSelectedRecs] = useState([]);
     const [reCharge, setRecharge] = useState(true);
     const [resources, setResources] = useState();
-    const { onChange, getResourcesBySkill, bookResource } = resourceController();
+
+    const { onChange,
+        getResourcesBySkill,
+        bookResource } = resourceController();
 
     useEffect(() => {
 
@@ -52,12 +55,15 @@ function ResourceListBody() {
     };
 
 
+
+
     const saveData = async () => {
-        let resource = (Array(selectedRecs.length).fill())
+        let resource = (Array(selectedRecs.length).fill());
         selectedRecs.map((rec, index) => {
-            resource[index] = (resources.filter(resource => resource.resource_id == rec.rsce_id)[0]);
+            resource[index] = (resources.filter(resource => resource.user_id == rec.rsce_id)[0]);
+            console.log(resources.filter(resource => resource.user_id == rec.rsce_id)[0])
         })
-        
+
         bookResource(resource, selectedRecs);
     }
 
