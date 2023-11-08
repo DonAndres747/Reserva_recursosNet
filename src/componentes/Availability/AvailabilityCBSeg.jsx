@@ -6,8 +6,7 @@ import { Picker } from '@react-native-picker/picker';
 
 export default function AvailabilityCBSeg({ text, data, onSelect}) {
 
-    function onChange(value) {
-        console.log('Valor seleccionado:', value);
+    function onChange(value) { 
         onSelect(value)
     }
 
