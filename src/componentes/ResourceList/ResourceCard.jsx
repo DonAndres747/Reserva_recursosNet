@@ -27,6 +27,7 @@ function ResourceCard({ onSelect, data }) {
             setResources(data);
             setCalendars(Array(data.length).fill(false));
             setResouceDates(Array(data.length).fill(JSON.parse(`{"rsce_id":"false", "start":"false", "end":"false"}`)));
+            setSelectedDateRange(Array(data.length).fill(''));
             (typeof (data)) ? seDataG(false) : ""
         } catch (error) {
         }
@@ -60,7 +61,9 @@ function ResourceCard({ onSelect, data }) {
         udpatedDates[index] = JSON.parse(`{"rsce_id":"false", "start":"false", "end":"false"}`)
         setResouceDates(udpatedDates);
         onSelect((udpatedDates.filter(item => item.rsce_id !== "false")))
-        setSelectedDateRange([])
+        const dateRanges = [...selectedDateRange];
+        dateRanges[index] = ('');
+        setSelectedDateRange(dateRanges);
         toggleItem(index);
     }
 
@@ -79,13 +82,13 @@ function ResourceCard({ onSelect, data }) {
 
 
         const selectedDates = {};
-
+        let newDates = '';
         if (udpatedDates[index].end != 'false') {
 
             for (let currentDate = new Date(udpatedDates[index].start); currentDate <= new Date(udpatedDates[index].end); currentDate.setDate(currentDate.getDate() + 1)) {
                 const dateString = currentDate.toISOString().split('T')[0];
 
-                let a = Object.keys(bookDates).filter(item => item == currentDate.toISOString().split('T')[0])
+                const a = Object.keys(bookDates).filter(item => item == currentDate.toISOString().split('T')[0])
 
                 if (a != "") {
                     const prevDate = currentDate
@@ -104,7 +107,6 @@ function ResourceCard({ onSelect, data }) {
 
                     prevDate.setDate(prevDate.getDate() + 1)
                 } else {
-                    console.log(currentDate);
 
                     const prexDate = currentDate
                     const prex = (new Date(prexDate.setDate(prexDate.getDate() - 1)).toISOString().split('T')[0])
@@ -133,6 +135,60 @@ function ResourceCard({ onSelect, data }) {
                 }
 
             }
+
+            const b = Object.entries(selectedDates).filter(([key, value]) => !value.disableTouchEvent)
+            const c = Object.entries(selectedDates).filter(([key, value]) => value.disableTouchEvent)
+
+            if (c.length >= 1) {
+                const rangos = [];
+                let rangoActual = [];
+                let fechaAnterior = null;
+
+                for (const fecha of b.map(([key, value]) => key)) {
+
+                    if (!fechaAnterior) {
+                        rangoActual.push(fecha);
+                    } else {
+                        const fechaActual = new Date(fecha);
+                        const fechaAnteriorDate = new Date(fechaAnterior);
+
+                        const diferenciaDias = (fechaActual - fechaAnteriorDate) / (1000 * 60 * 60 * 24);
+
+                        if (diferenciaDias <= 1) {
+                            rangoActual.push(fecha);
+                        } else {
+                            rangos.push(rangoActual);
+                            rangoActual = [fecha];
+                        }
+                    }
+
+                    fechaAnterior = fecha;
+                }
+
+                if (rangoActual.length > 0) {
+                    rangos.push(rangoActual);
+                }
+
+                rangos.map(rango => {
+                    const fechasObjeto = rango.map(fecha => new Date(fecha));
+
+                    const fechaMaxima = new Date(Math.max.apply(null, fechasObjeto)).toISOString().split('T')[0];
+                    const fechaMinima = new Date(Math.min.apply(null, fechasObjeto)).toISOString().split('T')[0];
+
+                    // console.log("Min: ", fechaMinima, "Max", fechaMaxima);
+                    newDates += `{"rsce_id":"${resource_id}", "start":"${fechaMinima}", "end":"${fechaMaxima}"}+`
+                })
+                newDates = newDates.split("+")
+                newDates.pop()
+                newDates = newDates.map((dates) => {
+                    return (JSON.parse(dates));
+                })
+
+                //  udpatedDates[index] = newDates
+            }
+
+
+
         } else if (udpatedDates[index].start != 'false') {
             selectedDates[udpatedDates[index].start] = {
                 selected: true,
@@ -140,74 +196,13 @@ function ResourceCard({ onSelect, data }) {
                 startingDay: true,
                 endingDay: true,
             };
-
-
         }
 
+        udpatedDates[index] = (newDates ? newDates : udpatedDates[index]);
 
-
-
-        /*if (udpatedDates[index].end != 'false') {
- 
-            let omitDates;
-            omitDates = (Object.keys(bookDates).map((omitDate) => {
-                return (omitDate >= udpatedDates[index].start && omitDate <= udpatedDates[index].end) ? omitDate : "";
-            }).filter((valor) => valor !== ''));
- 
-            omitDates = omitDates.map((omitDate) => {
-                selectedDates[omitDate] = { selected: true, disableTouchEvent: true, textColor: "#cf010b", color: "white" };
-                return new Date(omitDate)
-            });
- 
-            if (omitDates.length > 0) {
- 
-                const a = (Object.entries(selectedDates).map(([key, a]) => {
-                    // console.log(a.disableTouchEvent);
-                   console.log(new Date(key));
-                    return !a.disableTouchEvent ? (key) : "";
-                }))
-                // .filter((value) => value !== '');
- 
-                // const b = [[]]
-                // a.map((a, index) => {
-                //     // console.log(new Date(a).getDate())
-                //     console.log(a)
-                // })
- 
-                console.log(a);
- 
-                for (let index = new Date(Math.min(...a)); index < new Date(Math.max(...a)); currentDate.setDate(currentDate.getDate() + 1)) {
-                    console.log(index);
-                    console.log(a[index]);
-                }
- 
-                // const minDate = new Date(Math.min(...omitDates) - 1).toISOString().split('T')[0];
-                // const maxDate = new Date(Math.max(...omitDates))
-                // maxDate.setDate(maxDate.getDate() + 1)
- 
-                // selectedDates[minDate] = {
-                //     selected: true,
-                //     color: theme.colors.naranjaNet,
-                //     startingDay: minDate == udpatedDates[index].start,
-                //     endingDay: true,c
-                // };
-                // selectedDates[maxDate.toISOString().split('T')[0]] = {
-                //     selected: true,
-                //     color: theme.colors.naranjaNet,
-                //     startingDay: true,
-                //     endingDay: maxDate.toISOString().split('T')[0] == udpatedDates[index].end
-                // };
- 
- 
- 
-            }
- 
- 
-        }*/
-
-
-
-        setSelectedDateRange(selectedDates);
+        const dateRanges = [...selectedDateRange];
+        dateRanges[index] = (selectedDates);
+        setSelectedDateRange(dateRanges);
     }
 
     const getBookDays = async (index) => {
@@ -275,7 +270,7 @@ function ResourceCard({ onSelect, data }) {
                                     markingType="period"
                                     markedDates={{
                                         ...bookDates,
-                                        ...selectedDateRange
+                                        ...selectedDateRange[index]
                                     }}
 
                                 />

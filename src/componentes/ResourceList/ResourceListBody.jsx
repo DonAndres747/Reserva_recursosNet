@@ -54,17 +54,24 @@ function ResourceListBody() {
         setSelectedRecs(items)
     };
 
-
-
-
     const saveData = async () => {
-        let resource = (Array(selectedRecs.length).fill());
-        selectedRecs.map((rec, index) => {
-            resource[index] = (resources.filter(resource => resource.user_id == rec.rsce_id)[0]);
-            console.log(resources.filter(resource => resource.user_id == rec.rsce_id)[0])
+        let formatedRecs = []
+        selectedRecs.map((rec) => {
+            if (rec[0]) {
+                rec.map((rec2) => {
+                    formatedRecs.push(rec2);
+                })
+            } else {
+                formatedRecs.push(rec)
+            }
         })
 
-        bookResource(resource, selectedRecs);
+        let resource = (Array(formatedRecs.length).fill());
+        formatedRecs.map((rec, index) => {
+            resource[index] = (resources.filter(resource => resource.user_id == rec.rsce_id)[0]);
+        })
+
+        bookResource(resource, formatedRecs);
     }
 
     return (
