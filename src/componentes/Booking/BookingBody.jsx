@@ -10,16 +10,23 @@ import BookingDatesSeg from "./BookingDatesSeg";
 import BookingComplete from "./BookingComplete";
 import ButtonStyle from "../buttonsStyle";
 
+import applicationController from "../../services/controllers/applicationController";
 
 const emptySpace = `
 `
 
 const BookingBody = () => {
     const [selectedSols, setselectedSols] = useState();
-    const [requesitionData, setRequsitionData] = useState([])
+    const [requesitionData, setRequesitionData] = useState([])
     const [selectedLevels, setSelectedLevels] = useState('|');
     const [selectedDates, setSelectedDates] = useState();
     const [complete, setComplete] = useState(false);
+
+    const { bookApplications, load } = applicationController();
+
+    useEffect(() => {
+        setComplete(load)
+    }, [load])
 
     const handleselectedSols = (items) => {
         setselectedSols(items)
@@ -34,24 +41,31 @@ const BookingBody = () => {
         setComplete(!complete)
         return !complete
     };
+
+    const handleBooking = async () => {
+        const result = await bookApplications(requesitionData)
+        console.log("result: ", result);
+        (result != 500) ? (setComplete(false) + setTimeout(() => {
+            setRequesitionData(result)
+        }, 300)) : "";
+    }
+
     const addRequest = () => {
         if (selectedSols && selectedLevels.split('|')[0] && selectedLevels.split('|')[1] && selectedDates) {
             const temp = [...requesitionData];
 
-            const date = `"start": "${selectedDates.split(',')[0]}", "end": "${selectedDates.split(',')[1]}"`
             const formatedReq = JSON.parse(`
-              {
-                "sols": "${selectedSols}",
-                "serv": "${selectedLevels.split('|')[1]}",
-                "level": "${selectedLevels.split('|')[0]}",
-                "dates": {
-                  ${date}
-                }
-              }`);
+            {
+              "solTyp": "${selectedSols}",
+              "servTyp": "${selectedLevels.split('|')[1]}",
+              "recLvl": "${selectedLevels.split('|')[0]}",
+              "start": "${selectedDates.split(',')[0]}", 
+              "end": "${selectedDates.split(',')[1]}"
+            }`)
 
             temp.push(formatedReq);
 
-            setRequsitionData(temp);
+            setRequesitionData(temp);
             setselectedSols();
             setSelectedLevels('|');
             setSelectedDates();
@@ -64,19 +78,17 @@ const BookingBody = () => {
         if (selectedSols && selectedLevels.split('|')[0] && selectedLevels.split('|')[1] && selectedDates) {
             const temp = [...requesitionData];
 
-            const date = `"start": "${selectedDates.split(',')[0]}", "end": "${selectedDates.split(',')[1]}"`
             const formatedReq = JSON.parse(`
-              {
-                "sols": "${selectedSols}",
-                "serv": "${selectedLevels.split('|')[1]}",
-                "level": "${selectedLevels.split('|')[0]}",
-                "dates": {
-                  ${date}
-                }
-              }`);
+            {
+              "solTyp": "${selectedSols}",
+              "servTyp": "${selectedLevels.split('|')[1]}",
+              "recLvl": "${selectedLevels.split('|')[0]}",
+              "start": "${selectedDates.split(',')[0]}", 
+              "end": "${selectedDates.split(',')[1]}"
+            }`)
 
             temp.push(formatedReq);
-            setRequsitionData(temp);
+            setRequesitionData(temp);
             setselectedSols();
             setSelectedLevels('|');
             setSelectedDates();
@@ -140,7 +152,12 @@ const BookingBody = () => {
             </View>
 
 
-            <BookingComplete open={handleComplete} show={complete} data={requesitionData} onRemove={setRequsitionData} />
+            <BookingComplete
+                open={handleComplete}
+                show={complete}
+                data={requesitionData}
+                onRemove={setRequesitionData}
+                onComplete={handleBooking} />
         </View >
     )
 }

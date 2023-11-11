@@ -5,18 +5,19 @@ import theme from "../../theme";
 import TittleStyle from "../tittlesStyle";
 
 
-export default function BookingComplete({ data, open, show, onRemove }) {
+export default function BookingComplete({ data, open, show, onRemove, onComplete }) {
     const [dataR, setDataR] = useState(data);
 
     useEffect(() => {
         setDataR(data)
+
     }, [show])
 
     const remove = (index) => {
         const newData = [...dataR]
         newData.splice(index, 1);
         setDataR(newData);
-        onRemove(newData); 
+        onRemove(newData);
         newData.length < 1 ? open() : "";
     }
 
@@ -54,17 +55,17 @@ export default function BookingComplete({ data, open, show, onRemove }) {
                         {dataR.map((req, index) => (
                             < View key={index} style={styles.tableRows} >
                                 <View style={[styles.tableCell, index % 2 === 0 ? styles.tableCellEven : styles.tableCellOdd, index == (data.length - 1) ? { borderBottomLeftRadius: 5 } : ""]}>
-                                    <Text>{req.sols}</Text>
+                                    <Text>{req.solTyp}</Text>
                                 </View>
                                 <View style={[styles.tableCell, index % 2 === 0 ? styles.tableCellEven : styles.tableCellOdd]}>
-                                    <Text>{req.serv}</Text>
+                                    <Text>{req.servTyp}</Text>
                                 </View>
                                 <View style={[styles.tableCell, index % 2 === 0 ? styles.tableCellEven : styles.tableCellOdd]}>
-                                    <Text>{req.level}</Text>
+                                    <Text>{req.recLvl}</Text>
                                 </View>
                                 <View style={[styles.tableCell, index % 2 === 0 ? styles.tableCellEven : styles.tableCellOdd, { width: "21%" }]}>
-                                    <Text>{req.dates.start}</Text>
-                                    <Text>{req.dates.end}</Text>
+                                    <Text>{req.start}</Text>
+                                    <Text>{req.end}</Text>
                                 </View>
                                 <View style={[styles.tableCell, index % 2 === 0 ? styles.tableCellEven : styles.tableCellOdd, index == (dataR.length - 1) ? { borderBottomRightRadius: 5 } : ""]}>
                                     <TouchableWithoutFeedback onPress={() => remove(index)}>
@@ -81,7 +82,7 @@ export default function BookingComplete({ data, open, show, onRemove }) {
                                     <Text style={styles.bottomButtonText}>Continuar</Text>
                                 </View>
                             </TouchableWithoutFeedback>
-                            <TouchableWithoutFeedback onPress={() => console.log(dataR)}>
+                            <TouchableWithoutFeedback onPress={() => onComplete()}>
                                 <View style={styles.bottomButton}>
                                     <Text style={styles.bottomButtonText}>Completar</Text>
                                 </View>
