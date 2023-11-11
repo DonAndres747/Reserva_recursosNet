@@ -1,17 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, TouchableWithoutFeedback, StyleSheet, ScrollView } from "react-native";
 import theme from "../../theme";
 
 
-export default function BookingList({ data, onSelectedItemsChange }) {
+export default function BookingList({ data, onSelectedItemsChange, single, reload }) {
     const [selectedItems, setSelectedItems] = useState(Array(data.length).fill(false));
     const [selectedItemsStr, setSelectedItemsStr] = useState("");
-     
+
+    useEffect(() => {
+        setSelectedItems(Array(data.length).fill(false));
+        setSelectedItemsStr("")
+    }, [reload])
 
 
     const toggleItem = (index) => {
-        const updatedSelectedItems = [...selectedItems];
-        updatedSelectedItems[index] = !updatedSelectedItems[index];
+        let updatedSelectedItems = [...selectedItems];
+        const temp = !updatedSelectedItems[index]
+        single ? updatedSelectedItems = Array(updatedSelectedItems.length).fill(false) : "";
+        updatedSelectedItems[index] = temp;
         setSelectedItems(updatedSelectedItems);
         return updatedSelectedItems;
     };
@@ -24,7 +30,7 @@ export default function BookingList({ data, onSelectedItemsChange }) {
 
         updatedSelectedItems.forEach((selectedItem, index) => {
             if (selectedItem) {
-                selectedItemsList.push(data[index].id); 
+                selectedItemsList.push(data[index].id);
             }
         });
 

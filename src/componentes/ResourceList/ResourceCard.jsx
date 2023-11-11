@@ -174,8 +174,7 @@ function ResourceCard({ onSelect, data }) {
 
                     const fechaMaxima = new Date(Math.max.apply(null, fechasObjeto)).toISOString().split('T')[0];
                     const fechaMinima = new Date(Math.min.apply(null, fechasObjeto)).toISOString().split('T')[0];
-
-                    // console.log("Min: ", fechaMinima, "Max", fechaMaxima);
+ 
                     newDates += `{"rsce_id":"${resource_id}", "start":"${fechaMinima}", "end":"${fechaMaxima}"}+`
                 })
                 newDates = newDates.split("+")
@@ -183,8 +182,7 @@ function ResourceCard({ onSelect, data }) {
                 newDates = newDates.map((dates) => {
                     return (JSON.parse(dates));
                 })
-
-                //  udpatedDates[index] = newDates
+                
             }
 
 

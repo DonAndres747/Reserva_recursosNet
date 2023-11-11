@@ -2,19 +2,24 @@ import { useState, useEffect } from "react";
 import { View, Text, TouchableWithoutFeedback, StyleSheet, Alert } from "react-native";
 import theme from "../../theme";
 import { Dimensions } from 'react-native';
+
 import BookingSolSeg from "./BookingSolSeg";
 import BookingTextSeg from "./BookingTextSeg";
 import BookingSerTypSeg from "./BookingSerTypSeg";
 import BookingDatesSeg from "./BookingDatesSeg";
+import BookingComplete from "./BookingComplete";
 import ButtonStyle from "../buttonsStyle";
+
 
 const emptySpace = `
 `
 
 const BookingBody = () => {
-    const [selectedSols, setselectedSols] = useState([]);
-    const [selectedLevels, setSelectedLevels] = useState([]);
-    const [selectedDates, setSelectedDates] = useState([]);
+    const [selectedSols, setselectedSols] = useState();
+    const [requesitionData, setRequsitionData] = useState([])
+    const [selectedLevels, setSelectedLevels] = useState('|');
+    const [selectedDates, setSelectedDates] = useState();
+    const [complete, setComplete] = useState(false);
 
     const handleselectedSols = (items) => {
         setselectedSols(items)
@@ -25,6 +30,67 @@ const BookingBody = () => {
     const handleselectedDates = (items) => {
         setSelectedDates(items)
     };
+    const handleComplete = () => {
+        setComplete(!complete)
+        return !complete
+    };
+    const addRequest = () => {
+        if (selectedSols && selectedLevels.split('|')[0] && selectedLevels.split('|')[1] && selectedDates) {
+            const temp = [...requesitionData];
+
+            const date = `"start": "${selectedDates.split(',')[0]}", "end": "${selectedDates.split(',')[1]}"`
+            const formatedReq = JSON.parse(`
+              {
+                "sols": "${selectedSols}",
+                "serv": "${selectedLevels.split('|')[1]}",
+                "level": "${selectedLevels.split('|')[0]}",
+                "dates": {
+                  ${date}
+                }
+              }`);
+
+            temp.push(formatedReq);
+
+            setRequsitionData(temp);
+            setselectedSols();
+            setSelectedLevels('|');
+            setSelectedDates();
+        } else {
+            Alert.alert("por favor seleccione tipo de solucion, tipo de servicio, nivel de recurso y un rango de fechas ")
+        }
+    }
+
+    const sendRequest = () => {
+        if (selectedSols && selectedLevels.split('|')[0] && selectedLevels.split('|')[1] && selectedDates) {
+            const temp = [...requesitionData];
+
+            const date = `"start": "${selectedDates.split(',')[0]}", "end": "${selectedDates.split(',')[1]}"`
+            const formatedReq = JSON.parse(`
+              {
+                "sols": "${selectedSols}",
+                "serv": "${selectedLevels.split('|')[1]}",
+                "level": "${selectedLevels.split('|')[0]}",
+                "dates": {
+                  ${date}
+                }
+              }`);
+
+            temp.push(formatedReq);
+            setRequsitionData(temp);
+            setselectedSols();
+            setSelectedLevels('|');
+            setSelectedDates();
+            handleComplete();
+
+        } else {
+            if (requesitionData.length >= 1) {
+                handleComplete();
+            } else {
+                Alert.alert("por favor dilingencia la solicitud para porder completar la peticion")
+            }
+        }
+
+    }
 
     return (
         <View style={{ alignItems: "center" }}>
@@ -39,11 +105,11 @@ const BookingBody = () => {
                 <BookingTextSeg
                     number='1'
                     text='Selecciona la solución o soluciones sobre la cual requieres nuestro apoyo.' />
-                <BookingSolSeg onchange={handleselectedSols} />
+                <BookingSolSeg onchange={handleselectedSols} data={requesitionData} />
             </View>
             <View style={styles.separator} />
             <View style={styles.container}>
-                <BookingSerTypSeg onchange={handleselectedLevels} />
+                <BookingSerTypSeg onchange={handleselectedLevels} data={requesitionData} />
                 <BookingTextSeg
                     number='2'
                     text='Selecciona el tipo de servicio que deseas y el nivel de experiencia del recurso requerido.' />
@@ -57,14 +123,24 @@ const BookingBody = () => {
                 <BookingTextSeg
                     number='3'
                     text={'Selecciona las fechas en que deseas reservar el servicio. ' + emptySpace} />
-                <BookingDatesSeg onChange={handleselectedDates} />
+                <BookingDatesSeg onChange={handleselectedDates} data={requesitionData} />
             </View>
             <View style={styles.separator} />
-            <TouchableWithoutFeedback onPress={() => Alert.alert((selectedSols + " | " + selectedLevels + " | " + selectedDates))}>
-                <View style={{ marginTop: 8 }}>
-                    <ButtonStyle view="action" >Buscar</ButtonStyle>
-                </View>
-            </TouchableWithoutFeedback>
+            <View style={styles.buttons}>
+                <TouchableWithoutFeedback onPress={() => addRequest()}>
+                    <View>
+                        <ButtonStyle view="action" >Agregar</ButtonStyle>
+                    </View>
+                </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={() => sendRequest()}>
+                    <View>
+                        <ButtonStyle view="action" >Completar</ButtonStyle>
+                    </View>
+                </TouchableWithoutFeedback>
+            </View>
+
+
+            <BookingComplete open={handleComplete} show={complete} data={requesitionData} onRemove={setRequsitionData} />
         </View >
     )
 }
@@ -98,6 +174,12 @@ const styles = StyleSheet.create({
         position: "absolute",
         left: '30%',
         top: "68%",
+    },
+    buttons: {
+        marginTop: 8,
+        flexDirection: "row",
+        justifyContent: 'space-evenly',
+        width: autoWidth
     }
 
 })

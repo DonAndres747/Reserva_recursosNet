@@ -1,77 +1,109 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TextInput, Alert } from "react-native";
+import { View, Text, StyleSheet, Dimensions, Modal, TouchableWithoutFeedback } from "react-native";
+import { Calendar } from 'react-native-calendars';
 import Slider from "@react-native-assets/slider";
 import theme from "../../theme";
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
-const currentDate = new Date();
-const ToDate = new Date();
-currentDate.setDate(currentDate.getDate() + 5);
-ToDate.setDate(ToDate.getDate() + 6)
 
-export default function BookingDatesSeg({ onChange }) {
+export default function BookingDatesSeg({ onChange, data }) {
     const [sliderValue, setSliderValue] = useState(0);
-    const [isFromDatePickerVisible, setFromDatePickerVisibility] = useState(false);
-    const [isToDatePickerVisible, setToDatePickerVisibility] = useState(false);
-    const [selectedFromDate, setSelectedFromDate] = useState(null);
-    const [selectedToDate, setSelectedToDate] = useState(null);
+    const [selectedDates, setSelectedDates] = useState(JSON.parse(`{"start":"false", "end":"false"}`));
+    const [calendar, setCalendar] = useState(false);
+    const [selectedDateRange, setSelectedDateRange] = useState([]);
+    const currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() + 5);
 
-    const showDatePicker = (as) => {
-        as == "from" ? setFromDatePickerVisibility(true) : setToDatePickerVisibility(true);
-    };
 
-    const hideDatePicker = () => {
-        setFromDatePickerVisibility(false);
-        setToDatePickerVisibility(false);
-    };
 
-    const handleConfirm = (date, as) => {
-        const isValid = isSunday(date)
-        if (!isValid) {
-            if (as == "from") {
-                setSelectedFromDate(date);
-                ToDate.setDate(date.getDate() + 1);
-            } else {
-                setSelectedToDate(date);
+    useEffect(() => {
+        setSliderValue(0);
+        setSelectedDates(JSON.parse(`{"start":"false", "end":"false"}`));
+        setSelectedDateRange('')
+    }, [data])
+
+    const selectDates = (date) => {
+        let udpatedDates = selectedDates
+
+        udpatedDates.start == 'false' ? udpatedDates = JSON.parse(`{"start":"${date}", "end":"false"}`) :
+            udpatedDates.start == date ? udpatedDates = JSON.parse(`{"start":"${udpatedDates.end}", "end":"false"}`) :
+                udpatedDates.start > date ? udpatedDates = JSON.parse(`{"start":"${date}", "end":"${udpatedDates.start}"}`) :
+                    udpatedDates.end == 'false' ? udpatedDates = JSON.parse(`{"start":"${udpatedDates.start}", "end":"${date}"}`) :
+                        udpatedDates.end == date ? udpatedDates = JSON.parse(`{"start":"${udpatedDates.start}", "end":"false"}`) :
+                            udpatedDates.end < date ? udpatedDates = JSON.parse(`{"start":"${udpatedDates.end}", "end":"${date}"}`) :
+                                udpatedDates = JSON.parse(`{"start":"${udpatedDates.start}", "end":"${date}"}`)
+        setSelectedDates(udpatedDates);
+
+        const selectedDatesRange = {};
+        if (udpatedDates.end != 'false') {
+
+            for (let currentDate = new Date(udpatedDates.start); currentDate <= new Date(udpatedDates.end); currentDate.setDate(currentDate.getDate() + 1)) {
+                const dateString = currentDate.toISOString().split('T')[0];
+
+                selectedDatesRange[dateString] = {
+                    selected: true,
+                    color: theme.colors.naranjaNet,
+                    startingDay: currentDate.getDate() == new Date(udpatedDates.start).getDate(),
+                    endingDay: currentDate.getDate() == new Date(udpatedDates.end).getDate(),
+                };
+
             }
-        } else {
-            Alert.alert("Por favor seleccione un día hábil")
+
+        } else if (udpatedDates.start != 'false') {
+            selectedDatesRange[udpatedDates.start] = {
+                selected: true,
+                color: theme.colors.naranjaNet,
+                startingDay: true,
+                endingDay: true,
+            };
         }
 
-        hideDatePicker();
-        as == "from" ?
-            onChange(date.toDateString() + " , " + (selectedToDate == null ? "" : selectedToDate.toDateString())) + console.log(contarHoras(date, selectedToDate)) :
-            onChange((selectedFromDate == null ? "" : selectedFromDate.toDateString() + " , " + date.toDateString())) + console.log(contarHoras(selectedFromDate, date));
-    };
+        setSelectedDateRange(selectedDatesRange);
+    }
 
-    function contarDomingos(desde, hasta) {
+    const saveDates = () => {
+        if (selectedDates.start == "false") {
+            Alert.alert("Por favor seleccione una fecha")
+        } else {
+            let udpatedDates = selectedDates;
+            if (selectedDates.end == "false") {
+                udpatedDates = JSON.parse(`{"start":"${udpatedDates.start}", "end":"${udpatedDates.start}"}`)
+                setSelectedDates(udpatedDates);
+            }
+
+            onChange(udpatedDates.start + ',' + udpatedDates.end)
+            contarHoras(udpatedDates.start, udpatedDates.end)
+            setCalendar(!calendar)
+        }
+    }
+
+    const cancelDates = () => {
+        let udpatedDates = selectedDates;
+        udpatedDates = JSON.parse(`{"start":"false", "end":"false"}`)
+        setSelectedDates(udpatedDates);
+        onChange(udpatedDates.start + ',' + udpatedDates.end)
+
+        setSelectedDateRange('');
+        setCalendar(!calendar);
+    }
+
+    function contarHoras(from, to) {
+        const domingos = contarDomingos(from, to)
+        const totalHoras = (((new Date(to).getDate() - new Date(from).getDate()) + 1) - domingos) * 8;
+        setSliderValue(totalHoras)
+        return totalHoras
+    }
+
+    function contarDomingos(from, to) {
         let count = 0;
-        const unDiaEnMs = 24 * 60 * 60 * 1000;
 
-        let currentDate = new Date(desde);
-        while (currentDate <= hasta) {
+        for (let currentDate = new Date(from); currentDate <= new Date(to); currentDate.setDate(currentDate.getDate() + 1)) {
             if (currentDate.getDay() === 0) {
                 count++;
             }
-            currentDate.setTime(currentDate.getTime() + unDiaEnMs);
         }
 
         return count;
     }
-
-    function contarHoras(desde, hasta) {
-        const domingos = contarDomingos(desde, hasta)
-        const totalHoras = (((hasta.getDate() - desde.getDate()) + 1) - domingos) * 8;
-        setSliderValue(totalHoras)
-        return totalHoras
-
-    }
-
-    const isSunday = (date) => {
-        const dayOfWeek = date.getDay();
-        return dayOfWeek === 0;
-    };
-
 
     return (
         <View style={styles.container}>
@@ -81,19 +113,10 @@ export default function BookingDatesSeg({ onChange }) {
                 </Text>
                 <Text
                     style={styles.date}
-                    onPress={() => showDatePicker("from")}
+                    onPress={() => setCalendar(!calendar)}
                 >
-                    {selectedFromDate == null ? "" : selectedFromDate.toDateString()}
+                    {selectedDates.start == "false" ? "" : selectedDates.start}
                 </Text>
-                <DateTimePickerModal
-                    isVisible={isFromDatePickerVisible}
-                    mode="date"
-                    onConfirm={value => {
-                        handleConfirm(value, "from");
-                    }}
-                    onCancel={() => hideDatePicker()}
-                    minimumDate={currentDate}
-                />
             </View>
             <View style={styles.containerSeg}>
                 <Text style={styles.textSeg}>
@@ -101,19 +124,10 @@ export default function BookingDatesSeg({ onChange }) {
                 </Text>
                 <Text
                     style={styles.date}
-                    onPress={() => showDatePicker("to")}
+                    onPress={() => setCalendar(!calendar)}
                 >
-                    {selectedToDate == null ? "" : selectedToDate.toDateString()}
+                    {selectedDates.end == "false" ? "" : selectedDates.end}
                 </Text>
-                <DateTimePickerModal
-                    isVisible={isToDatePickerVisible}
-                    mode="date"
-                    onConfirm={value => {
-                        handleConfirm(value, "to");
-                    }}
-                    onCancel={() => hideDatePicker()}
-                    minimumDate={ToDate}
-                />
             </View >
             <View>
                 <Slider
@@ -124,13 +138,59 @@ export default function BookingDatesSeg({ onChange }) {
                     thumbStyle={styles.thumbStyle}
                     enabled={false}
                     trackHeight={2}
-                    trackStyle={{ backgroundColor: "black" }}
+                    trackStyle={{ backgroundColor: "grey" }}
 
                 />
                 <View style={styles.middleLine} />
                 <Text style={styles.middleLineLabel}>
-                    40 hrs
+                    {sliderValue} hrs
                 </Text>
+            </View>
+
+
+
+            <View >
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={calendar}
+                    onRequestClose={() => {
+                        setCalendar(!calendar)
+                    }}
+                >
+                    <View style={styles.centeredView}>
+                        <Calendar
+                            style={styles.modalView}
+                            minDate={currentDate.toISOString().split('T')[0]}
+                            theme={{
+                                monthTextColor: theme.colors.naranjaNet
+                            }}
+                            onDayPress={(date) => (selectDates(date.dateString))}
+                            markingType="period"
+                            markedDates={{
+                                ...selectedDateRange
+                            }}
+
+                        />
+                        <View style={styles.calendarButtons}>
+                            <TouchableWithoutFeedback onPress={() => cancelDates()}>
+                                <View style={styles.calendarButton}>
+                                    <Text style={styles.calendarButtonText}>
+                                        Resetear
+                                    </Text>
+                                </View>
+                            </TouchableWithoutFeedback>
+                            <TouchableWithoutFeedback onPress={() => saveDates()}>
+                                <View style={styles.calendarButton}>
+                                    <Text style={styles.calendarButtonText}>
+                                        Aceptar
+                                    </Text>
+                                </View>
+                            </TouchableWithoutFeedback>
+                        </View>
+                    </View>
+                </Modal>
+
             </View>
         </View >
     );
@@ -138,7 +198,9 @@ export default function BookingDatesSeg({ onChange }) {
 
 
 
-
+function autoWidth(percentage) {
+    return (Dimensions.get('window').width * (percentage / 100));
+}
 const styles = StyleSheet.create({
     container: {
         flexDirection: "column",
@@ -195,5 +257,44 @@ const styles = StyleSheet.create({
         left: '39%',
         top: "73%",
         position: 'absolute',
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: '25%',
+    },
+    modalView: {
+        borderRadius: 15,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+        paddingVertical: 10,
+        backgroundColor: theme.colors.azulNet,
+        width: autoWidth(75)
+    },
+    calendarButton: {
+        backgroundColor: theme.colors.azulNet,
+        marginVertical: 3,
+        justifyContent: "center",
+        alignContent: "center",
+        borderRadius: 5,
+    },
+    calendarButtonText: {
+        color: "white",
+        textAlign: "center",
+        padding: 7,
+        fontSize: 15
+    },
+    calendarButtons: {
+        flexDirection: "row",
+        justifyContent: "space-evenly",
+        alignContent: 'center',
+        width: autoWidth(75)
     }
 });

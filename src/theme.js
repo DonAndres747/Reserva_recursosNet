@@ -3,7 +3,9 @@ const theme = {
     colors: {
         blanco: '#fff',
         azulNet: 'rgb(0, 38, 58)',
-        naranjaNet: 'rgb(255,103,29)'
+        azulNetTransp: 'rgba(0, 38, 58, 0.8)',
+        naranjaNet: 'rgb(255,103,29)',
+        naranjaNetTransp: 'rgba(255, 103, 29, 0.8)',
     },
     fontSizes: {
         buttons: 20,

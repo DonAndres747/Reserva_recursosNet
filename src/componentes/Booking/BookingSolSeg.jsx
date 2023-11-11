@@ -3,7 +3,7 @@ import { View, Text, TouchableWithoutFeedback, StyleSheet, ScrollView } from "re
 import BookingList from "./BookingList";
 import solTypController from "../../services/controllers/solTypController";
 
-function BookingSolSeg({ onchange }) {
+function BookingSolSeg({ onchange, data }) {
     const { getAllSolTypes } = solTypController();
     const [solTypes, setSolTypes] = useState([]);
 
@@ -11,7 +11,7 @@ function BookingSolSeg({ onchange }) {
         getAllSolTypes()
             .then((data) => {
                 const response = JSON.stringify(data);
-                const parsedData = JSON.parse(response); 
+                const parsedData = JSON.parse(response);
                 setSolTypes(parsedData.solutionsTypes[0]);
             })
             .catch((error) => {
@@ -29,7 +29,7 @@ function BookingSolSeg({ onchange }) {
     return (
         <View style={styles.container}>
             <Text style={styles.solText}>Solucion(es)</Text>
-            <BookingList data={solTypes} onSelectedItemsChange={handleSelectedItems} />
+            <BookingList data={solTypes} onSelectedItemsChange={handleSelectedItems} reload={data} />
         </View >
     );
 }

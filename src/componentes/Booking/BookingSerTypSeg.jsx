@@ -9,21 +9,22 @@ import recLevelController from "../../services/controllers/recLevelController";
 let levels = ''
 let servs = ''
 
-export default function BookingSerTypSeg({ onchange }) {
+export default function BookingSerTypSeg({ onchange, data }) {
+    const [checkboxStates, setCheckboxStates] = useState(Array(array.length).fill(false));
+    const [recLevels, setrecLevels] = useState([]);
+    
+    const { getAllRecLevels } = recLevelController();
 
     useEffect(() => {
         levels = ''
         servs = ''
-    }, []);
+        setCheckboxStates(Array(array.length).fill(false));
 
-    const [checkboxStates, setCheckboxStates] = useState(Array(array.length).fill(false));
+    }, [data]);
 
-    const { getAllRecLevels } = recLevelController();
-    const [recLevels, setrecLevels] = useState([]);
 
     const handleSelectedItems = (selectedItems) => {
-        levels = ''
-        onchange(selectedItems + " | " + servs)
+        onchange([selectedItems, "|", servs].join(""));
         return levels = selectedItems
     };
 
@@ -39,7 +40,7 @@ export default function BookingSerTypSeg({ onchange }) {
                 checkItems.push(array[index].id);
             }
         });
-        onchange(levels + " | " + checkItems)
+        onchange([levels, "|", checkItems].join(""))
 
         return servs = checkItems
     };
@@ -81,7 +82,7 @@ export default function BookingSerTypSeg({ onchange }) {
                 </View>
             ))}
             <View style={styles.listContainer}>
-                <BookingList data={recLevels} onSelectedItemsChange={handleSelectedItems} />
+                <BookingList data={recLevels} single={true} onSelectedItemsChange={handleSelectedItems} reload={data} />
             </View>
         </View>
     );
