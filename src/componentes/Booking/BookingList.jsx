@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
         height: Platform.OS === 'ios' ? 38 : 30,
     },
     listText: {
-        fontSize: Platform.OS === 'ios' ? "20%" : 20
+        fontSize: Platform.OS === 'ios' ? 20 : 20
     },
     colorN: {
         color: theme.colors.naranjaNet

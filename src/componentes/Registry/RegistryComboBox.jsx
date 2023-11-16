@@ -24,16 +24,16 @@ export default function RegistryComboBox({ data, onSelect }) {
 
 const pickerOS = Platform.select({
     ios: ({ data, onChange }) => {
-        const [selectedValue, setSelectedValue] = useState();
         return (
             <ModalDropdown
-                onValueChange={value => {
-                    setSelectedValue(value);
-                    onChange(value);
+                onSelect={value => {
+                    onChange(data[value].id);
                 }}
                 options={data.map(n => n.description)}
                 key={data.map(n => n.id)}
+                saveScrollPosition={false}
                 defaultValue="select"
+                defaultIndex={0}
                 dropdownStyle={[styles.pickerIos, { width: Platform.OS === 'ios' ? "61%" : theme.width.input, height: "auto" }]}
                 textStyle={[styles.pickerIos]}
                 style={[styles.input, styles.pickerIos]}

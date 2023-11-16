@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
     },
     label: {
         marginLeft: 8,
-        fontSize: Platform.OS === 'ios' ? "14%" : 17
+        fontSize: Platform.OS === 'ios' ? 14 : 17
     },
     checkbox: {
         margin: 0,

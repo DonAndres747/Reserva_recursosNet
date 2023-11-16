@@ -34,14 +34,10 @@ export default function HomeSegments({ circleV, tittle, segText, iconSrc, name }
 
 const styles = StyleSheet.create({
     container: {
-        alignItems: 'center',
-        // backgroundColor: 'lightblue',
+        alignItems: 'center', 
         width: '33%',
         height: '100%',
-        justifyContent: 'center',
-
-        // borderColor: 'black',
-        // borderWidth: 1
+        justifyContent: 'center', 
     },
     circle: {
         width: '65%',
@@ -61,7 +57,7 @@ const styles = StyleSheet.create({
         fontWeight: theme.fontWeight.bold,
         marginTop: 10,
         marginBottom: 5,
-        fontSize: Platform.OS === 'ios' ? '14%' : 16
+        fontSize: Platform.OS === 'ios' ? 14 : 16
 
     },
     segText: {

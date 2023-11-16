@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { View, Text, TouchableWithoutFeedback, StyleSheet, Alert } from "react-native";
+import { View, Text, TouchableWithoutFeedback, StyleSheet, Alert, Platform } from "react-native";
 import theme from "../../theme";
 import { Dimensions } from 'react-native';
 
@@ -146,7 +146,7 @@ const BookingBody = () => {
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback onPress={() => sendRequest()}>
                     <View>
-                        <ButtonStyle view="action" >Completar</ButtonStyle>
+                        <ButtonStyle view="action" >{Platform.OS == "ios" ? "Finalizar" : "Completar"}</ButtonStyle>
                     </View>
                 </TouchableWithoutFeedback>
             </View>
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
         color: theme.colors.azulNet,
         marginVertical: 10,
         alignSelf: "center",
-        fontSize: Platform.OS === 'ios' ? "12%" : 14
+        fontSize: Platform.OS === 'ios' ? 12 : 14
     },
     separator: {
         borderBottomWidth: Platform.OS === 'ios' ? 1 : 2,

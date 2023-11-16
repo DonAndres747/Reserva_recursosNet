@@ -15,14 +15,15 @@ export default function applicationController() {
         try {
             const user = JSON.parse(await AsyncStorage.getItem("result"));
             const token = await AsyncStorage.getItem("token");
-            ApplicationData.push(JSON.parse(`
-            {
-              "solTyp": "1",
-              "servTyp": "1",
-              "recLvl": "1",
-              "start": "1",  
-              "end": "1"
-            }`))
+            // codigo para probar insersion fallida
+            /*  ApplicationData.push(JSON.parse(`
+              {
+                "solTyp": "1",
+                "servTyp": "1",
+                "recLvl": "1",
+                "start": "1",  
+                "end": "1"
+              }`))*/
             const response = await applicationModel.bookApplication(token, ApplicationData, user.id);
 
             if (response.result.failedResults) {
@@ -36,7 +37,7 @@ export default function applicationController() {
                 console.log((failedApps));
 
                 Alert.alert('Los siguientes reservas no pudieron ser procesadas'
-                    , JSON.stringify(failedApps) + '\n\ntodos los demas fueron reservados exitosamente',
+                    , /*JSON.stringify(failedApps) + \n\n*/ 'todos los demas fueron reservados exitosamente',
                     [
                         {
                             text: 'Aceptar',
@@ -50,7 +51,7 @@ export default function applicationController() {
             } else if (response.status == 201) {
                 Alert.alert(
                     'Recursos reservados exitosamente',
-                    ' ',
+                    '',
                     [
                         {
                             text: 'Aceptar',

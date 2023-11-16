@@ -91,7 +91,7 @@ export default function HomeSegments() {
                     />
                 </Stack.Group>
                 <Stack.Group
-                    screenOptions={() => ({
+                    screenOptions={({ route }) => ({
                         title: (
                             isDataLoaded ? `${formatName(userData.first_name, userData.last_name)}`
                                 : "Cargando..."
@@ -100,15 +100,17 @@ export default function HomeSegments() {
                             backgroundColor: '#f2f2f2'
                         },
                         headerShadowVisible: false,
-                        headerLeft: () => Platform.OS === 'android' ? <EmptyComponent /> : null,
-                        headerBackTitle: '',
+                        headerLeft: (() => Platform.OS === 'android' ? <EmptyComponent /> : null),
                         headerTintColor: "black",
+                        headerBackTitleVisible: false
+                    })}>
 
-                    })}
-                >
                     <Stack.Screen
                         name='Home'
                         component={HomeScreen}
+                        options={{
+                            headerLeft: (() => <EmptyComponent />)
+                        }}
                     />
                     <Stack.Screen
                         name='Booking'
@@ -132,7 +134,7 @@ export default function HomeSegments() {
                 </Stack.Group>
 
             </Stack.Navigator>
-        </NavigationContainer>
+        </NavigationContainer >
     )
 }
 

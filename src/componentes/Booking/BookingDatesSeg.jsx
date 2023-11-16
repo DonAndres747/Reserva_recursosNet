@@ -138,8 +138,8 @@ export default function BookingDatesSeg({ onChange, data }) {
                     thumbStyle={styles.thumbStyle}
                     enabled={false}
                     trackHeight={2}
-                    trackStyle={{ backgroundColor: "grey" }}
-
+                    minimumTrackTintColor="black"
+                    maximumTrackTintColor="grey"
                 />
                 <View style={styles.middleLine} />
                 <Text style={styles.middleLineLabel}>

@@ -8,11 +8,11 @@ const theme = {
         naranjaNetTransp: 'rgba(255, 103, 29, 0.8)',
     },
     fontSizes: {
-        buttons: 20,
+        buttons: Platform.OS === 'ios' ? 19 : 20,
         subheading: 16,
         subText: 13,
         tittle: 33,
-        subtittle: Platform.OS === 'ios' ? "20%" : 23
+        subtittle: Platform.OS === 'ios' ? 21 : 23
     },
     fontWeight: {
         buttons: 700,

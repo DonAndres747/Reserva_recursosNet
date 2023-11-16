@@ -4,9 +4,9 @@ import theme from "../../theme";
 import ModalDropdown from 'react-native-modal-dropdown';
 import { Picker } from '@react-native-picker/picker';
 
-export default function AvailabilityCBSeg({ text, data, onSelect}) {
+export default function AvailabilityCBSeg({ text, data, onSelect }) {
 
-    function onChange(value) { 
+    function onChange(value) {
         onSelect(value)
     }
 
@@ -27,24 +27,27 @@ export default function AvailabilityCBSeg({ text, data, onSelect}) {
 
 const pickerOS = Platform.select({
     ios: ({ data, onChange }) => {
-        const [selectedValue, setSelectedValue] = useState();
-
+        const [selectedValue, setSelectedValue] = useState(0);
         return (
+
             <ModalDropdown
-                onValueChange={value => {
+                onSelect={value => {
                     setSelectedValue(value);
-                    onChange(value)
+                    onChange(data[value].id);
                 }}
                 options={data.map(n => (
                     n.description
                 ))}
-                key={data.map(n => (
-                    n.id
-                ))}
-                dropdownStyle={[styles.pickerIos, { width: Platform.OS === 'ios' ? "61%" : theme.width.input, height: "auto" }]}
-                textStyle={[styles.pickerIos]}
-                style={[styles.input, styles.pickerIos]} />
+                keyExtractor={(index) => index.toString()}
+                saveScrollPosition={false}
+                defaultValue={"select"}
+                defaultIndex={selectedValue}
+                dropdownStyle={[styles.pickerIos, { width: "63%", height: "auto" }]}
+                textStyle={styles.pickerFont}
+                dropdownTextStyle={styles.pickerFont}
+                style={styles.pickerIos} />
         )
+
     },
     default: ({ data, onChange }) => {
         const [selectedValue, setSelectedValue] = useState();
@@ -92,9 +95,12 @@ const styles = StyleSheet.create({
     },
     pickerIos: {
         justifyContent: 'center',
-        marginLeft: Platform.OS === 'ios' ? 4 : 0,
-        fontSize: Platform.OS === 'ios' ? 15 : 18,
         alignContent: "center",
+        flex: Platform.OS === 'ios' ? 1 : undefined,
+    },
+    pickerFont: {
+        marginLeft: Platform.OS === 'ios' ? 5 : 0,
+        fontSize: Platform.OS === 'ios' ? 15 : 18,
     },
     row: {
         flexDirection: 'row',

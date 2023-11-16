@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, TouchableWithoutFeedback, StyleSheet, ScrollView, Modal } from "react-native";
+import { View, Text, TouchableWithoutFeedback, StyleSheet, ScrollView, Modal, Platform } from "react-native";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 import theme from "../../theme";
 import TittleStyle from "../tittlesStyle";
@@ -64,13 +65,13 @@ export default function BookingComplete({ data, open, show, onRemove, onComplete
                                     <Text>{req.recLvl}</Text>
                                 </View>
                                 <View style={[styles.tableCell, index % 2 === 0 ? styles.tableCellEven : styles.tableCellOdd, { width: "21%" }]}>
-                                    <Text>{req.start}</Text>
-                                    <Text>{req.end}</Text>
+                                    <Text style={[Platform.OS === "ios" ? { fontSize: 11 } : {}]}>{req.start}</Text>
+                                    <Text style={[Platform.OS === "ios" ? { fontSize: 11 } : {}]}>{req.end}</Text>
                                 </View>
                                 <View style={[styles.tableCell, index % 2 === 0 ? styles.tableCellEven : styles.tableCellOdd, index == (dataR.length - 1) ? { borderBottomRightRadius: 5 } : ""]}>
                                     <TouchableWithoutFeedback onPress={() => remove(index)}>
                                         <View style={styles.removeButton}>
-                                            <Text style={styles.buttonText}>Remover</Text>
+                                            <Icon name='delete' color={"white"} size={20}></Icon>
                                         </View>
                                     </TouchableWithoutFeedback>
                                 </View>
@@ -101,7 +102,7 @@ const styles = StyleSheet.create({
     modelContainer: {
         flex: 1,
         justifyContent: 'center',
-        width: "88%",
+        width: Platform.OS === "ios" ? "95%" : "88%",
         alignSelf: "center",
     },
     tableTittle: {
@@ -133,7 +134,7 @@ const styles = StyleSheet.create({
     },
     headerText: {
         color: "white",
-        fontSize: 15
+        fontSize: Platform.OS === "ios" ? 13 : 15
     },
     tableCell: {
         paddingVertical: 5,
@@ -141,7 +142,7 @@ const styles = StyleSheet.create({
         width: "19.8%",
         margin: 1,
         justifyContent: "center",
-        alignItems: "center",
+        alignItems: "center"
     },
     tableCellEven: {
         backgroundColor: "#d4eafc"

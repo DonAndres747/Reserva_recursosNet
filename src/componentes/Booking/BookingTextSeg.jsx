@@ -27,14 +27,14 @@ const styles = StyleSheet.create({
         flexDirection: "row"
     },
     number: {
-        fontSize:  Platform.OS === 'ios' ? "80%" :100,
+        fontSize: Platform.OS === 'ios' ? 85 : 100,
         color: theme.colors.azulNet,
     },
     segText: {
         paddingLeft: "5%",
         paddingRight: "5%",
         width: 140,
-        fontSize: Platform.OS === 'ios' ? "12%" : 14
+        fontSize: Platform.OS === 'ios' ? 12.5 : 14
     }
 })
 

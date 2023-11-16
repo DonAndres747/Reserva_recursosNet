@@ -80,7 +80,7 @@ function ResourceListBody() {
                 La disponibilidad ha sido confirmada{"   "}
             </TittleStyle>
             <Text style={styles.headerText}>
-                Se han identificado varios recursos que concuerdan con su solicitud,. Por favor seleccione el recurso a reservar:
+                Se han identificado varios recursos que concuerdan con su solicitud,{/*💩*/} Por favor seleccione el recurso a reservar:
             </Text>
             <ResourceCard onSelect={handleselectedRec} data={resources} />
             <TouchableWithoutFeedback onPress={() => (selectedRecs != '' ? (saveData()) : Alert.alert("Ningun recurso a sido seleccionado"))}>
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
         color: theme.colors.azulNet,
         width: autoWidth(90),
         alignSelf: "center",
-        fontSize: Platform.OS === 'ios' ? "12%" : 14.5,
+        fontSize: Platform.OS === 'ios' ? 13 : 14.5,
         marginVertical: 8
     },
 });

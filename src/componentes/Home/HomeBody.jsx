@@ -58,7 +58,7 @@ const HomeBody = () => {
                         tittle='netRewards'
                         segText='conoce tu estatus y puntos asignados a tu cuenta'
                         iconSrc={netRewardsLogo}
-                        name={'Booking'}
+                        // name={'Booking'}
                         firstName = {'Prov'}
                         lastName = {'1'}
                     />
@@ -67,7 +67,7 @@ const HomeBody = () => {
                         tittle='planificacion'
                         segText='Realiza la planificacion de recursos'
                         iconSrc={planificacionLogo}
-                        name={'Booking'}
+                        // name={'Booking'}
                         firstName = {'Prov'}
                         lastName = {'1'}
                     />

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { View, Text, TouchableWithoutFeedback, StyleSheet, Alert } from "react-native";
+import { View, Text, TouchableWithoutFeedback, StyleSheet } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { Dimensions } from 'react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -10,12 +10,12 @@ import AvailabilityCBSeg from "./AvailabilityCBSeg";
 import AvailabilityTypSeg from "./AvailabilityTypSeg";
 import ButtonStyle from "../buttonsStyle";
 import solTypController from "../../services/controllers/solTypController";
-import recLevelController from "../../services/controllers/recLevelController"; 
+import recLevelController from "../../services/controllers/recLevelController";
 
 function AvailabilityBody() {
 
     const navigation = useNavigation();
- 
+
 
     const { getAllSolTypes } = solTypController();
     const [solTypes, setSolTypes] = useState([]);
@@ -80,7 +80,7 @@ function AvailabilityBody() {
             <View style={styles.separator} />
             <TouchableWithoutFeedback onPress={() => {
                 AsyncStorage.setItem("skills", (selectedSol + "," + caracteristics));
-                AsyncStorage.setItem("level", selectedRec); 
+                AsyncStorage.setItem("level", selectedRec + "");
                 navigation.navigate("ResourceList");
             }}>
                 <View style={{ marginTop: 8 }}>

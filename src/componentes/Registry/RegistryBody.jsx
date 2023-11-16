@@ -173,7 +173,7 @@ export default function BodyRegistry() {
 
 
                 <TouchableWithoutFeedback onPress={() => {
-                    const newC = (newCompany == "none" ? "false" : true);
+                    const newC = (newCompany == "none" ? "false" : true); 
                     saveData(newC)
                 }}>
                     <View>

@@ -174,7 +174,7 @@ function ResourceCard({ onSelect, data }) {
 
                     const fechaMaxima = new Date(Math.max.apply(null, fechasObjeto)).toISOString().split('T')[0];
                     const fechaMinima = new Date(Math.min.apply(null, fechasObjeto)).toISOString().split('T')[0];
- 
+
                     newDates += `{"rsce_id":"${resource_id}", "start":"${fechaMinima}", "end":"${fechaMaxima}"}+`
                 })
                 newDates = newDates.split("+")
@@ -182,7 +182,7 @@ function ResourceCard({ onSelect, data }) {
                 newDates = newDates.map((dates) => {
                     return (JSON.parse(dates));
                 })
-                
+
             }
 
 
@@ -225,7 +225,7 @@ function ResourceCard({ onSelect, data }) {
         try {
             return resources.map((element, index) => (
                 < View key={element.user_id} style={styles.card} >
-                    <Image source={require('../../assets/profile.png')} style={styles.pict} />
+                    <Image source={require('../../assets/profile2.png')} style={styles.pict} />
                     <Text style={styles.resourceName}>
                         {element.first_name}
                         {" "}
@@ -346,6 +346,8 @@ const styles = StyleSheet.create({
     },
     pict: {
         marginVertical: 10,
+        width: 118,
+        height: 118
     },
     resourceName: {
         fontSize: theme.fontSizes.buttons

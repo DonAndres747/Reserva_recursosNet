@@ -54,7 +54,7 @@ export default function userController() {
                     Alert.alert(result.result.message);
                 } else {
                     Alert.alert("Algo ha salido mal :(");
-                } 
+                }
             } catch (error) {
                 console.error(error);
             } finally {
