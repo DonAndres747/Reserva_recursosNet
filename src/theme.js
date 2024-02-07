@@ -6,6 +6,7 @@ const theme = {
         azulNetTransp: 'rgba(0, 38, 58, 0.8)',
         naranjaNet: 'rgb(255,103,29)',
         naranjaNetTransp: 'rgba(255, 103, 29, 0.8)',
+        blancoNetTransp: 'rgba( 255, 255, 255, 0.8)',
     },
     fontSizes: {
         buttons: Platform.OS === 'ios' ? 19 : 20,

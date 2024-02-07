@@ -15,6 +15,7 @@ import BookingScreen from "../src/screens/BookingScreen.jsx";
 import ComponentsScreen from "../src/screens/ComponentsScreen.jsx";
 import AvailabilityScreen from "../src/screens/AvailabilityScreen.jsx";
 import ResourceListScreen from "../src/screens/ResourceListScreen.jsx";
+import ComponentsListScreen from "../src/screens/ComponentsListScreen.jsx";
 
 
 const EmptyComponent = () => <View style={{ width: 0, height: 0 }} />;
@@ -127,9 +128,14 @@ export default function HomeSegments() {
                     <Stack.Screen
                         name='ResourceList'
                         component={ResourceListScreen}
-                    // options={({ route }) => (
-
-                    // )}
+                    />
+                    <Stack.Screen
+                        name='ComponentsList'
+                        component={ComponentsListScreen}
+                        options={({ route }) => ({
+                            solTyp: route.params.solTyp,
+                            compList: route.params.compList
+                        })}
                     />
                 </Stack.Group>
 

@@ -17,7 +17,7 @@ const emptySpace = `
 
 const BookingBody = () => {
     const [selectedSols, setselectedSols] = useState();
-    const [requesitionData, setRequesitionData] = useState([])
+    const [requesitionData, setRequesitionData] = useState([]);
     const [selectedLevels, setSelectedLevels] = useState('|');
     const [selectedDates, setSelectedDates] = useState();
     const [complete, setComplete] = useState(false);

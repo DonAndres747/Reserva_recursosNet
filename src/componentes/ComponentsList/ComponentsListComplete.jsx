@@ -6,12 +6,11 @@ import theme from "../../theme";
 import TittleStyle from "../tittlesStyle";
 
 
-export default function BookingComplete({ data, open, show, onRemove, onComplete }) {
+export default function ComponenstListComplete({ data, open, show, onRemove, onComplete }) {
     const [dataR, setDataR] = useState(data);
 
     useEffect(() => {
         setDataR(data)
-
     }, [show])
 
     const remove = (index) => {
@@ -21,6 +20,7 @@ export default function BookingComplete({ data, open, show, onRemove, onComplete
         onRemove(newData);
         newData.length < 1 ? open() : "";
     }
+
 
     return (
         <View >
@@ -39,34 +39,21 @@ export default function BookingComplete({ data, open, show, onRemove, onComplete
                         </View>
                         <View style={styles.tableRows}>
                             <View style={[styles.tableHeader, { borderTopLeftRadius: 5 }]}>
-                                <Text style={styles.headerText}>Soluciones</Text>
+                                <Text style={styles.headerText}>Componentes</Text>
                             </View>
                             <View style={styles.tableHeader}>
-                                <Text style={styles.headerText}>Servicios</Text>
-                            </View>
-                            <View style={styles.tableHeader}>
-                                <Text style={styles.headerText}>Nivel</Text>
-                            </View>
-                            <View style={[styles.tableHeader, { width: "21%" }]}>
-                                <Text style={styles.headerText}>Fechas</Text>
+                                <Text style={styles.headerText}>Price $ </Text>
                             </View>
                             <View style={[styles.tableHeader, , { borderTopEndRadius: 5 }]}>
                             </View>
                         </View>
-                        {dataR.map((req, index) => (
+                        {dataR.map((comp, index) => (
                             < View key={index} style={styles.tableRows} >
-                                <View style={[styles.tableCell, index % 2 === 0 ? styles.tableCellEven : styles.tableCellOdd, index == (data.length - 1) ? { borderBottomLeftRadius: 5 } : ""]}>
-                                    <Text>{req.solTyp}</Text>
+                                <View style={[styles.tableCell, styles.tittle, index % 2 === 0 ? styles.tableCellEven : styles.tableCellOdd, index == (data.length - 1) ? { borderBottomLeftRadius: 5 } : ""]}>
+                                    <Text style={styles.tittle}>{comp.recTittle}</Text>
                                 </View>
                                 <View style={[styles.tableCell, index % 2 === 0 ? styles.tableCellEven : styles.tableCellOdd]}>
-                                    <Text>{req.servTyp}</Text>
-                                </View>
-                                <View style={[styles.tableCell, index % 2 === 0 ? styles.tableCellEven : styles.tableCellOdd]}>
-                                    <Text>{req.recLvl}</Text>
-                                </View>
-                                <View style={[styles.tableCell, index % 2 === 0 ? styles.tableCellEven : styles.tableCellOdd, { width: "21%" }]}>
-                                    <Text style={[Platform.OS === "ios" ? { fontSize: 11 } : {}]}>{req.start}</Text>
-                                    <Text style={[Platform.OS === "ios" ? { fontSize: 11 } : {}]}>{req.end}</Text>
+                                    <Text>${comp.recprice}</Text>
                                 </View>
                                 <View style={[styles.tableCell, index % 2 === 0 ? styles.tableCellEven : styles.tableCellOdd, index == (dataR.length - 1) ? { borderBottomRightRadius: 5 } : ""]}>
                                     <TouchableWithoutFeedback onPress={() => remove(index)}>
@@ -83,7 +70,7 @@ export default function BookingComplete({ data, open, show, onRemove, onComplete
                                     <Text style={styles.bottomButtonText}>Continuar</Text>
                                 </View>
                             </TouchableWithoutFeedback>
-                            <TouchableWithoutFeedback onPress={() => onComplete()}>
+                            <TouchableWithoutFeedback onPress={() => /*onComplete()*/ console.log(dataR)}>
                                 <View style={styles.bottomButton}>
                                     <Text style={styles.bottomButtonText}>Completar</Text>
                                 </View>
@@ -126,7 +113,7 @@ const styles = StyleSheet.create({
     tableHeader: {
         paddingVertical: 5,
         backgroundColor: "white",
-        width: "19.8%",
+        width: "30%",
         margin: 1,
         justifyContent: "center",
         alignItems: "center",
@@ -140,7 +127,7 @@ const styles = StyleSheet.create({
     tableCell: {
         paddingVertical: 5,
         backgroundColor: "white",
-        width: "19.8%",
+        width: "30%",
         margin: 1,
         justifyContent: "center",
         alignItems: "center"
@@ -178,5 +165,9 @@ const styles = StyleSheet.create({
         color: "white",
         fontSize: 15,
     },
+    tittle: {
+        color: theme.colors.azulNet,
+        fontSize: Platform.OS === "ios" ? 13 : 15
+    }
 
 });

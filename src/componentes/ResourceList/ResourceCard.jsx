@@ -100,7 +100,7 @@ function ResourceCard({ onSelect, data }) {
                         selectedDates[prev] = {
                             selected: true,
                             color: theme.colors.naranjaNet,
-                            startingDay: new Date(prev).getDate() == new Date(udpatedDates[index].start).getDate(),
+                            startingDay: (new Date(prev).getDate() + "," + new Date(prev).getMonth()) == (new Date(udpatedDates[index].start).getDate() + "," + new Date(udpatedDates[index].start).getMonth()),
                             endingDay: true
                         };
                     };
@@ -118,7 +118,7 @@ function ResourceCard({ onSelect, data }) {
                             selected: true,
                             color: theme.colors.naranjaNet,
                             startingDay: true,
-                            endingDay: currentDate.getDate() == new Date(udpatedDates[index].end).getDate(),
+                            endingDay: (currentDate.getDate() + "," + currentDate.getMonth()) == (new Date(udpatedDates[index].end).getDate() + "," + new Date(udpatedDates[index].end).getMonth()),
                         };
                     } else {
                         new Date(prexDate.setDate(prexDate.getDate() + 1))
@@ -126,8 +126,8 @@ function ResourceCard({ onSelect, data }) {
                         selectedDates[dateString] = {
                             selected: true,
                             color: theme.colors.naranjaNet,
-                            startingDay: currentDate.getDate() == new Date(udpatedDates[index].start).getDate(),
-                            endingDay: currentDate.getDate() == new Date(udpatedDates[index].end).getDate(),
+                            startingDay: (currentDate.getDate() + "," + currentDate.getMonth()) == (new Date(udpatedDates[index].start).getDate() + "," + new Date(udpatedDates[index].start).getMonth()),
+                            endingDay: (currentDate.getDate() + "," + currentDate.getMonth()) == (new Date(udpatedDates[index].end).getDate() + "," + new Date(udpatedDates[index].end).getMonth()),
                         };
                     }
 
@@ -366,6 +366,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: '25%',
+        backgroundColor: theme.colors.blancoNetTransp
     },
     modalView: {
         borderRadius: 15,

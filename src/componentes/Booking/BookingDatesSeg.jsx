@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Dimensions, Modal, TouchableWithoutFeedback } from "react-native";
+import { View, Text, StyleSheet, Dimensions, Modal, TouchableWithoutFeedback, Alert } from "react-native";
 import { Calendar } from 'react-native-calendars';
 import Slider from "@react-native-assets/slider";
 import theme from "../../theme";
@@ -42,8 +42,8 @@ export default function BookingDatesSeg({ onChange, data }) {
                 selectedDatesRange[dateString] = {
                     selected: true,
                     color: theme.colors.naranjaNet,
-                    startingDay: currentDate.getDate() == new Date(udpatedDates.start).getDate(),
-                    endingDay: currentDate.getDate() == new Date(udpatedDates.end).getDate(),
+                    startingDay: (currentDate.getDate() + "," + currentDate.getMonth()) == (new Date(udpatedDates.start).getDate() + "," + new Date(udpatedDates.start).getMonth()),
+                    endingDay: (currentDate.getDate() + "," + currentDate.getMonth()) == (new Date(udpatedDates.end).getDate() + "," + new Date(udpatedDates.end).getMonth()),
                 };
 
             }
@@ -263,6 +263,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: '25%',
+        backgroundColor: theme.colors.blancoNetTransp
     },
     modalView: {
         borderRadius: 15,

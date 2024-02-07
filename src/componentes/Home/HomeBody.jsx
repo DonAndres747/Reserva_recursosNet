@@ -1,6 +1,5 @@
 import React from "react";
-import { View, Text, TouchableWithoutFeedback, StyleSheet } from "react-native";
-import { useNavigation } from '@react-navigation/native';
+import { View, Text, TouchableWithoutFeedback, StyleSheet } from "react-native"; 
 import TittleStyle from "../tittlesStyle";
 import HomeSegments from "./HomeSegments";
 import disponibilidadLogo from "../../assets/disponibilidadLogo.png";
@@ -11,8 +10,7 @@ import planificacionLogo from "../../assets/planificacionLogo.png";
 
 import theme from "../../theme";
 
-const HomeBody = () => {
-    const navigation = useNavigation();
+const HomeBody = () => { 
     return (
         <View style={{ flex: 4 }}>
             <View>

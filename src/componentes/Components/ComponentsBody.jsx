@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { View, Text, TouchableWithoutFeedback, StyleSheet, Alert } from "react-native";
+import { useNavigation } from '@react-navigation/native';
 import { Dimensions } from 'react-native';
 import TittleStyle from "../tittlesStyle";
 import ComponentCBSeg from "./ComponentCBSeg";
@@ -8,6 +9,7 @@ import ButtonStyle from "../buttonsStyle";
 import solTypController from "../../services/controllers/solTypController"
 
 function ComponentsBody() {
+    const navigation = useNavigation();
     const { getAllSolTypes } = solTypController();
     const [solTypes, setSolTypes] = useState([]);
 
@@ -49,7 +51,7 @@ function ComponentsBody() {
                 <ComponentTypSeg onChange={handleSelectCaract} />
             </View>
             <View style={styles.separator} />
-            <TouchableWithoutFeedback onPress={() => Alert.alert(selectedSol + " | " + caracteristics)}>
+            <TouchableWithoutFeedback onPress={() => navigation.navigate('ComponentsList', { solTyp: selectedSol, compList: caracteristics.join(",") })}>
                 <View style={{ marginTop: 30 }}>
                     <ButtonStyle view="action" >Buscar</ButtonStyle>
                 </View>
