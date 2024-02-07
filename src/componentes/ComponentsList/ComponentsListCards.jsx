@@ -6,16 +6,12 @@ import ComponenstListModal from "./ComponentsListModal";
 import { clickProps } from "react-native-web/dist/cjs/modules/forwardedProps";
 
 function ComponenstListCards({ data, onAdd, onRemove }) {
-    const [modal, setModal] = useState(false);
-    const [onRemove2, setOnRemove2] = useState([])
+    const [modal, setModal] = useState(false); 
 
     useEffect(() => {
         data ? setModal(Array(data.length).fill(false)) : "";
     }, [data])
-
-    useEffect(() => {
-        setOnRemove2(onRemove)
-    }, [onRemove])
+ 
 
     handleModal = (index) => {
         const tempMod = [...modal];
@@ -46,7 +42,7 @@ function ComponenstListCards({ data, onAdd, onRemove }) {
                             </View>
                             {modal[index] == true ? <ComponenstListModal
                                 component={component}
-                                onRemove={onRemove2}
+                                onRemove={onRemove}
                                 visible={modal[index]}
                                 onClose={() => handleModal(index)}
                                 onAdd={(selected) => {

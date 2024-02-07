@@ -21,10 +21,7 @@ function ComponenstListBody({ solTyp, compList }) {
                 setComponents(response.data)
             })
     }, [])
-
-    // useEffect(() => {
-    //     console.log(selectedComponent.length);
-    // }, [selectedComponent])
+ 
 
     handleSelected = (selected) => {
         setSelectedComponent(selected);
