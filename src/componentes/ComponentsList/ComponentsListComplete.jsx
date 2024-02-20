@@ -70,7 +70,7 @@ export default function ComponenstListComplete({ data, open, show, onRemove, onC
                                     <Text style={styles.bottomButtonText}>Continuar</Text>
                                 </View>
                             </TouchableWithoutFeedback>
-                            <TouchableWithoutFeedback onPress={() => /*onComplete()*/ console.log(dataR)}>
+                            <TouchableWithoutFeedback onPress={() => onComplete()}>
                                 <View style={styles.bottomButton}>
                                     <Text style={styles.bottomButtonText}>Completar</Text>
                                 </View>

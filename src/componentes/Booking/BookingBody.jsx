@@ -21,7 +21,7 @@ const BookingBody = () => {
     const [selectedLevels, setSelectedLevels] = useState('|');
     const [selectedDates, setSelectedDates] = useState();
     const [complete, setComplete] = useState(false);
-
+ 
     const { bookApplications, load } = applicationController();
 
     useEffect(() => {

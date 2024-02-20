@@ -3,7 +3,6 @@ import { View, Text, TouchableWithoutFeedback, StyleSheet, Alert, Dimensions, Im
 
 import theme from "../../theme";
 import ComponenstListModal from "./ComponentsListModal";
-import { clickProps } from "react-native-web/dist/cjs/modules/forwardedProps";
 
 function ComponenstListCards({ data, onAdd, onRemove }) {
     const [modal, setModal] = useState(false); 

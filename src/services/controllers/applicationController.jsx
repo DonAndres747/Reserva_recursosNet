@@ -8,7 +8,7 @@ import ApplicationModel from "../models/applicationModel.js";
 
 export default function applicationController() {
     const applicationModel = new ApplicationModel();
-    const [load, setLoad] = useState(false)
+    const [load, setLoad] = useState(false);
     const navigation = useNavigation();
 
     const bookApplications = async (ApplicationData) => {

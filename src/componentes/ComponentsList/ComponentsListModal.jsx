@@ -11,18 +11,18 @@ function ComponenstListModal({ component, visible, onClose, onAdd, onRemove }) {
     }, [visible])
 
 
-    handleAdd = (component2) => {
+    handleAdd = () => {
         const temp = [...selectedComponent];
 
         const formatedReq = JSON.parse(`
         {
-          "recid": "${component2.id}",
-          "recTittle": "${component2.name}",
-          "recDesc": "${component2.description}",
-          "recprice": "${component2.rate}" 
+          "comp_id": "${component.id}",
+          "recTittle": "${component.name}",
+          "recDesc": "${component.description}",
+          "recprice": "${component.rate}" 
         }`)
 
-        temp.push(formatedReq);
+        temp.push(formatedReq)
         setSelectedComponent(temp);
         onAdd(temp);
     }
@@ -50,7 +50,7 @@ function ComponenstListModal({ component, visible, onClose, onAdd, onRemove }) {
                             </Text>
                         </View>
                         <View style={styles.buttons}>
-                            <TouchableWithoutFeedback onPress={() => { handleAdd(component) }} >
+                            <TouchableWithoutFeedback onPress={() => { handleAdd() }} >
                                 <View style={[styles.button, styles.buttonOra]}>
                                     <Text style={styles.buttonText}>
                                         Añadir

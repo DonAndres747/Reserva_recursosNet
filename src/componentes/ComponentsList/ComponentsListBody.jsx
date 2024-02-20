@@ -10,18 +10,19 @@ import ComponenstListCards from "./ComponentsListCards";
 import ComponenstListComplete from "./ComponentsListComplete";
 
 function ComponenstListBody({ solTyp, compList }) {
-    const { getComponentsByType } = componentController();
+    const { getComponentsByType, bookComponents } = componentController();
     const [components, setComponents] = useState();
     const [complete, setComplete] = useState(false);
     const [selectedComponent, setSelectedComponent] = useState([]);
 
+
     useEffect(() => {
         getComponentsByType({ solTyp: solTyp, compList: compList })
-            .then((response) => {
+            .then((response) => { 
                 setComponents(response.data)
             })
     }, [])
- 
+
 
     handleSelected = (selected) => {
         setSelectedComponent(selected);
@@ -34,11 +35,12 @@ function ComponenstListBody({ solTyp, compList }) {
 
 
     const handleBooking = async () => {
-        setComplete(false)
+        bookComponents(selectedComponent)
+        setComplete(false);
     }
 
 
-    const sendRequest = () => {
+    const openComplete = () => {
         if (selectedComponent.length >= 1) {
             handleComplete();
         } else {
@@ -52,7 +54,7 @@ function ComponenstListBody({ solTyp, compList }) {
             <TittleStyle fontColor='Orange' text="subtittle" >Seleccione los componentes deseados</TittleStyle>
             <ComponenstListCards data={components} onAdd={(selected) => { handleSelected(selected) }} onRemove={selectedComponent} />
             <View style={styles.buttons}>
-                <TouchableWithoutFeedback onPress={() => sendRequest()}>
+                <TouchableWithoutFeedback onPress={() => openComplete()}>
                     <View>
                         <ButtonStyle view="action" >{Platform.OS == "ios" ? "Finalizar" : "Completar"}</ButtonStyle>
                     </View>
