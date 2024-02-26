@@ -17,6 +17,7 @@ function ResourceCard({ onSelect, data }) {
     const [bookDates, setBookDates] = useState([]);
     const currentDate = new Date();
     currentDate.setDate(currentDate.getDate() + 5);
+    const [multiSelect, setMultiSelect] = useState([])
 
 
     const { getResourceBookDays } = resourceController();
@@ -65,6 +66,27 @@ function ResourceCard({ onSelect, data }) {
         dateRanges[index] = ('');
         setSelectedDateRange(dateRanges);
         toggleItem(index);
+    }
+
+    const handleMultiSelect = (id) => {
+        const temp = [...multiSelect]
+        if (temp.length > 0) {
+            const index = temp.findIndex(element => element.rsce_id == id);
+            if (index >= 0) {
+                temp.splice(index, 1)
+            } else {
+                temp.push(JSON.parse(`{"rsce_id":"${id}"}`))
+            }
+        } else {
+            temp.push(JSON.parse(`{"rsce_id":"${id}"}`))
+        }
+
+        setMultiSelect(temp);
+    }
+
+    const isSelect = (id) => {
+        const index = multiSelect.findIndex(element => element.rsce_id == id) + 1;
+        return index > 0 ? styles[`multi${index}`] : styles.notSelected;
     }
 
 
@@ -224,75 +246,77 @@ function ResourceCard({ onSelect, data }) {
     const card = () => {
         try {
             return resources.map((element, index) => (
-                < View key={element.user_id} style={styles.card} >
-                    <Image source={require('../../assets/profile2.png')} style={styles.pict} />
-                    <Text style={styles.resourceName}>
-                        {element.first_name}
-                        {" "}
-                        {element.last_name}
-                    </Text>
-                    <Text style={styles.resourceLevel}>
-                        {element.long_dsc}
-                    </Text>
-                    <Text style={styles.resourceDescription}>
-                        {element.description}
-                    </Text>
-                    <TouchableWithoutFeedback onPress={() => {
-                        toggleItem(index);
-                        getBookDays(index);
-                    }}>
-                        <View  >
-                            <ButtonStyle>Agregar</ButtonStyle>
-                        </View>
-                    </TouchableWithoutFeedback>
-
-                    <View >
-                        <Modal
-                            animationType="slide"
-                            transparent={true}
-                            visible={calendars[index]}
-                            onRequestClose={() => {
-                                toggleItem(index)
-                            }}
-                        >
-                            <View style={styles.centeredView}>
-                                <Calendar
-                                    style={styles.modalView}
-                                    minDate={currentDate.toISOString().split('T')[0]}
-                                    theme={{
-                                        monthTextColor: theme.colors.naranjaNet
-
-                                    }}
-                                    disableAllTouchEventsForDisabledDays={true}
-                                    onDayPress={(date) => (selectDates(index, date.dateString, element.user_id))}
-                                    markingType="period"
-                                    markedDates={{
-                                        ...bookDates,
-                                        ...selectedDateRange[index]
-                                    }}
-
-                                />
-                                <View style={styles.calendarButtons}>
-                                    <TouchableWithoutFeedback onPress={() => cancelDates(index)}>
-                                        <View style={styles.calendarButton}>
-                                            <Text style={styles.calendarButtonText}>
-                                                Cancelar
-                                            </Text>
-                                        </View>
-                                    </TouchableWithoutFeedback>
-                                    <TouchableWithoutFeedback onPress={() => saveDates(index)}>
-                                        <View style={styles.calendarButton}>
-                                            <Text style={styles.calendarButtonText}>
-                                                Aceptar
-                                            </Text>
-                                        </View>
-                                    </TouchableWithoutFeedback>
-                                </View>
+                <TouchableWithoutFeedback key={element.user_id} onLongPress={() => handleMultiSelect(element.user_id)} >
+                    < View key={element.user_id} style={[styles.card, isSelect(element.user_id)]}  >
+                        <Image source={require('../../assets/profile2.png')} style={styles.pict} />
+                        <Text style={styles.resourceName}>
+                            {element.first_name}
+                            {" "}
+                            {element.last_name}
+                        </Text>
+                        <Text style={styles.resourceLevel}>
+                            {element.long_dsc}
+                        </Text>
+                        <Text style={styles.resourceDescription}>
+                            {element.description}
+                        </Text>
+                        <TouchableWithoutFeedback onPress={() => {
+                            toggleItem(index);
+                            getBookDays(index);
+                        }}>
+                            <View  >
+                                <ButtonStyle>Agregar {multiSelect.length > 0 ? multiSelect.length : ""}</ButtonStyle>
                             </View>
-                        </Modal>
+                        </TouchableWithoutFeedback>
 
+                        <View >
+                            <Modal
+                                animationType="slide"
+                                transparent={true}
+                                visible={calendars[index]}
+                                onRequestClose={() => {
+                                    toggleItem(index)
+                                }}
+                            >
+                                <View style={styles.centeredView}>
+                                    <Calendar
+                                        style={styles.modalView}
+                                        minDate={currentDate.toISOString().split('T')[0]}
+                                        theme={{
+                                            monthTextColor: theme.colors.naranjaNet
+
+                                        }}
+                                        disableAllTouchEventsForDisabledDays={true}
+                                        onDayPress={(date) => (selectDates(index, date.dateString, element.user_id))}
+                                        markingType="period"
+                                        markedDates={{
+                                            ...bookDates,
+                                            ...selectedDateRange[index]
+                                        }}
+
+                                    />
+                                    <View style={styles.calendarButtons}>
+                                        <TouchableWithoutFeedback onPress={() => cancelDates(index)}>
+                                            <View style={styles.calendarButton}>
+                                                <Text style={styles.calendarButtonText}>
+                                                    Cancelar
+                                                </Text>
+                                            </View>
+                                        </TouchableWithoutFeedback>
+                                        <TouchableWithoutFeedback onPress={() => saveDates(index)}>
+                                            <View style={styles.calendarButton}>
+                                                <Text style={styles.calendarButtonText}>
+                                                    Aceptar
+                                                </Text>
+                                            </View>
+                                        </TouchableWithoutFeedback>
+                                    </View>
+                                </View>
+                            </Modal>
+
+                        </View>
                     </View>
-                </View>
+                </TouchableWithoutFeedback>
             ))
         } catch (error) {
             return <Text>No data found {":("}</Text>
@@ -341,7 +365,6 @@ const styles = StyleSheet.create({
         height: autoHeight(46),
         marginHorizontal: 10,
         marginVertical: 12,
-        backgroundColor: "white",
         justifyContent: "center"
     },
     pict: {
@@ -400,7 +423,16 @@ const styles = StyleSheet.create({
         justifyContent: "space-evenly",
         alignContent: 'center',
         width: autoWidth(75)
-    }
+    },
+    notSelected: { backgroundColor: "white" },
+    multi1: { backgroundColor: "#a9cce3" },  
+    multi2: { backgroundColor: "#a2d9ce" }, 
+    multi3: { backgroundColor: "#f1948a" },  
+    multi4: { backgroundColor: "#f7dc6f" },   
+    multi5: { backgroundColor: "#d7bde2" }   
+
+
+
 });
 
 export default ResourceCard;
