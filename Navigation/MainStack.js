@@ -128,6 +128,12 @@ export default function HomeSegments() {
                     <Stack.Screen
                         name='ResourceList'
                         component={ResourceListScreen}
+                        /*
+                            PENDIENTE REMPLAZAR ASYNC STORAGE POR ESO PARA REALIZAR LAS PETICIONES
+                        options={({ route }) => ({
+                            solTyp: route.params.solTyp,
+                            compList: route.params.compList
+                        })}*/
                     />
                     <Stack.Screen
                         name='ComponentsList'

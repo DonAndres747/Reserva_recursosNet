@@ -24,7 +24,7 @@ function ResourceListBody() {
             try {
                 parsedData.result.status == 404 ? setResources(parsedData.result.status) : setResources(parsedData.result.data);
             } catch (error) {
-
+                return false
             }
         }
 
@@ -56,9 +56,12 @@ function ResourceListBody() {
 
     const saveData = async () => {
         let formatedRecs = []
+        console.log(selectedRecs);
         selectedRecs.map((rec) => {
+            console.log(rec[0]);
             if (rec[0]) {
                 rec.map((rec2) => {
+                    console.log(rec2);
                     formatedRecs.push(rec2);
                 })
             } else {
