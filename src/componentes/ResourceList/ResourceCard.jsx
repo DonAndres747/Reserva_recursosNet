@@ -32,6 +32,7 @@ function ResourceCard({ onSelect, data }) {
             setSelectedDateRange(Array(data.length + 1).fill(''));
             (typeof (data)) ? seDataG(false) : ""
         } catch (error) {
+            seDataG(false)
         }
 
     }, [data])
@@ -334,7 +335,6 @@ function ResourceCard({ onSelect, data }) {
     const multiSelectEach = (index, date, resource_id, selectedLoop, dateEach) => {
 
         udpatedDates = selectedLoop ? [...selectedLoop] : [...resourceDates];
-
         udpatedDates[index].start == 'false' && udpatedDates[index].start != undefined ? udpatedDates[index] = JSON.parse(`{"rsce_id":"${resource_id}", "start":"${date}", "end":"false"}`) :
             udpatedDates[index].end == 'false' ? udpatedDates[index] = JSON.parse(`{"rsce_id":"${resource_id}", "start":"${udpatedDates[index].start}", "end":"${date}"}`) :
                 udpatedDates[index].start != undefined ? udpatedDates[index] = JSON.parse(`{"rsce_id":"${resource_id}", "start":"${udpatedDates[index].start}", "end":"${date}"}`) :
@@ -348,7 +348,7 @@ function ResourceCard({ onSelect, data }) {
 
         if (udpatedDates[index].end != 'false') {
             const endArr = udpatedDates[index].length ? udpatedDates[index][udpatedDates[index].length - 1].end : udpatedDates[index].end;
-            const startArr = udpatedDates[index].length ? udpatedDates[index][0].start : udpatedDates[index].start; 
+            const startArr = udpatedDates[index].length ? udpatedDates[index][0].start : udpatedDates[index].start;
 
             for (let currentDate = new Date(startArr); currentDate <= new Date(endArr); currentDate.setDate(currentDate.getDate() + 1)) {
                 const dateString = currentDate.toISOString().split('T')[0];
@@ -405,9 +405,6 @@ function ResourceCard({ onSelect, data }) {
             const b = Object.entries(selectedDates).filter(([key, value]) => !value.disableTouchEvent)
             const c = Object.entries(selectedDates).filter(([key, value]) => value.disableTouchEvent)
 
-            console.log("b", Object.keys(selectedDates).filter(([key, value]) => !value.disableTouchEvent));
-            console.log("c", Object.keys(selectedDates).filter(([key, value]) => value.disableTouchEvent));
-            console.log("1", udpatedDates[index]);
             if (c.length >= 1) {
                 const rangos = [];
                 let rangoActual = [];
@@ -441,7 +438,6 @@ function ResourceCard({ onSelect, data }) {
                     const fechasObjeto = rango.map(fecha => new Date(fecha));
                     const fechaMaxima = new Date(Math.max.apply(null, fechasObjeto)).toISOString().split('T')[0];
                     const fechaMinima = new Date(Math.min.apply(null, fechasObjeto)).toISOString().split('T')[0];
-                    //Inicializar newDates con el udpatedDates si ya tiene un lenght para que solo formatee el ultimo
                     newDates += `{"rsce_id":"${resource_id}", "start":"${fechaMinima}", "end":"${fechaMaxima}"}+`
                 })
                 newDates = newDates.split("+")
@@ -472,8 +468,8 @@ function ResourceCard({ onSelect, data }) {
                 endingDay: true
             };
         }
- 
-        udpatedDates[index] = (newDates  ? newDates : udpatedDates[index]);
+
+        udpatedDates[index] = (newDates ? newDates : udpatedDates[index]);
 
         dateRanges = dateEach ? [...dateEach] : [...selectedDateRange];
         dateRanges[index] = (selectedDates);
@@ -486,7 +482,7 @@ function ResourceCard({ onSelect, data }) {
         let days = await getResourceBookDays(resources[index])
         const bookDates = {};
 
-        days.forEach((date) => {
+        days ? days.forEach((date) => {
             const startDate = new Date(date.start);
             const endDate = new Date(date.end);
 
@@ -494,7 +490,7 @@ function ResourceCard({ onSelect, data }) {
                 const dateString = currentDate.toISOString().split('T')[0];
                 bookDates[dateString] = { selected: true, disableTouchEvent: true, textColor: "#cf010b", color: "white" };
             }
-        });
+        }) : "";
 
         setBookDates(bookDates);
     }
@@ -505,7 +501,7 @@ function ResourceCard({ onSelect, data }) {
         const promises = multiSelect.map(async (element, i) => {
             let days = await getResourceBookDays(resources[element.index]);
 
-            days.forEach((date) => {
+            days ? days.forEach((date) => {
                 const startDate = new Date(date.start);
                 const endDate = new Date(date.end);
                 for (let currentDate = startDate; currentDate <= endDate; currentDate.setDate(currentDate.getDate() + 1)) {
@@ -528,11 +524,16 @@ function ResourceCard({ onSelect, data }) {
                         );
                     }
                 }
-            });
+            }) : "";
         });
 
         await Promise.all(promises);
         setBookDates(bookDates);
+    }
+
+    const disableButton = (id) => {
+        const temp = multiSelect.find(element => element.rsce_id == id) 
+        return temp ? false : true;
     }
 
     const card = () => {
@@ -557,11 +558,21 @@ function ResourceCard({ onSelect, data }) {
                             {element.description}
                         </Text>
                         <TouchableWithoutFeedback onPress={() => {
-                            toggleItem(index);
-                            multiSelect.length > 0 ? getMultiBookDays() : getBookDays(index);
+                            if (multiSelect.length > 0) {
+                                if (!disableButton(element.user_id)) {
+                                    toggleItem(index);
+                                    multiSelect.length > 0 ? getMultiBookDays() : getBookDays(index);
+                                } else {
+                                    return false
+                                }
+                            } else {
+                                toggleItem(index);
+                                multiSelect.length > 0 ? getMultiBookDays() : getBookDays(index);
+                            }
+
                         }}>
-                            <View  >
-                                <ButtonStyle>Agregar {multiSelect.length > 0 ? multiSelect.length : ""}</ButtonStyle>
+                            <View>
+                                <ButtonStyle disable={multiSelect.length > 0 ? disableButton(element.user_id) : false}>Agregar {multiSelect.length > 0 ? multiSelect.length : ""}</ButtonStyle>
                             </View>
                         </TouchableWithoutFeedback>
 
@@ -611,8 +622,8 @@ function ResourceCard({ onSelect, data }) {
                             </Modal>
 
                         </View>
-                    </View>
-                </TouchableWithoutFeedback>
+                    </View >
+                </TouchableWithoutFeedback >
             ))
         } catch (error) {
             return <Text>No data found {":("}</Text>

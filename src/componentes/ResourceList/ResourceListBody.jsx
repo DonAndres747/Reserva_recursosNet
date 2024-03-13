@@ -55,10 +55,8 @@ function ResourceListBody() {
     };
 
     const saveData = async () => {
-        let formatedRecs = []
-        console.log(selectedRecs);
-        selectedRecs.map((rec) => {
-            console.log(rec[0]);
+        let formatedRecs = [] 
+        selectedRecs.map((rec) => { 
             if (rec[0]) {
                 rec.map((rec2) => {
                     console.log(rec2);

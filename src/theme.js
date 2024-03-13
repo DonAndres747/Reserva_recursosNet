@@ -3,8 +3,10 @@ const theme = {
     colors: {
         blanco: '#fff',
         azulNet: 'rgb(0, 38, 58)',
+        azulNetDisable: 'rgb(65, 89, 102)',
         azulNetTransp: 'rgba(0, 38, 58, 0.8)',
         naranjaNet: 'rgb(255,103,29)',
+        naranjaNetDisable: 'hsl(24, 100%, 55%)',
         naranjaNetTransp: 'rgba(255, 103, 29, 0.8)',
         blancoNetTransp: 'rgba( 255, 255, 255, 0.8)',
     },
