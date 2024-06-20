@@ -1,4 +1,4 @@
-import db from "../../../config.json";
+import db from "../../../config.json"
 
 class UserModel {
   constructor(first_name, last_name, company_id, phone, email, password, password2, country_id) {

@@ -7,7 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 //pantallas
 import MainScreen from "../src/screens/MainScreen.jsx";
-import LoginScreen from '../src/screens/LoginScreen.jsx';
+import LoginScreen from "../src/screens/loginScreen.jsx" ;
 import RegistryScreen from "../src/screens/RegistryScreen.jsx";
 import RecoverScreen from "../src/screens/RecoverScreen.jsx";
 import HomeScreen from "../src/screens/HomeScreen.jsx";

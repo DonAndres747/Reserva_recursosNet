@@ -51,12 +51,13 @@ function ResourceListBody() {
     }, [reCharge]);
 
     const handleselectedRec = (items) => {
+        console.log(items);
         setSelectedRecs(items)
     };
 
     const saveData = async () => {
-        let formatedRecs = [] 
-        selectedRecs.map((rec) => { 
+        let formatedRecs = []
+        selectedRecs.map((rec) => {
             if (rec[0]) {
                 rec.map((rec2) => {
                     console.log(rec2);
