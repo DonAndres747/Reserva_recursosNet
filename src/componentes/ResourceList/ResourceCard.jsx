@@ -11,7 +11,7 @@ import theme from "../../theme";
 
 let a = null
 
-function ResourceCard({ onSelect, data }) {
+function ResourceCard({ onSelect, data, onComplete }) {
     const [resources, setResources] = useState();
     const [dataG, seDataG] = useState(true);
     const [calendars, setCalendars] = useState([]);
@@ -55,9 +55,10 @@ function ResourceCard({ onSelect, data }) {
 
         if (updatedDates[index].end == "false") {
             updatedDates[index] = JSON.parse(`{"rsce_id":"${updatedDates[index].rsce_id}", "start":"${updatedDates[index].start}", "end":"${updatedDates[index].start}"}`)
+            updatedDates[index].extraOrd = checked[index]
             setResourceDates(updatedDates);
         }
-        onSelect((updatedDates.filter(item => item.rsce_id !== "false")))
+        onSelect(updatedDates.filter(item => item.rsce_id !== "false"))
 
         return updatedDates
     }
@@ -68,6 +69,7 @@ function ResourceCard({ onSelect, data }) {
                 Alert.alert("Por favor seleccione una fecha")
             } else {
                 saveDatesPerIndex(index)
+                handleComplete(index)
                 toggleItem(index);
             }
         } else {
@@ -84,9 +86,9 @@ function ResourceCard({ onSelect, data }) {
                     multiSelect.forEach(selected => {
                         //verifica si la fecha ha marca sido marcada como reservada por algun recurso independientemente de cual sea
                         if (bookDates[dateString]) {
-                            //verifica si el recurso iterado tiene disponible la fecha o si es un recurso extraordinario  
-                            if (!(bookDates[dateString].periods.find(id => id.user_id == selected.rsce_id)) /* || checked[selected.index] */) {
-                                //si se cumplen alguna de estas 2 condiciones la fecha se reserva para el recurso   
+                            //verifica si el recurso iterado tiene disponible la fecha o si es un recurso extraordinario   
+                            if (!(bookDates[dateString].periods.find(id => id.user_id == selected.rsce_id)) || checked[selected.index]) {
+                                //si se cumplen alguna de estas 2 condiciones la fecha se reserva para el recurso     
                                 result = multiSelectEach(selected.index, dateString, selected.rsce_id, selectedLoop, dateEach)
                                 selectedLoop = result.selectedLoop
                                 dateEach = result.dateEach
@@ -101,6 +103,7 @@ function ResourceCard({ onSelect, data }) {
                 }
 
                 if (selectedLoop) {
+
                     selectedLoop.pop()
                     dateEach.pop()
                     setSelectedDateRange(dateEach);
@@ -121,6 +124,13 @@ function ResourceCard({ onSelect, data }) {
 
     const cancelDates = (index, refresh) => {
         const updatedDates = [...resourceDates];
+        if (multiSelect.length > 0) {
+            //formatea todas las fechas de los recursos seleccionados 
+            multiSelect.forEach(rec => {
+                return updatedDates[rec.index] = { "end": "false", "rsce_id": "false", "start": "false" };
+            })
+        }
+        //si la condicion es cierta resetea ultimo valor de resource el cual se usa para seleccion multiple
         updatedDates[multiSelect.length > 0 ? resources.length : index] = JSON.parse(`{"rsce_id":"false", "start":"false", "end":"false"}`);
         setResourceDates(updatedDates);
         onSelect((updatedDates.filter(item => item.rsce_id !== "false")))
@@ -199,7 +209,7 @@ function ResourceCard({ onSelect, data }) {
                     const prev = (new Date(prevDate.setDate(prevDate.getDate() - 1)).toISOString().split('T')[0])
 
                     //verifica si prev esta reservado si no formatea como dia inicio
-                    if ((Object.keys(bookDates).filter(key => key == prev)) == "" &&  selectedDates[prev] ) {
+                    if ((Object.keys(bookDates).filter(key => key == prev)) == "" && selectedDates[prev]) {
                         selectedDates[prev] = {
                             selected: true,
                             selectedColor: theme.colors.naranjaNet,
@@ -430,8 +440,7 @@ function ResourceCard({ onSelect, data }) {
             }
 
             const b = Object.entries(selectedDates).filter(([key, value]) => !value.disableTouchEvent)
-            const c = Object.entries(selectedDates).filter(([key, value]) => value.disableTouchEvent) 
-
+            const c = Object.entries(selectedDates).filter(([key, value]) => value.disableTouchEvent)
             //verifica si hay fechas reservadas y si no el recurso a formatear no es extraordinario
             if (c.length >= 1 && !checked[index]) {
                 const rangos = [];
@@ -488,7 +497,6 @@ function ResourceCard({ onSelect, data }) {
             } else if (checked[index]) {
                 updatedDates[index].extraOrd = checked[index]
             }
-
         } else if (updatedDates[index].start != 'false') {
             selectedDates[updatedDates[index].start] = {
                 selected: true,
@@ -497,6 +505,7 @@ function ResourceCard({ onSelect, data }) {
                 selectedColor: theme.colors.naranjaNet,
                 endingDay: true
             };
+            updatedDates[index].extraOrd = checked[index]
         }
 
         updatedDates[index] = (newDates ? newDates : updatedDates[index]);
@@ -527,6 +536,12 @@ function ResourceCard({ onSelect, data }) {
     }
 
     const getMultiBookDays = async () => {
+
+        //resetea las fechas par los recursos seleccionados 
+        multiSelect.forEach(rec => {
+            cancelDates(rec.index, true)
+        })
+
         setBookDates();
         let bookDates = {};
         const promises = multiSelect.map(async (element, i) => {
@@ -639,7 +654,11 @@ function ResourceCard({ onSelect, data }) {
 
         const names = []
         data2.forEach(resc => {
-            names.push({ name1: (resc.first_name + " " + resc.last_name), idx: multiSelect.findIndex(a => a.rsce_id == resc.user_id) + 1, recIndex: multiSelect.filter(a => a.rsce_id == resc.user_id)[0].index });
+            names.push({
+                name1: (resc.first_name + " " + resc.last_name),
+                idx: multiSelect.findIndex(a => a.rsce_id == resc.user_id) + 1,
+                recIndex: multiSelect.filter(a => a.rsce_id == resc.user_id)[0].index
+            });
         });
 
         return names
@@ -818,8 +837,9 @@ function ResourceCard({ onSelect, data }) {
                 open={handleComplete}
                 show={complete}
                 data={resourceDates}
-                onRemove={setResourceDates}
+                onRemove={cancelDates}
                 resourceInfo={resources}
+                onComplete={() => { onComplete() }}
             />
         </View >
     );

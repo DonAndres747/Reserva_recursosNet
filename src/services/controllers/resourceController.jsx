@@ -58,91 +58,136 @@ export default function resourceController() {
 
     const bookResource = async (resource, selectedRecs) => {
         try {
-            const user = JSON.parse(await AsyncStorage.getItem("result"));
-            const skills = await AsyncStorage.getItem("skills");
-            let temp = (Array(selectedRecs.length).fill(""));
-            selectedRecs.map((items, index) => {
-                temp[index] = JSON.parse(`{"end": "${items.end}", "rsce_id": "${items.rsce_id}", "start": "${items.start}", "user_id":"${user.id}", "selected_skills":"${skills}"}`)
-            });
+            const [user, skills, token] = await Promise.all([
+                AsyncStorage.getItem("result").then(JSON.parse),
+                AsyncStorage.getItem("skills"),
+                AsyncStorage.getItem("token")
+            ]);
 
-            const token = await AsyncStorage.getItem("token");
+            const temp = selectedRecs.map(items => ({
+                end: items.end,
+                rsce_id: items.rsce_id,
+                start: items.start,
+                user_id: user.id,
+                selected_skills: skills
+            }));
+
             const response = await resourceModel.bookResource(token, temp);
             const result = await response.json();
+            let alertResponse = {}
 
             switch (response.status) {
                 case 401:
-                    AsyncStorage.clear();
-                    Alert.alert(
-                        'La sesión ha expirado',
-                        ' ',
-                        [
-                            {
-                                text: 'Aceptar',
-                                onPress: () => {
-                                    navigation.navigate('Login');
-                                },
-                            },
-                        ]
-                    );
+                    await AsyncStorage.clear();
+                    Alert.alert('La sesión ha expirado', '', [{ text: 'Aceptar', onPress: () => navigation.navigate('Login') }]);
                     break;
 
                 case 201:
-                    AsyncStorage.removeItem('skills');
-                    AsyncStorage.removeItem('level');
-                    Alert.alert(
-                        'Recursos reservados exitosamente',
-                        ' ',
-                        [
-                            {
-                                text: 'Aceptar',
-                                onPress: () => {
-                                    navigation.navigate('Home');
-                                },
-                            },
-                        ]
-                    );
+                    await AsyncStorage.multiRemove(['skills', 'level']);
+                    // Alert.alert('Recursos reservados exitosamente', '', [{ text: 'Aceptar', onPress: () => navigation.navigate('Home') }]);
+                    alertResponse = { tittle: 'Recursos reservados exitosamente', status: "ok" }
                     break;
 
                 case 400:
-                    Alert.alert('Los recursos no pudieron ser reservados    :(', ' ', [
-                        {
-                            text: 'Aceptar',
-                        },
-                    ]);
+                    // Alert.alert('Los recursos no pudieron ser reservados :(', '', [{ text: 'Aceptar' }]);
+                    alertResponse = { tittle: "Los recursos no pudieron ser reservados :(", status: "Error" }
                     break;
 
                 default:
                     break;
             }
 
-
-
             if (result.failedResults) {
-                const failedResourceNames = result.failedResults.map((res) => {
-                    const matchingResource = resource.find(rec => res.user_id == rec.resource_id);
-                    if (matchingResource) {
-                        return matchingResource.first_name + ' ' + matchingResource.last_name;
-                    }
-                });
+                const failedResourceNames = result.failedResults.map(res => {
+                    const matchingResource = resource.find(rec => res.rsce_id == rec.rsce_id);
+                    return matchingResource ? `${matchingResource.first_name} ${matchingResource.last_name}` : null;
+                }).filter(Boolean);
 
-                console.log('Failed Resource Names:', failedResourceNames);
+                // Alert.alert('Los siguientes recursos no pudieron ser reservados',
+                //     failedResourceNames.join('\n') + '\n\ntodos los demás fueron reservados exitosamente',
+                //     [{ text: 'Aceptar' }]);
 
-                Alert.alert('Los siguientes recursos no pudieron ser reservados'
-                    , failedResourceNames.join('\n') + '\n\ntodos los demas fueron reservados exitosamente',
-                    [
-                        {
-                            text: 'Aceptar'
-                        }
-                    ]);
+                alertResponse = {
+                    tittle: 'Los siguientes recursos no pudieron ser reservados',
+                    body: failedResourceNames.join('\n') + '\n\ntodos los demás fueron reservados exitosamente',
+                    status: "ok"
+                }
+
             }
 
-            console.log(response.status);
-
+            return alertResponse
         } catch (error) {
             console.error("Error fetching data:", error);
-            return error
         }
-    }
+    };
 
-    return { getResourcesBySkill, onChange, setResourceModelData, bookResource, getResourceBookDays, resourceModelData };
+    const extraRequest = async (extraData) => {
+        try {
+            const [user, token] = await Promise.all([
+                AsyncStorage.getItem("result").then(JSON.parse),
+                AsyncStorage.getItem("token")
+            ]);
+
+            const temp = extraData.map(items => ({
+                end: items.end,
+                rsce_id: items.rsce_id,
+                start: items.start,
+                user_id: user.id
+            }));
+
+            const response = await resourceModel.extraRequest(token, temp);
+            const result = await response.json();
+            let alertResponse = {}
+
+            console.log(response.status);
+            switch (response.status) {
+                case 401:
+                    await AsyncStorage.clear();
+                    Alert.alert('La sesión ha expirado', '', [{ text: 'Aceptar', onPress: () => navigation.navigate('Login') }]);
+                    break;
+
+                case 201:
+                    // Alert.alert('Solicitud extraordinaria procesada exitosamente', '', [{ text: 'Aceptar', onPress: () => navigation.navigate('Home') }]);
+                    alertResponse = { tittle: 'Solicitud extraordinaria procesada exitosamente', status: "ok" }
+                    break;
+
+                case 400:
+                    // Alert.alert('La solicitud no pudo ser procesada :(', '', [{ text: 'Aceptar' }]);
+                    alertResponse = { tittle: 'La solicitud no pudo ser procesada :(', status: "Error" }
+                    break;
+
+                case 404:
+                    // Alert.alert('La solicitud no pudo ser procesada :(', '', [{ text: 'Aceptar' }]);
+                    alertResponse = { tittle: 'Los dias reservados corresponden al solicitante ', status: "Error" }
+                    break;
+
+                default:
+                    break;
+            }
+
+            if (result.failedResults) {
+                const failedResourceNames = result.failedResults.map(res => {
+                    const matchingResource = resource.find(rec => res.rsce_id == rec.rsce_id);
+                    return matchingResource ? `${matchingResource.first_name} ${matchingResource.last_name}` : null;
+                }).filter(Boolean);
+
+                // Alert.alert('Los siguientes recursos no pudieron ser reservados',
+                //     failedResourceNames.join('\n') + '\n\npara solicitud extraordinaria',
+                //     [{ text: 'Aceptar' }]);
+
+                alertResponse = {
+                    tittle: 'Los siguientes recursos no pudieron ser reservados',
+                    body: failedResourceNames.join('\n') + '\n\ntodos los demás fueron reservados exitosamente',
+                    status: "ok"
+                }
+            }
+
+            // console.log(response.status);
+            return alertResponse
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+
+    return { getResourcesBySkill, onChange, setResourceModelData, bookResource, getResourceBookDays, extraRequest, resourceModelData };
 }

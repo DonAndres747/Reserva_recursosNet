@@ -6,23 +6,23 @@ import theme from "../../theme";
 import TittleStyle from "../tittlesStyle";
 
 
-export default function ResouceListComplete({ data, open, show, onRemove, resourceInfo }) {
+export default function ResouceListComplete({ data, open, show, onRemove, resourceInfo, onComplete }) {
     const [dataR, setDataR] = useState(data);
 
     useEffect(() => {
         setDataR(data)
     }, [show])
 
-    const remove = (index) => {
+    const remove = async (index, recid) => {
         const newData = [...dataR]
         newData.splice(index, 1);
         setDataR(newData);
-        onRemove(newData);
+        await onRemove(resourceInfo.findIndex((resource) => resource.user_id == recid), true);
         newData.length < 1 ? open() : "";
     }
 
     const getNames = (id) => {
-        const { first_name, last_name } = resourceInfo.find((resource) => resource.user_id == id)
+        const { first_name, last_name } = resourceInfo.find((resource) => resource.user_id == id) || { first_name: null, last_name: null }
         return first_name + " " + last_name
     }
 
@@ -51,7 +51,7 @@ export default function ResouceListComplete({ data, open, show, onRemove, resour
                             <View style={[styles.tableHeader, , { borderTopEndRadius: 5 }]}>
                             </View>
                         </View>
-                        {dataR.map((recD, index) => (
+                        {dataR.map((recD, index) => (recD.rsce_id != "false" ?
                             < View key={index} style={styles.tableRows} >
                                 <View key={index} style={[styles.tableCell, styles.tittle, index % 2 === 0 ? styles.tableCellEven : styles.tableCellOdd, index == (data.length - 1) ? { borderBottomLeftRadius: 5 } : ""]}>
                                     <Text key={index} style={styles.tittle}>
@@ -66,18 +66,23 @@ export default function ResouceListComplete({ data, open, show, onRemove, resour
                                     }
                                 </View>
                                 <View style={[styles.tableCell, index % 2 === 0 ? styles.tableCellEven : styles.tableCellOdd, index == (dataR.length - 1) ? { borderBottomRightRadius: 5 } : ""]}>
-                                    <TouchableWithoutFeedback onPress={() => remove(index)}>
+                                    <TouchableWithoutFeedback onPress={() => remove(index, recD.rsce_id)}>
                                         <View style={styles.removeButton}>
                                             <Icon name='delete' color={"white"} size={20}></Icon>
                                         </View>
                                     </TouchableWithoutFeedback>
                                 </View>
                             </View>
-                        ))}
+                            : ""))}
                         <View style={styles.bottomButtonsRow}>
                             <TouchableWithoutFeedback onPress={() => open()}>
                                 <View style={styles.bottomButton}>
-                                    <Text style={styles.bottomButtonText}>Aceptar</Text>
+                                    <Text style={styles.bottomButtonText}>Continuar</Text>
+                                </View>
+                            </TouchableWithoutFeedback>
+                            <TouchableWithoutFeedback onPress={() => onComplete()}>
+                                <View style={styles.bottomButton}>
+                                    <Text style={styles.bottomButtonText}>Completar</Text>
                                 </View>
                             </TouchableWithoutFeedback>
                         </View>

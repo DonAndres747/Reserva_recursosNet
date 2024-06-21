@@ -1,7 +1,10 @@
 import React from "react";
-import { View, Text, Image, StyleSheet, TouchableWithoutFeedback } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableWithoutFeedback, Alert } from "react-native";
 import theme from "../../theme";
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import { rolesConfig, rolesDefinition } from "../../helpers/rolesConfig";
 
 export default function HomeSegments({ circleV, tittle, segText, iconSrc, name }) {
 
@@ -11,8 +14,28 @@ export default function HomeSegments({ circleV, tittle, segText, iconSrc, name }
         circleV != 'false' && styles.circleColor,
     ]
 
+
+
+    const Action = async () => {
+        try {
+            const [user] = await Promise.all([
+                AsyncStorage.getItem("result").then(JSON.parse)
+            ]);
+
+            if (!name) {
+                console.log("No route provided");
+            } else if (rolesConfig[user.rol_id]?.includes(name)) {
+                navigation.navigate(name);
+            } else {
+                Alert.alert(`El modulo no se encuentra habilidata para el rol ${rolesDefinition[user.rol_id]} por el momento`);
+            }
+        } catch (error) {
+            console.error("An error occurred:", error);
+        }
+    };
+
     return (
-        <TouchableWithoutFeedback onPress={() => { name == null ? console.log("Not route provided") : [navigation.navigate(name)] }}>
+        <TouchableWithoutFeedback onPress={() => Action()}>
             <View style={[styles.container]}>
                 <View style={circle}>
                     <Image source={iconSrc} style={[styles.icon]} >
@@ -34,10 +57,10 @@ export default function HomeSegments({ circleV, tittle, segText, iconSrc, name }
 
 const styles = StyleSheet.create({
     container: {
-        alignItems: 'center', 
+        alignItems: 'center',
         width: '33%',
         height: '100%',
-        justifyContent: 'center', 
+        justifyContent: 'center',
     },
     circle: {
         width: '65%',

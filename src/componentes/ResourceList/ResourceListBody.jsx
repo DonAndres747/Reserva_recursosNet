@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TouchableWithoutFeedback, StyleSheet, Alert, Dimensions } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from '@react-navigation/native';
 
 import TittleStyle from "../tittlesStyle";
 
@@ -13,10 +14,14 @@ function ResourceListBody() {
     const [selectedRecs, setSelectedRecs] = useState([]);
     const [reCharge, setRecharge] = useState(true);
     const [resources, setResources] = useState();
+    const navigation = useNavigation();
 
-    const { onChange,
+    const {
+        onChange,
         getResourcesBySkill,
-        bookResource } = resourceController();
+        bookResource,
+        extraRequest
+    } = resourceController();
 
     useEffect(() => {
 
@@ -51,7 +56,7 @@ function ResourceListBody() {
     }, [reCharge]);
 
     const handleselectedRec = (items) => {
-        console.log(items);
+        // console.log(items);
         setSelectedRecs(items)
     };
 
@@ -60,7 +65,6 @@ function ResourceListBody() {
         selectedRecs.map((rec) => {
             if (rec[0]) {
                 rec.map((rec2) => {
-                    console.log(rec2);
                     formatedRecs.push(rec2);
                 })
             } else {
@@ -68,12 +72,29 @@ function ResourceListBody() {
             }
         })
 
-        let resource = (Array(formatedRecs.length).fill());
-        formatedRecs.map((rec, index) => {
+        let normalRec = formatedRecs.filter(rec => { return rec.extraOrd == undefined || rec.extraOrd == false })
+        let extraRec = formatedRecs.filter(rec => { return rec.extraOrd == true })
+
+        let resource = (Array(normalRec.length).fill());
+
+        normalRec.map((rec, index) => {
             resource[index] = (resources.filter(resource => resource.user_id == rec.rsce_id)[0]);
         })
 
-        bookResource(resource, formatedRecs);
+        const response = normalRec.length > 0 ? await bookResource(resource, normalRec) : "";
+        const response2 = extraRec.length > 0 ? await extraRequest(extraRec) : "";
+
+        Alert.alert(
+            (response ? response.tittle : "") + " \n" + (response2 ? response2.tittle : "") + " ",
+            (response && response.body ? response.body : "") + " \n" + (response2 && response2.body ? response2.body : ""),
+            [{
+                text: 'Aceptar',
+                onPress: () =>
+                    response?.status !== 'Error' && response2?.status !== 'Error' ?
+                        navigation.navigate('Home') :
+                        null
+            }]
+        )
     }
 
     return (
@@ -84,7 +105,7 @@ function ResourceListBody() {
             <Text style={styles.headerText}>
                 Se han identificado varios recursos que concuerdan con su solicitud,{/*💩*/} Por favor seleccione el recurso a reservar:
             </Text>
-            <ResourceCard onSelect={handleselectedRec} data={resources} />
+            <ResourceCard onSelect={handleselectedRec} data={resources} onComplete={() => { saveData() }} />
             <TouchableWithoutFeedback onPress={() => (selectedRecs != '' ? (saveData()) : Alert.alert("Ningun recurso a sido seleccionado"))}>
                 <View>
                     <ButtonStyle>
