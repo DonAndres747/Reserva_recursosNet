@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { View, Text, TouchableWithoutFeedback, StyleSheet, Alert } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { Dimensions } from 'react-native';
+
 import TittleStyle from "../tittlesStyle";
 import ComponentCBSeg from "./ComponentCBSeg";
 import ComponentTypSeg from "./ComponentTypSeg";

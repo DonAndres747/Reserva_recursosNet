@@ -14,7 +14,7 @@ export default function TittleStyle({ children, text, fontColor, fontWeight, Res
         fontColor == 'white' && styles.fontColorW,
         fontWeight == "bold" && styles.fontWeight,
         margin != "false" && styles.margins
-    ]
+    ] 
     return (
         <Text style={TittleStyle}{...RestOfProps}>
             {children}

@@ -55,8 +55,7 @@ function ResourceListBody() {
         fetchResources();
     }, [reCharge]);
 
-    const handleselectedRec = (items) => {
-        // console.log(items);
+    const handleselectedRec = (items) => { 
         setSelectedRecs(items)
     };
 
@@ -100,7 +99,7 @@ function ResourceListBody() {
     return (
         <View style={styles.container}>
             <TittleStyle text="subtittle" fontColor='blue' fontWeight="bold">
-                La disponibilidad ha sido confirmada{"   "}
+                Disponibilidad de Recursos{"   "}
             </TittleStyle>
             <Text style={styles.headerText}>
                 Se han identificado varios recursos que concuerdan con su solicitud,{/*💩*/} Por favor seleccione el recurso a reservar:

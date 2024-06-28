@@ -7,7 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 //pantallas
 import MainScreen from "../src/screens/MainScreen.jsx";
-import LoginScreen from "../src/screens/loginScreen.jsx" ;
+import LoginScreen from "../src/screens/loginScreen.jsx";
 import RegistryScreen from "../src/screens/RegistryScreen.jsx";
 import RecoverScreen from "../src/screens/RecoverScreen.jsx";
 import HomeScreen from "../src/screens/HomeScreen.jsx";
@@ -16,6 +16,7 @@ import ComponentsScreen from "../src/screens/ComponentsScreen.jsx";
 import AvailabilityScreen from "../src/screens/AvailabilityScreen.jsx";
 import ResourceListScreen from "../src/screens/ResourceListScreen.jsx";
 import ComponentsListScreen from "../src/screens/ComponentsListScreen.jsx";
+import Requestcreen from "../src/screens/RequestScreen.jsx";
 
 
 const EmptyComponent = () => <View style={{ width: 0, height: 0 }} />;
@@ -128,12 +129,12 @@ export default function HomeSegments() {
                     <Stack.Screen
                         name='ResourceList'
                         component={ResourceListScreen}
-                        /*
-                            PENDIENTE REMPLAZAR ASYNC STORAGE POR ESO PARA REALIZAR LAS PETICIONES
-                        options={({ route }) => ({
-                            solTyp: route.params.solTyp,
-                            compList: route.params.compList
-                        })}*/
+                    /*
+                        PENDIENTE REMPLAZAR ASYNC STORAGE POR ESO PARA REALIZAR LAS PETICIONES
+                    options={({ route }) => ({
+                        solTyp: route.params.solTyp,
+                        compList: route.params.compList
+                    })}*/
                     />
                     <Stack.Screen
                         name='ComponentsList'
@@ -142,6 +143,10 @@ export default function HomeSegments() {
                             solTyp: route.params.solTyp,
                             compList: route.params.compList
                         })}
+                    />
+                    <Stack.Screen
+                        name='Request'
+                        component={Requestcreen}
                     />
                 </Stack.Group>
 

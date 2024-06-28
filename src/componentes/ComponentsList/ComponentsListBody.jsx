@@ -4,10 +4,10 @@ import { View, Text, TouchableWithoutFeedback, StyleSheet, Alert, Dimensions } f
 import theme from "../../theme";
 import TittleStyle from "../tittlesStyle";
 import ButtonStyle from "../buttonsStyle";
-
-import componentController from "../../services/controllers/componentController";
 import ComponenstListCards from "./ComponentsListCards";
 import ComponenstListComplete from "./ComponentsListComplete";
+
+import componentController from "../../services/controllers/componentController";
 
 function ComponenstListBody({ solTyp, compList }) {
     const { getComponentsByType, bookComponents } = componentController();
@@ -18,7 +18,7 @@ function ComponenstListBody({ solTyp, compList }) {
 
     useEffect(() => {
         getComponentsByType({ solTyp: solTyp, compList: compList })
-            .then((response) => { 
+            .then((response) => {
                 setComponents(response.data)
             })
     }, [])

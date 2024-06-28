@@ -6,7 +6,7 @@ import theme from "../../theme";
 function ComponenstListModal({ component, visible, onClose, onAdd, onRemove }) {
     const [selectedComponent, setSelectedComponent] = useState([]);
 
-    useState(() => { 
+    useState(() => {
         setSelectedComponent(onRemove == undefined ? [] : onRemove);
     }, [visible])
 
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         alignSelf: "center",
-        backgroundColor: "white",
+        backgroundColor: theme.colors.blanco,
         justifySelf: "center",
         width: autoWidth(80),
         marginTop: "60%",

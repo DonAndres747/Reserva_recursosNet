@@ -8,6 +8,7 @@ const theme = {
         naranjaNet: 'rgb(255,103,29)',
         naranjaNetDisable: 'hsl(24, 100%, 55%)',
         naranjaNetTransp: 'rgba(255, 103, 29, 0.8)',
+        blanco: "white",
         blancoNetTransp: 'rgba( 255, 255, 255, 0.8)',
     },
     fontSizes: {
@@ -19,7 +20,8 @@ const theme = {
     },
     fontWeight: {
         buttons: 700,
-        bold: 'bold'
+        bold: 'bold',
+        semiBold: 'semibold'
     },
     width: {
         buttonCont: 190,

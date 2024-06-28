@@ -1,16 +1,17 @@
 import React from "react";
-import { View, Text, TouchableWithoutFeedback, StyleSheet } from "react-native"; 
+import { View, Text, StyleSheet } from "react-native";
 import TittleStyle from "../tittlesStyle";
 import HomeSegments from "./HomeSegments";
 import disponibilidadLogo from "../../assets/disponibilidadLogo.png";
 import ReservaLogo from "../../assets/reservaLogo.png";
 import componentesLogo from "../../assets/componentesLogo.png";
+import solicitudLogo from "../../assets/solicitudLogo.png";
 import netRewardsLogo from "../../assets/netRewardsLogo.png";
 import planificacionLogo from "../../assets/planificacionLogo.png";
 
 import theme from "../../theme";
 
-const HomeBody = () => { 
+const HomeBody = () => {
     return (
         <View style={{ flex: 4 }}>
             <View>
@@ -22,15 +23,15 @@ const HomeBody = () => {
                 </Text>
             </View>
 
-            <View style={{marginTop:5, padding:1}}>
+            <View style={{ marginTop: 5, padding: 1 }}>
                 <View style={[styles.segmentsRows]}>
                     <HomeSegments
                         tittle='Disponibilidad'
                         segText='Conoce la disponibilidad de los recursos para tus proyectos'
                         iconSrc={disponibilidadLogo}
                         name={'Disponibilidad'}
-                        firstName = {'Prov'}
-                        lastName = {'1'}
+                        firstName={'Prov'}
+                        lastName={'1'}
                     />
                     <View style={styles.separator} />
                     <HomeSegments
@@ -38,8 +39,8 @@ const HomeBody = () => {
                         segText='Reserva recursos definiendo las caracteristicas y habilidades que necesitas'
                         iconSrc={ReservaLogo}
                         name={'Booking'}
-                        firstName = {'Prov'}
-                        lastName = {'1'}
+                        firstName={'Prov'}
+                        lastName={'1'}
                     />
                     <View style={styles.separator} />
                     <HomeSegments
@@ -47,18 +48,27 @@ const HomeBody = () => {
                         segText='Conoce y adquiere componentes, servicios y addons para tus soluciones'
                         iconSrc={componentesLogo}
                         name={'Components'}
-                        firstName = {'Prov'}
-                        lastName = {'1'}
+                        firstName={'Prov'}
+                        lastName={'1'}
                     />
                 </View>
                 <View style={[styles.segmentsRows]}>
+                    <HomeSegments
+                        tittle='Soluciones'
+                        segText='Maneja tus solicitudes de manera eficiente'
+                        iconSrc={solicitudLogo}
+                        name={'Request'}
+                        firstName={'Prov'}
+                        lastName={'1'}
+                    />
+                    <View style={styles.separator} />
                     <HomeSegments
                         tittle='netRewards'
                         segText='conoce tu estatus y puntos asignados a tu cuenta'
                         iconSrc={netRewardsLogo}
                         // name={'Booking'}
-                        firstName = {'Prov'}
-                        lastName = {'1'}
+                        firstName={'Prov'}
+                        lastName={'1'}
                     />
                     <View style={styles.separator} />
                     <HomeSegments
@@ -66,12 +76,8 @@ const HomeBody = () => {
                         segText='Realiza la planificacion de recursos'
                         iconSrc={planificacionLogo}
                         // name={'Booking'}
-                        firstName = {'Prov'}
-                        lastName = {'1'}
-                    />
-                    <View style={styles.separator} />
-                    <HomeSegments
-                        circleV='false'
+                        firstName={'Prov'}
+                        lastName={'1'}
                     />
                 </View>
             </View>
@@ -94,10 +100,10 @@ const styles = StyleSheet.create({
         marginLeft: theme.margin.marginLeft1,
         marginLeft: 16,
         marginTop: 5
-    }, 
+    },
     segmentsRows: {
-        flexDirection: 'row', 
-        height:'43%', 
+        flexDirection: 'row',
+        height: '43%',
         marginTop: 3
     },
     separator: {
@@ -105,7 +111,7 @@ const styles = StyleSheet.create({
         borderRightColor: 'black',
         height: '70%',
         marginVertical: 5,
-        alignSelf:'center'
+        alignSelf: 'center'
     },
 })
 

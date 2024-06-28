@@ -1,9 +1,9 @@
 // rolesConfig.js
 
 export const rolesConfig = {
-  1: [ "Booking", "Components", "netRewards", "Planificacion"],
-  2: ["Disponibilidad", "Booking", "Components", "netRewards", "Planificacion"],
-  3: ["Disponibilidad", "Booking", "Components", "netRewards", "Planificacion"],
+  1: ["Booking", "Components", "netRewards", "Planificacion"],
+  2: ["Disponibilidad", "Booking", "Components", "netRewards", "Planificacion",],
+  3: ["Disponibilidad", "Booking", "Components", "netRewards", "Planificacion", "Request"],
 };
 
 export const rolesDefinition = {

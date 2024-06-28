@@ -14,14 +14,12 @@ export default function HomeSegments({ circleV, tittle, segText, iconSrc, name }
         circleV != 'false' && styles.circleColor,
     ]
 
-
-
     const Action = async () => {
         try {
             const [user] = await Promise.all([
                 AsyncStorage.getItem("result").then(JSON.parse)
             ]);
-
+            
             if (!name) {
                 console.log("No route provided");
             } else if (rolesConfig[user.rol_id]?.includes(name)) {
@@ -74,7 +72,8 @@ const styles = StyleSheet.create({
     },
     icon: {
         width: '60%',
-        height: '50%'
+        height: '50%',
+        resizeMode: 'contain'
     },
     segTittle: {
         fontWeight: theme.fontWeight.bold,
