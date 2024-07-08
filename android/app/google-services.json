@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "496818691954",
+    "project_id": "resevas-net",
+    "storage_bucket": "resevas-net.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:496818691954:android:f9b7caf0181d93c81087eb",
+        "android_client_info": {
+          "package_name": "com.net.reservarecursos"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJWWY9vKrpI1qgcCsmtB-ERSXcTvr3haw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
