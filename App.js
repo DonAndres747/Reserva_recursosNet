@@ -1,35 +1,24 @@
 import React, { useEffect } from "react";
-// import app from '@react-native-firebase/app';
-import messaging from '@react-native-firebase/messaging';
-import { PermissionsAndroid } from 'react-native';
 
 import MainStack from "./Navigation/MainStack.js";
+import initFireBase from "./src/services/firebase/firebaseAdmin.jsx";
 
 
-async function requestUserPermission() {
-  const authStatus = await messaging().requestPermission();
-  const enabled =
-    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-    authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-
-  if (enabled) {
-    console.log('Authorization status:', authStatus);
-  }
-}
-
-async function getToken() {
-  const token = await messaging().getToken()
-  console.log("token: ", token);
-}
 
 export default function App() {
 
   useEffect(() => {
+    try {
+      const unsubscribe = initFireBase();
+      return () => {
+        if (unsubscribe) {
+          unsubscribe();
+        }
+      };
+    } catch (error) {
 
-    requestUserPermission()
-    getToken()
-
-  }, [])
+    }
+  }, []);
 
   return (
     <MainStack />

@@ -1,7 +1,8 @@
 import db from "../../../config.json"
 
 class UserModel {
-  constructor(first_name, last_name, company_id, phone, email, password, password2, country_id) {
+  constructor(id, first_name, last_name, company_id, phone, email, password, password2, country_id) {
+    this.id = id
     this.first_name = first_name;
     this.last_name = last_name;
     this.company_id = company_id;
@@ -48,6 +49,24 @@ class UserModel {
           email: this.email,
           password: this.password,
         }),
+      });
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async registerUserPhone(id, phoneToken) {
+    try {
+      const response = await fetch(`http://${db.database.host}:${db.database.port}/registerPhone/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: id,
+          phone_token: phoneToken
+        })
       });
       return response;
     } catch (error) {

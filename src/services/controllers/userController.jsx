@@ -68,6 +68,7 @@ export default function userController() {
         try {
 
             const userModel = new UserModel(
+                userModelData.id,
                 userModelData.first_name,
                 userModelData.last_name,
                 userModelData.company_id,
@@ -86,7 +87,7 @@ export default function userController() {
                 delete data.password;
                 await AsyncStorage.setItem("token", result.result.token)
                 await AsyncStorage.setItem("result", JSON.stringify(data))
-
+                registerPhone(data.id)
                 navigation.navigate('Home')
 
             } else if (response.status === 401) {
@@ -101,6 +102,14 @@ export default function userController() {
         }
     };
 
+    const registerPhone = async (id) => {
+        try {
+            const phoneToken = await AsyncStorage.getItem("phoneToken")
+            await userModel.registerUserPhone(id, phoneToken)
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     return { onChange, saveData, userLogin, onNewClient, loading };
 };
