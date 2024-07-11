@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, TouchableWithoutFeedback, StyleSheet, ScrollView, Modal, Platform, Alert } from "react-native";
 
-import theme from "../../theme";
 import TittleStyle from "../tittlesStyle";
+import theme from "../../theme";
+import { useTranslation } from "react-i18next";
 
 
 export default function RequestModal({ data, open, show, onResponse }) {
     const [dataR, setDataR] = useState(data);
+    const { t } = useTranslation()
 
     useEffect(() => {
         setDataR(data);
@@ -29,12 +31,12 @@ export default function RequestModal({ data, open, show, onResponse }) {
             >
                 <View style={styles.modelContainer}>
                     <TittleStyle margin="false" text='subtittle' fontColor='Orange' RestOfProps={{ marginBottom: 5 }}>
-                        Evaluación de Solicitud
+                        {t("solutions.modal.title")}
                     </TittleStyle>
                     <View style={styles.modalBody}>
                         <View style={styles.segment}>
                             <Text style={styles.label}>
-                                Recurso:
+                                {t("solutions.modal.resource")}
                             </Text>
                             <Text>
                                 {dataR.resource_name}
@@ -42,7 +44,7 @@ export default function RequestModal({ data, open, show, onResponse }) {
                         </View>
                         <View style={styles.segment}>
                             <Text style={styles.label}>
-                                Fechas a Liberar:
+                                {t("solutions.modal.datesToFree")}
                             </Text>
                             <Text style={styles.reservedDate}>
                                 {formatDate(dataR.reserved_date)}
@@ -50,7 +52,7 @@ export default function RequestModal({ data, open, show, onResponse }) {
                         </View>
                         <View style={styles.segment}>
                             <Text style={styles.label}>
-                                Solicitante:
+                                {t("solutions.modal.manager")}
                             </Text>
                             <Text>
                                 {dataR.reqMng_name}
@@ -58,7 +60,7 @@ export default function RequestModal({ data, open, show, onResponse }) {
                         </View>
                         <View style={styles.segment}>
                             <Text style={styles.label}>
-                                Fechas Solicitantes:
+                                {t("solutions.modal.requestedDates")}
                             </Text>
                             <Text>
                                 {formatDate(dataR.requested_date)}
@@ -67,17 +69,22 @@ export default function RequestModal({ data, open, show, onResponse }) {
                         <View style={styles.buttons}>
                             <View style={styles.button}>
                                 <TouchableWithoutFeedback onPress={() => open()}>
-                                    <Text style={styles.buttonText}>Cancelar</Text>
+                                    <Text style={styles.buttonText}>
+                                        {t("solutions.modal.buttons.cancel")}
+                                    </Text>
                                 </TouchableWithoutFeedback>
                             </View>
                             <View style={styles.button}>
                                 <TouchableWithoutFeedback onPress={() => onResponse(dataR.req_id, "deny")}>
-                                    <Text style={styles.buttonText}>Rechazar</Text>
+                                    <Text style={styles.buttonText}>
+                                        {t("solutions.modal.buttons.reject")}
+                                    </Text>
                                 </TouchableWithoutFeedback>
                             </View>
                             <View style={[styles.button, { backgroundColor: theme.colors.naranjaNet }]}>
                                 <TouchableWithoutFeedback onPress={() => onResponse(dataR.req_id, "accept")}>
-                                    <Text style={styles.buttonText}>Aceptar</Text>
+                                    <Text style={styles.buttonText}>
+                                        {t("solutions.modal.buttons.accept")}</Text>
                                 </TouchableWithoutFeedback>
                             </View>
                         </View>

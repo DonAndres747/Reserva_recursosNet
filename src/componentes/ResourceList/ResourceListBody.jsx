@@ -2,19 +2,21 @@ import React, { useState, useEffect } from "react";
 import { View, Text, TouchableWithoutFeedback, StyleSheet, Alert, Dimensions } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from "react-i18next";
 
-import TittleStyle from "../tittlesStyle";
-
+import ButtonStyle from "../buttonsStyle";
 import resourceController from "../../services/controllers/resourceController";
 import ResourceCard from "./ResourceCard";
 import theme from "../../theme";
-import ButtonStyle from "../buttonsStyle";
+import TittleStyle from "../tittlesStyle";
+import '../../helpers/i18n'
 
 function ResourceListBody() {
     const [selectedRecs, setSelectedRecs] = useState([]);
     const [reCharge, setRecharge] = useState(true);
     const [resources, setResources] = useState();
     const navigation = useNavigation();
+    const { t } = useTranslation();
 
     const {
         onChange,
@@ -55,7 +57,7 @@ function ResourceListBody() {
         fetchResources();
     }, [reCharge]);
 
-    const handleselectedRec = (items) => { 
+    const handleselectedRec = (items) => {
         setSelectedRecs(items)
     };
 
@@ -99,16 +101,16 @@ function ResourceListBody() {
     return (
         <View style={styles.container}>
             <TittleStyle text="subtittle" fontColor='blue' fontWeight="bold">
-                Disponibilidad de Recursos{"   "}
+                {t("resourceList.title")}{"   "}
             </TittleStyle>
             <Text style={styles.headerText}>
-                Se han identificado varios recursos que concuerdan con su solicitud,{/*💩*/} Por favor seleccione el recurso a reservar:
+                {t("resourceList.subtitle")}
             </Text>
             <ResourceCard onSelect={handleselectedRec} data={resources} onComplete={() => { saveData() }} />
             <TouchableWithoutFeedback onPress={() => (selectedRecs != '' ? (saveData()) : Alert.alert("Ningun recurso a sido seleccionado"))}>
                 <View>
                     <ButtonStyle>
-                        Completar reserva
+                        {t("resourceList.buttons.completeR")}
                     </ButtonStyle>
                 </View>
             </TouchableWithoutFeedback>

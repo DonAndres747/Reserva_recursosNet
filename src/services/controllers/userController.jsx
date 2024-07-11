@@ -4,12 +4,14 @@ import { useNavigation } from '@react-navigation/native';
 import UserModel from "../models/userModel";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import newClientController from "./newClientController";
+import { useTranslation } from "react-i18next";
 
 export default function userController() {
     const navigation = useNavigation();
     const userModel = new UserModel();
     const [loading, setLoading] = useState(false);
     const [userModelData, setUserModelData] = useState({ ...userModel });
+    const { t } = useTranslation()
 
     const onChange = (field, value) => {
         setUserModelData({ ...userModelData, [field]: value });
@@ -20,7 +22,7 @@ export default function userController() {
     const saveData = async (newClient) => {
         setLoading(true);
         if (!userModelData.first_name || !userModelData.last_name || !userModelData.company_id || !userModelData.phone || !userModelData.email || !userModelData.password || !userModelData.password2 || !userModelData.country_id || userModelData.country_id == "select" || userModelData.company_id == "select") {
-            Alert.alert("Por favor complete todos los campos obligatorios");
+            Alert.alert(t("registry.alerts.completeFields"));
             setLoading(false);
         } else {
             try {
@@ -42,18 +44,16 @@ export default function userController() {
 
                     delete userModelData.password;
                     delete userModelData.password2;
-                    await AsyncStorage.setItem("token", result.result.message)
-                    await AsyncStorage.setItem("result", JSON.stringify(userModelData))
 
                     newClient ? (
                         createNewClient(),
-                        navigation.navigate('Home')
-                    ) : navigation.navigate('Home');
+                        navigation.navigate('Login')
+                    ) : navigation.navigate('Login');
 
                 } else if (response.status === 500) {
                     Alert.alert(result.result.message);
                 } else {
-                    Alert.alert("Algo ha salido mal :(");
+                    Alert.alert(t("globals.somethingWrong"));
                 }
             } catch (error) {
                 console.error(error);
@@ -93,7 +93,7 @@ export default function userController() {
             } else if (response.status === 401) {
                 Alert.alert(result.result.message);
             } else {
-                Alert.alert("Algo ha salido mal :(");
+                Alert.alert(t("globals.somethingWrong"));
             }
         } catch (error) {
             console.error(error);

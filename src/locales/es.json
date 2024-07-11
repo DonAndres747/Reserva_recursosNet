@@ -1,0 +1,162 @@
+{
+    "globals": {
+        "sessionExpired": "La sesión ha expirado",
+        "somethingWrong": "Algo ha salido mal 🙁",
+        "buttons": {
+            "accept": "aceptar"
+        }
+    },
+    "main": {
+        "registry": "Registro",
+        "login": "Login"
+    },
+    "footer": {
+        "rights": "Todos los derechos reservados. Bogota, Marzo 2022",
+        "net": "NetLogistik Colombia"
+    },
+    "login": {
+        "login": "Login",
+        "loading": "Cargando",
+        "remeberP": "Recordar contraseña?",
+        "register": "Register",
+        "new": "Nuevo en Netlogistk?"
+    },
+    "registry": {
+        "register": "Registro",
+        "registerBtn": "Registrar",
+        "already": "Ya tiene una cuenta con nosotros?",
+        "login": "Login",
+        "placeholder": {
+            "firstname": " Nombre*",
+            "lastname": " Apellido*",
+            "password": " Contraseña*",
+            "password2": " Confirmar contraseña*",
+            "newCompany": " Compañia*",
+            "email": " TuEmail@netlogistik.com*"
+        },
+        "alerts": {
+            "completeFields": "Por favor complete todos los campos obligatorios"
+        }
+    },
+    "home": {
+        "title": "Portal de Servicios de netLogistiK",
+        "subtitle": "Bienvenido a nuestra App",
+        "availabilitySeg": {
+            "title": "Disponibilidad",
+            "description": "Conoce la disponibilidad de los recursos para tus proyectos"
+        },
+        "bookSeg": {
+            "title": "Reserva recursos",
+            "description": "Reserva recursos definiendo las caracteristicas y habilidades que necesitas"
+        },
+        "componentSeg": {
+            "title": "Componentes",
+            "description": "Conoce y adquiere componentes, servicios y addons para tus soluciones"
+        },
+        "solutionsSeg": {
+            "title": "Soluciones",
+            "description": "Maneja tus solicitudes de manera eficiente"
+        },
+        "rewardsSeg": {
+            "title": "NetRewards",
+            "description": "conoce tu estatus y puntos asignados a tu cuenta"
+        },
+        "planificationSeg": {
+            "title": "Planificacion",
+            "description": "Realiza la planificacion de recursos"
+        }
+    },
+    "availability": {
+        "title": "Disponibilidad de recursos",
+        "labels": {
+            "selectSol": "Selecciona la solucion:",
+            "selectRecLvl": "Selecciona el nivel del Recurso:",
+            "additionalC": "Caracteristicas Adicionales:"
+        },
+        "button": "Buscar"
+    },
+    "resourceList": {
+        "title": "Recursos Encontrados",
+        "subtitle": "Se han identificado los siguientes recursos que cumplen con su solicitud.  Por favor, seleccione el recurso que desea reservar.",
+        "buttons": {
+            "cardbutton": "Agregar",
+            "completeR": "Completar reserva",
+            "complete": "Completar",
+            "cancel": "Cancelar",
+            "accept": "Aceptar",
+            "continue": "Continuar"
+        },
+        "extra": "Extra",
+        "loading": "Cargando...",
+        "alerts": {
+            "selectDate": "Por favor seleccione una fecha",
+            "noAvailRec": "Ninguno de los recursos se encuentra disponible en las fechas seleccionadas",
+            "maxRecsReached": "Máxima selección de 5 recursos a la vez",
+            "extraordinarySol": {
+                "title": "Solicitud extraordinaria",
+                "body": "Permite solicitar el recurso de manera extraordinaria incluso en períodos ya reservados. La solicitud está sujeta a la evaluación del gerente y a la posibilidad de liberación del recurso."
+            },
+            "reservedRec": "Recursos reservados exitosamente",
+            "recNotReserved": "Los recursos no pudieron ser reservados 🙁",
+            "someRecNotReserved": "Los siguientes recursos no pudieron ser reservados",
+            "otherRecReserved": "\n\ntodos los demás fueron reservados exitosamente",
+            "solRequested": "Solicitud extraordinaria procesada exitosamente",
+            "solNotRequested": "La solicitud no pudo ser procesada 🙁",
+            "nothingToRequest": "Los dias reservados corresponden al solicitante ",
+            "someRequestNotDone": "Los siguientes recursos no pudieron ser reservados",
+            "otherReqDone": "\n\ntodos los demás fueron reservados exitosamente"
+        },
+        "noDataFound": "No se encontraron datos 🙁",
+        "completeModal": {
+            "title": "Reservas",
+            "header": {
+                "resource": "Recursos",
+                "dates": "Fechas"
+            }
+        }
+    },
+    "solutions": {
+        "title": "Maneja tus solicitudes desde esta pantalla:",
+        "doneSeg": {
+            "subtitle": "Tus solicitudes realizadas:",
+            "subtext": "Consulta el estado de tus solicitudes"
+        },
+        "doneRcv": {
+            "subtitle": "Solicitudes recibidas:",
+            "subtext": "Aprueba o rechazasa las solicitudes recibidas"
+        },
+        "headersDone": {
+            "resource": "Recurso",
+            "manager": "Gerente",
+            "crozDates": "Fechas Cruzadas",
+            "status": "Estado"
+        },
+        "headersRcv": {
+            "resource": "Recurso",
+            "manager": "Solititante",
+            "crozDates": "Fechas Cruzadas",
+            "space": "                    "
+        },
+        "listSeg": {
+            "status": {
+                "p": "Pendiente",
+                "a": "Aprovado",
+                "r": "Denegado",
+                "pp": "Ap parcial"
+            },
+            "button": "Responder"
+        },
+        "modal": {
+            "title": "Evaluación de Solicitud",
+            "resource": "Recurso:",
+            "datesToFree": "Fechas a Liberar:",
+            "manager": "Solicitante:",
+            "requestedDates": "Fechas Solicitantes:",
+            "buttons": {
+                "accept": "Aceptar",
+                "reject": "Rechazar",
+                "cancel": "Cancelar"
+            }
+        }
+    }
+}

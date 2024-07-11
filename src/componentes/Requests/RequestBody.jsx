@@ -1,12 +1,13 @@
 // RequestBody.jsx
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Platform, Dimensions, Alert } from "react-native";
-import theme from "../../theme";
-
-import RequestSeqment from "./RequestSeqment";
-import RequestModal from "./RequestModal";
+import { useTranslation } from "react-i18next";
 
 import RequestController from "../../services/controllers/requestController";
+import RequestModal from "./RequestModal";
+import RequestSeqment from "./RequestSeqment";
+import theme from "../../theme";
+import '../../helpers/i18n'
 
 const RequestBody = () => {
     const { getRequestByManager, denyRequest, acceptRequest } = RequestController();
@@ -15,11 +16,19 @@ const RequestBody = () => {
     const [formateDataRcv, setFormateDataRcv] = useState([])
     const [modal, setModal] = useState(false);
     const [selectedReq, setSelectedReq] = useState({});
+    const { t } = useTranslation()
+
     const headersDone = [
-        "Recurso", "Gerente", "Fechas Cruzadas", "Estado"
+        t("solutions.headersDone.resource"),
+        t("solutions.headersDone.manager"),
+        t("solutions.headersDone.crozDates"),
+        t("solutions.headersDone.status")
     ]
     const headersRcv = [
-        "Recurso", "Solicitante", "Fechas Cruzadas", "                    "
+        t("solutions.headersRcv.resource"),
+        t("solutions.headersRcv.manager"),
+        t("solutions.headersRcv.crozDates"),
+        t("solutions.headersRcv.space")
     ]
 
     useEffect(() => {
@@ -103,13 +112,13 @@ const RequestBody = () => {
     return (
         <View style={styles.container}>
             <Text style={styles.headerText}>
-                Maneja tus solicitudes desde esta pantalla:
+                {t("solutions.title")}
             </Text>
             <View style={styles.separator} />
             <View style={styles.segment}>
                 <RequestSeqment
-                    subtittle={"Tus solicitudes realizadas:"}
-                    subtext={"Consulta el estado de tus solicitudes"}
+                    subtittle={t("solutions.doneSeg.subtitle")}
+                    subtext={t("solutions.doneSeg.subtext")}
                     headers={headersDone}
                     data={formateDataDone}
                 />
@@ -117,15 +126,14 @@ const RequestBody = () => {
             <View style={styles.separator} />
             <View style={styles.segment}>
                 <RequestSeqment
-                    subtittle={"Solicitudes recibidas:"}
+                    subtittle={t("solutions.doneRcv.subtitle")}
+                    subtext={t("solutions.doneRcv.subtext")}
                     headers={headersRcv}
                     data={formateDataRcv}
                     action={handleRequest}
                 />
             </View>
             <View style={styles.separator} />
-
-
 
 
             <RequestModal

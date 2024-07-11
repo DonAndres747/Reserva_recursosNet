@@ -1,22 +1,25 @@
 import React, { useState, useEffect } from "react";
-import TittleStyle from "../tittlesStyle";
-import { View, TextInput, StyleSheet, Platform, Text, TouchableWithoutFeedback, Alert } from "react-native";
-import theme from "../../theme";
-import Icon from "react-native-vector-icons/MaterialIcons";
-import userController from "../../services/controllers/userController";
-import Footer from "../footer";
-import { useNavigation } from '@react-navigation/native';
+import { View, TextInput, StyleSheet, Text, TouchableWithoutFeedback } from "react-native";
+import { useTranslation } from 'react-i18next';
+
 import ButtonStyle from "../buttonsStyle";
-import RegistryComboBox from "./RegistryComboBox";
 import companyController from "../../services/controllers/companyController"
 import countryController from "../../services/controllers/countryController"
-
+import Footer from "../footer";
+import Icon from "react-native-vector-icons/MaterialIcons";
+import RegistryComboBox from "./RegistryComboBox";
+import TittleStyle from "../tittlesStyle";
+import theme from "../../theme";
+import userController from "../../services/controllers/userController";
+import { useNavigation } from '@react-navigation/native';
+import '../../helpers/i18n';
 
 export default function BodyRegistry() {
     const navigation = useNavigation();
     const [selectedCoun, setSelectedCoun] = useState([]);
     const [selectedCom, setSelectedCom] = useState([]);
     const [newCompany, setNewCompany] = useState("none");
+    const { t } = useTranslation();
 
     const { getAllCompanies } = companyController();
     const [companies, setCompanies] = useState([]);
@@ -68,14 +71,14 @@ export default function BodyRegistry() {
 
         <View>
             <TittleStyle text='tittle'>
-                Register
+                {t("registry.register")}
             </TittleStyle>
             <View style={styles.row}>
                 <Icon name='face' color={theme.colors.azulNet} size={22}></Icon>
                 <TextInput
                     label="nombre"
                     returnKeyType="next"
-                    placeholder="  Nombre"
+                    placeholder={t("registry.placeholder.firstname")}
                     keyboardType='default'
                     style={[styles.input, styles.marginInput]}
                     onChangeText={(value) => onChange("first_name", value)}
@@ -86,7 +89,7 @@ export default function BodyRegistry() {
                 <TextInput
                     label="apellido"
                     returnKeyType="next"
-                    placeholder="  Apellido"
+                    placeholder={t("registry.placeholder.lastname")}
                     keyboardType='default'
                     style={[styles.input, styles.marginInput]}
                     onChangeText={(value) => onChange("last_name", value)}
@@ -103,7 +106,7 @@ export default function BodyRegistry() {
                 <TextInput
                     label="newCompany"
                     returnKeyType="next"
-                    placeholder="  Company Name*"
+                    placeholder={t("registry.placeholder.newCompany")}
                     keyboardType='default'
                     style={[styles.input, styles.marginInput]}
                     onChangeText={(value) => {
@@ -127,7 +130,7 @@ export default function BodyRegistry() {
                 <TextInput
                     label="email"
                     returnKeyType="next"
-                    placeholder="  YourEmail@netlogistik.com*"
+                    placeholder={t("registry.placeholder.email")}
                     keyboardType='email-address'
                     autoCapitalize="none"
                     style={[styles.input, styles.marginInput]}
@@ -148,7 +151,7 @@ export default function BodyRegistry() {
                 <TextInput
                     label="password"
                     returnKeyType="next"
-                    placeholder="  Contraseña*"
+                    placeholder={t("registry.placeholder.password")}
                     style={[styles.input, styles.marginInput]}
                     secureTextEntry={true}
                     autoCapitalize="none"
@@ -161,7 +164,7 @@ export default function BodyRegistry() {
                 <TextInput
                     label="confirmPassword"
                     returnKeyType="next"
-                    placeholder="  Confirma contraseña*"
+                    placeholder={t("registry.placeholder.password2")}
                     style={[styles.input, styles.marginInput]}
                     secureTextEntry={true}
                     autoCapitalize="none"
@@ -173,7 +176,7 @@ export default function BodyRegistry() {
 
 
                 <TouchableWithoutFeedback onPress={() => {
-                    const newC = (newCompany == "none" ? "false" : true); 
+                    const newC = (newCompany == "none" ? "false" : true);
                     saveData(newC)
                 }}>
                     <View>
@@ -187,11 +190,11 @@ export default function BodyRegistry() {
 
                 <View style={styles.text}>
                     <Text>
-                        Already have an account with us?
+                        {t("registry.already")}
                     </Text>
                     <TouchableWithoutFeedback onPress={() => navigation.navigate('Login')}>
                         <Text style={styles.HiperLinks}>
-                            Login
+                            {t("registry.login")}
                         </Text>
                     </TouchableWithoutFeedback>
                 </View>

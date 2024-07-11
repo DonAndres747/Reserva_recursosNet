@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from "react-i18next";
 
-import ResourceModel from "../models/resourceModel.js";
 import { Alert } from "react-native";
+import ResourceModel from "../models/resourceModel.js";
+import '../../helpers/i18n.js'
+import { t } from "i18next";
 
 export default function resourceController() {
     const navigation = useNavigation();
@@ -79,18 +82,16 @@ export default function resourceController() {
             switch (response.status) {
                 case 401:
                     await AsyncStorage.clear();
-                    Alert.alert('La sesión ha expirado', '', [{ text: 'Aceptar', onPress: () => navigation.navigate('Login') }]);
+                    Alert.alert((t("globals.sessionExpired")), '', [{ text: t("globals.buttons.accept"), onPress: () => navigation.navigate('Login') }]);
                     break;
 
                 case 201:
                     await AsyncStorage.multiRemove(['skills', 'level']);
-                    // Alert.alert('Recursos reservados exitosamente', '', [{ text: 'Aceptar', onPress: () => navigation.navigate('Home') }]);
-                    alertResponse = { tittle: 'Recursos reservados exitosamente', status: "ok" }
+                    alertResponse = { tittle: t("resourceList.alerts.reservedRec"), status: "ok" }
                     break;
 
                 case 400:
-                    // Alert.alert('Los recursos no pudieron ser reservados :(', '', [{ text: 'Aceptar' }]);
-                    alertResponse = { tittle: "Los recursos no pudieron ser reservados :(", status: "Error" }
+                    alertResponse = { tittle: t("resourceList.alerts.recNotReserved"), status: "Error" }
                     break;
 
                 default:
@@ -103,13 +104,9 @@ export default function resourceController() {
                     return matchingResource ? `${matchingResource.first_name} ${matchingResource.last_name}` : null;
                 }).filter(Boolean);
 
-                // Alert.alert('Los siguientes recursos no pudieron ser reservados',
-                //     failedResourceNames.join('\n') + '\n\ntodos los demás fueron reservados exitosamente',
-                //     [{ text: 'Aceptar' }]);
-
                 alertResponse = {
-                    tittle: 'Los siguientes recursos no pudieron ser reservados',
-                    body: failedResourceNames.join('\n') + '\n\ntodos los demás fueron reservados exitosamente',
+                    tittle: t("resourceList.alerts.someRecNotReserved"),
+                    body: failedResourceNames.join('\n') + t("resourceList.alerts.otherRecReserved"),
                     status: "ok"
                 }
 
@@ -143,22 +140,19 @@ export default function resourceController() {
             switch (response.status) {
                 case 401:
                     await AsyncStorage.clear();
-                    Alert.alert('La sesión ha expirado', '', [{ text: 'Aceptar', onPress: () => navigation.navigate('Login') }]);
+                    Alert.alert(t("globals.sessionExpired"), '', [{ text: t("globals.buttons.accept"), onPress: () => navigation.navigate('Login') }]);
                     break;
 
                 case 201:
-                    // Alert.alert('Solicitud extraordinaria procesada exitosamente', '', [{ text: 'Aceptar', onPress: () => navigation.navigate('Home') }]);
-                    alertResponse = { tittle: 'Solicitud extraordinaria procesada exitosamente', status: "ok" }
+                    alertResponse = { tittle: t("resourceList.alerts.solRequested"), status: "ok" }
                     break;
 
                 case 400:
-                    // Alert.alert('La solicitud no pudo ser procesada :(', '', [{ text: 'Aceptar' }]);
-                    alertResponse = { tittle: 'La solicitud no pudo ser procesada :(', status: "Error" }
+                    alertResponse = { tittle: t("resourceList.alerts.solNotRequested"), status: "Error" }
                     break;
 
                 case 404:
-                    // Alert.alert('La solicitud no pudo ser procesada :(', '', [{ text: 'Aceptar' }]);
-                    alertResponse = { tittle: 'Los dias reservados corresponden al solicitante ', status: "Error" }
+                    alertResponse = { tittle: t("resourceList.alerts.nothingToRequest"), status: "Error" }
                     break;
 
                 default:
@@ -171,18 +165,13 @@ export default function resourceController() {
                     return matchingResource ? `${matchingResource.first_name} ${matchingResource.last_name}` : null;
                 }).filter(Boolean);
 
-                // Alert.alert('Los siguientes recursos no pudieron ser reservados',
-                //     failedResourceNames.join('\n') + '\n\npara solicitud extraordinaria',
-                //     [{ text: 'Aceptar' }]);
-
                 alertResponse = {
-                    tittle: 'Los siguientes recursos no pudieron ser reservados',
-                    body: failedResourceNames.join('\n') + '\n\ntodos los demás fueron reservados exitosamente',
+                    tittle: t("resourceList.alerts.someRequestNotDone"),
+                    body: failedResourceNames.join('\n') + t("resourceList.alerts.otherReqDone"),
                     status: "ok"
                 }
             }
-
-            // console.log(response.status);
+ 
             return alertResponse
         } catch (error) {
             console.error("Error fetching data:", error);

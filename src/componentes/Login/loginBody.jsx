@@ -1,27 +1,29 @@
 import React, { useState } from "react";
-import TittleStyle from "../tittlesStyle";
 import { View, TextInput, StyleSheet, Text, TouchableWithoutFeedback } from "react-native";
-import theme from "../../theme";
+
+import ButtonStyle from "../buttonsStyle.jsx";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import Icon2 from "react-native-vector-icons/Ionicons";
-import { useNavigation } from '@react-navigation/native';
 import { showPassword } from "../../helpers/password";
+import TittleStyle from "../tittlesStyle";
+import theme from "../../theme";
 import userController from "../../services/controllers/userController";
-import ButtonStyle from "../buttonsStyle.jsx";
+import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
+import '../../helpers/i18n.js';
 
 export default function BodyLogin() {
-
-
     const navigation = useNavigation();
     const { passwordVisibility, rightIcon, handlePasswordVisibility } = showPassword();
     const [password, setPassword] = useState('');
     const { onChange, userLogin, loading } = userController();
+    const { t } = useTranslation();
 
 
     return (
         <View style={{ flex: 2, justifyContent: 'space-between' }}>
             <TittleStyle text='tittle'>
-                Login
+                {t("login.login")}
             </TittleStyle>
             <View style={styles.row}>
                 <Icon name='alternate-email' color={theme.colors.azulNet} size={22}></Icon>
@@ -56,7 +58,7 @@ export default function BodyLogin() {
             <TouchableWithoutFeedback onPress={() => navigation.navigate('Recover')}>
                 <View style={{ marginRight: 10 }}>
                     <Text style={styles.HiperLinks} >
-                        Remember Password?
+                        {t("login.remeberP")}
                     </Text>
                 </View>
             </TouchableWithoutFeedback>
@@ -66,7 +68,7 @@ export default function BodyLogin() {
                     <View>
                         <ButtonStyle name='Home'>
                             <Text>
-                                {loading ? "Loading" : "Login"}
+                                {loading ? t("login.loading") : t("login.login")}
                             </Text>
                         </ButtonStyle>
                     </View>
@@ -74,11 +76,11 @@ export default function BodyLogin() {
 
                 <View style={styles.text}>
                     <Text>
-                        New to Netlogistik?
+                        {t("login.new")}
                     </Text>
                     <TouchableWithoutFeedback onPress={() => [navigation.navigate('Registry')]}>
                         <Text style={styles.HiperLinks}>
-                            Register
+                            {t("login.register")}
                         </Text>
                     </TouchableWithoutFeedback>
                 </View>

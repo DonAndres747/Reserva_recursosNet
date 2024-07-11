@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, TouchableWithoutFeedback, StyleSheet, ScrollView, Modal, Platform } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { useTranslation } from "react-i18next";
 
-import theme from "../../theme";
 import TittleStyle from "../tittlesStyle";
+import theme from "../../theme";
+import '../../helpers/i18n'
 
-
-export default function ResouceListComplete({ data, open, show, onRemove, resourceInfo, onComplete }) {
+export default function ResoucerListComplete({ data, open, show, onRemove, resourceInfo, onComplete }) {
     const [dataR, setDataR] = useState(data);
+    const { t } = useTranslation()
 
     useEffect(() => {
         setDataR(data)
@@ -39,14 +41,14 @@ export default function ResouceListComplete({ data, open, show, onRemove, resour
                 <View style={styles.modelContainer}>
                     <View style={styles.tableColumns}>
                         <View style={styles.tableTittle}>
-                            <TittleStyle text="subtittle" margin="false" fontColor="white">Reservas</TittleStyle>
+                            <TittleStyle text="subtittle" margin="false" fontColor="white">{t("resourceList.completeModal.title")}</TittleStyle>
                         </View>
                         <View style={styles.tableRows}>
                             <View style={[styles.tableHeader, { borderTopLeftRadius: 5 }]}>
-                                <Text style={styles.headerText}>Recursos</Text>
+                                <Text style={styles.headerText}>{t("resourceList.completeModal.header.resource")}</Text>
                             </View>
                             <View style={[styles.tableHeader, styles.dates]}>
-                                <Text style={styles.headerText}>Fechas</Text>
+                                <Text style={styles.headerText}>{t("resourceList.completeModal.header.dates")}</Text>
                             </View>
                             <View style={[styles.tableHeader, , { borderTopEndRadius: 5 }]}>
                             </View>
@@ -77,12 +79,12 @@ export default function ResouceListComplete({ data, open, show, onRemove, resour
                         <View style={styles.bottomButtonsRow}>
                             <TouchableWithoutFeedback onPress={() => open()}>
                                 <View style={styles.bottomButton}>
-                                    <Text style={styles.bottomButtonText}>Continuar</Text>
+                                    <Text style={styles.bottomButtonText}>{t("resourceList.buttons.continue")}</Text>
                                 </View>
                             </TouchableWithoutFeedback>
                             <TouchableWithoutFeedback onPress={() => onComplete()}>
                                 <View style={styles.bottomButton}>
-                                    <Text style={styles.bottomButtonText}>Completar</Text>
+                                    <Text style={styles.bottomButtonText}>{t("resourceList.buttons.complete")}</Text>
                                 </View>
                             </TouchableWithoutFeedback>
                         </View>

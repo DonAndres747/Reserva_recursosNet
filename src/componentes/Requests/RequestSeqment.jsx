@@ -56,9 +56,6 @@ const styles = StyleSheet.create({
         fontSize: Platform.OS === 'ios' ? 16 : 20,
         fontWeight: theme.fontWeight.semiBold
     },
-    // segHeaderCount: { 
-    //     fontSize: Platform.OS === 'ios' ? 16 : 20,
-    // },
     segText: {
         alignSelf: "flex-start",
         fontSize: Platform.OS === 'ios' ? 12.5 : 15

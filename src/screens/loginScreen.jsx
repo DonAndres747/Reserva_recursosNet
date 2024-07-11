@@ -1,15 +1,11 @@
 import React from "react";
-import { View, StyleSheet, Text, TouchableWithoutFeedback, KeyboardAvoidingView } from "react-native";
-import { useNavigation } from '@react-navigation/native';
-import Footer from "../componentes/footer.jsx";
-import BodyLogin from "../componentes/Login/loginBody.jsx";
-import LoginIcon from "../componentes/Login/loginIcon.jsx";
-import theme from "../theme.js";
-import userController from "../services/controllers/userController.jsx";
+import { View,  KeyboardAvoidingView } from "react-native";
 
-const LoginScreen = () => {
-  const navigation = useNavigation();
-  const { userLogin, loading } = userController();
+import BodyLogin from "../componentes/Login/loginBody.jsx";
+import Footer from "../componentes/footer.jsx";
+import LoginIcon from "../componentes/Login/loginIcon.jsx"; 
+
+const LoginScreen = () => { 
   return (
 
     <View style={{ flex: 1, alignItems: 'center' }}>

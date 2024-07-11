@@ -1,18 +1,19 @@
 import React from "react";
 import { View } from "react-native";
-import HomeBody from "../componentes/Home/HomeBody.jsx";
-import Logo from "../componentes/logo.jsx";
+
 import Footer from "../componentes/footer.jsx";
-import theme from "../theme";
+import HomeBody from "../componentes/Home/HomeBody.jsx";
+import Logo from "../componentes/logo.jsx"; 
 
 const HomeScreen = () => {
+
 
   return (
     <View style={{ flex: 1, alignItems: 'center' }}>
       <HomeBody />
       <View style={{ flex: 1, alignItems: 'center' }}>
         <Logo logoTyp='subLogo' />
-        <Footer margin='false'/>
+        <Footer margin='false' />
       </View>
     </View >
   )

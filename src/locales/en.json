@@ -1,0 +1,155 @@
+{
+  "globals": {
+    "sessionExpired": "Session has expired",
+    "somethingWrong": "Something went wrong 🙁",
+    "buttons": {
+      "accept": "Accept"
+    }
+  },
+  "main": {
+    "registry": "Registry",
+    "login": "Login"
+  },
+  "footer": {
+    "rights": "All rights reserved. Bogota, March 2022",
+    "net": "NetLogistik Colombia"
+  },
+  "login": {
+    "login": "Login",
+    "loading": "Loading",
+    "remeberP": "Remeber Password?",
+    "register": "Register",
+    "new": "New to Netlogistk?"
+  },
+  "registry": {
+    "register": "Register",
+    "registerBtn": "Register",
+    "already": "Already have an account with us?",
+    "login": "Login",
+    "placeholder": {
+      "firstname": " Firts Name*",
+      "lastname": " Last Name*",
+      "password": " Password*",
+      "password2": " Confirm password*",
+      "newCompany": " New Company*",
+      "email": " YourEmail@netlogistik.com*"
+    },
+    "alerts": {
+      "completeFields": "Please fill out all mandatory fields"
+    }
+  },
+  "home": {
+    "title": "netLogistiK Services Portal",
+    "subtitle": "Welcome to our App",
+    "availabilitySeg": {
+      "title": "Availability",
+      "description": "Now the availability of the resources for your projects"
+    },
+    "bookSeg": {
+      "title": "Resource booking",
+      "description": "Reserve resources by selecting the caracteristics and habilities needed"
+    },
+    "componentSeg": {
+      "title": "Components",
+      "description": "Now and adquire, services and addons for your solutions"
+    },
+    "solutionsSeg": {
+      "title": "Solutions",
+      "description": "Manage your solutions efficiently"
+    },
+    "rewardsSeg": {
+      "title": "NetRewards",
+      "description": "Nkow your estatus and points asigned"
+    },
+    "planificationSeg": {
+      "title": "Planification",
+      "description": "Perform resource planning"
+    }
+  },
+  "availability": {
+    "title": "Resources availability",
+    "labels": {
+      "selectSol": "Select the solution:",
+      "selectRecLvl": "Select the resource level:",
+      "additionalC": "Additional Characteristics:"
+    },
+    "button": "Search"
+  },
+  "resourceList": {
+    "title": "Matching resources",
+    "subtitle": "The following resources have been identified to match your request.  Please select the resource you wish to book.",
+    "buttons": {
+      "cardbutton": "Add",
+      "completeR": "Complete booking",
+      "complete": "Complete",
+      "cancel": "Cancel",
+      "accept": "Accept",
+      "continue": "Continue"
+    },
+    "extra": "Extra",
+    "loading": "Loading...",
+    "alerts": {
+      "selectDate": "Please select a date",
+      "noAvailRec": "None of the resources are available on the selected dates",
+      "maxRecsReached": "Maximum selection of 5 resources at a time",
+      "extraordinarySol": {
+        "title": "Extraordinary Request",
+        "body": "Allows requesting the resource even during reserved periods. The request is subject to manager evaluation and resource availability."
+      },
+      "reservedRec": "Resources reserved successfully",
+      "recNotReserved": "Resources couldn't be reserved 🙁"
+    },
+    "noDataFound": "No data found 🙁",
+    "completeModal": {
+      "title": "Bookings",
+      "header": {
+        "resource": "Resources",
+        "dates": "Dates"
+      }
+    }
+  },
+  "solutions": {
+    "title": "Manage your requests from this screen:",
+    "doneSeg": {
+      "subtitle": "Your requests:",
+      "subtext": "Check the status of your requests"
+    },
+    "doneRcv": {
+      "subtitle": "Received requests:",
+      "subtext": "Approve or reject received requests"
+    },
+    "headersDone": {
+      "resource": "Resource",
+      "manager": "Manager",
+      "crozDates": "Croz Dates",
+      "status": "Status"
+    },
+    "headersRcv": {
+      "resource": "Resource",
+      "manager": "Requester",
+      "crozDates": "Croz Dates",
+      "space": "                   "
+    },
+    "listSeg": {
+      "status": {
+        "p": "Pending",
+        "a": "Approved",
+        "r": "Rejected",
+        "pp": "Partial A"
+      },
+      "button": "  Reply  "
+    },
+    "modal": {
+      "title": "Request Evaluation",
+      "resource": "Resource:",
+      "datesToFree": "Dates to Free:",
+      "manager": "Requester:",
+      "requestedDates": "Requested Dates:",
+      "buttons": {
+        "accept": "Accept",
+        "reject": "Reject",
+        "cancel": "Cancel"
+      }
+    }
+  }
+}

@@ -1,21 +1,21 @@
 import { useState, useEffect } from "react";
 import { View, Text, TouchableWithoutFeedback, StyleSheet } from "react-native";
-import { useNavigation } from '@react-navigation/native';
-import { Dimensions } from 'react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Dimensions } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from "react-i18next";
 
-
-import TittleStyle from "../tittlesStyle";
 import AvailabilityCBSeg from "./AvailabilityCBSeg";
 import AvailabilityTypSeg from "./AvailabilityTypSeg";
 import ButtonStyle from "../buttonsStyle";
-import solTypController from "../../services/controllers/solTypController";
 import recLevelController from "../../services/controllers/recLevelController";
+import solTypController from "../../services/controllers/solTypController";
+import TittleStyle from "../tittlesStyle";
+import '../../helpers/i18n'
 
 function AvailabilityBody() {
-
     const navigation = useNavigation();
-
+    const { t } = useTranslation();
 
     const { getAllSolTypes } = solTypController();
     const [solTypes, setSolTypes] = useState([]);
@@ -67,13 +67,13 @@ function AvailabilityBody() {
 
     return (
         <View style={styles.container}>
-            <TittleStyle text='subtittle' fontColor='Orange'>Disponibilidad de recursos{`                      
+            <TittleStyle text='subtittle' fontColor='Orange'>{t("availability.title")}{`                      
             `}</TittleStyle>
-            <AvailabilityCBSeg text='Selecciona la solución:' data={solTypes} onSelect={handleSelectSol} />
-            <AvailabilityCBSeg text='Selecciona el tipo de Recurso:' data={solRecLevels} onSelect={handleSelectRec} />
+            <AvailabilityCBSeg text={t("availability.labels.selectSol")} data={solTypes} onSelect={handleSelectSol} />
+            <AvailabilityCBSeg text={t("availability.labels.selectRecLvl")} data={solRecLevels} onSelect={handleSelectRec} />
             <View style={styles.checkbox}>
                 <Text >
-                    Caracteristicas Adcionales:
+                {t("availability.labels.additionalC")}
                 </Text>
                 <AvailabilityTypSeg onChange={handleSelectCaract} />
             </View>
@@ -84,7 +84,7 @@ function AvailabilityBody() {
                 navigation.navigate("ResourceList");
             }}>
                 <View style={{ marginTop: 8 }}>
-                    <ButtonStyle view="action" >Buscar</ButtonStyle>
+                    <ButtonStyle view="action" > {t("availability.button")}</ButtonStyle>
                 </View>
             </TouchableWithoutFeedback>
         </View >

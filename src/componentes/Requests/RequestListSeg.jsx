@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView, TouchableWithoutFeedback } from "react-native";
+import { useTranslation } from "react-i18next";
 
 import theme from "../../theme";
-import ButtonStyle from "../buttonsStyle"
+import '../../helpers/i18n'
 
 export default function RequestListSeg({ headers, data, action }) {
     const [dataList, setDataList] = useState([])
+    const { t } = useTranslation()
 
     useEffect(() => {
         setDataList(data)
     }, [data])
 
     const status = {
-        P: "Pendiente",
-        A: "Aprovado",
-        R: "Denegado"
+        P: t("solutions.listSeg.status.p"),
+        A: t("solutions.listSeg.status.a"),
+        R: t("solutions.listSeg.status.r"),
+        PP: t("solutions.listSeg.status.pp")
     }
 
     return (
@@ -49,7 +52,7 @@ export default function RequestListSeg({ headers, data, action }) {
                                                     <TouchableWithoutFeedback onPress={() => { action(rowIndex); }}>
                                                         <View style={styles.cardButton}>
                                                             <Text style={styles.cardButtonText}>
-                                                                Responder
+                                                                {t("solutions.listSeg.button")}
                                                             </Text>
                                                         </View>
                                                     </TouchableWithoutFeedback>

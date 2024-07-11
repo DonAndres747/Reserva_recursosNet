@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TouchableWithoutFeedback, StyleSheet, Dimensions, ScrollView, Image, Modal, FlatList } from "react-native";
-import { Calendar } from 'react-native-calendars';
 import { Alert } from "react-native";
-
-import resourceController from "../../services/controllers/resourceController";
-import ResouceListComplete from "./ResouceListComplete"
+import { Calendar } from 'react-native-calendars';
+import { useTranslation } from "react-i18next";
 
 import ButtonStyle from "../buttonsStyle";
+import resourceController from "../../services/controllers/resourceController";
+import ResourceListComplete from "./ResouceListComplete";
 import theme from "../../theme";
 
 let a = null
@@ -24,6 +24,7 @@ function ResourceCard({ onSelect, data, onComplete }) {
     const [complete, setComplete] = useState(false);
     const [multiExtra, setMultiExtra] = useState(false);
     const [checked, setChecked] = useState([]);
+    const { t } = useTranslation()
 
     const { getResourceBookDays } = resourceController();
 
@@ -66,7 +67,7 @@ function ResourceCard({ onSelect, data, onComplete }) {
     const saveDates = (index) => {
         if (multiSelect.length <= 0) {
             if (resourceDates[index] == undefined || resourceDates[index].start == "false") {
-                Alert.alert("Por favor seleccione una fecha")
+                Alert.alert(t("resourceList.alerts.selectDate"))
             } else {
                 saveDatesPerIndex(index)
                 handleComplete(index)
@@ -74,7 +75,7 @@ function ResourceCard({ onSelect, data, onComplete }) {
             }
         } else {
             if (resourceDates[resources.length] ? resourceDates[resources.length].start == "false" : "false") {
-                Alert.alert("Por favor seleccione una fecha")
+                Alert.alert(t("resourceList.alerts.selectDate"))
             } else {
                 //obtiene el ultimo objeto de la lista de fechas seleccionadas el cual se usa solo cuando se selccionan de a multiples recursos a la vez
                 const dates = resourceDates[resources.length];
@@ -113,11 +114,13 @@ function ResourceCard({ onSelect, data, onComplete }) {
                         selectedLoop = saveDatesPerIndex(element.index, selectedLoop);
                         multiEach = handleMultiSelect(element.rsce_id, element.index, multiEach)
                     })
+
+                    handleComplete(index)
+
                 } else {
-                    Alert.alert("ninguno de los recursos se encuentra disponible en las fechas seleccionadas")
+                    Alert.alert(t("resourceList.alerts.noAvailRec"))
                 }
 
-                handleComplete(index)
             }
         }
     }
@@ -156,7 +159,7 @@ function ResourceCard({ onSelect, data, onComplete }) {
                 if (temp.length < 5) {
                     temp.push(JSON.parse(`{"rsce_id":"${id}", "index":"${index}"}`))
                 } else {
-                    Alert.alert("Maxima seleccion de 5 recursos a la vez")
+                    Alert.alert(t("resourceList.alerts.maxRecsReached"))
                 }
             }
         } else {
@@ -592,15 +595,15 @@ function ResourceCard({ onSelect, data, onComplete }) {
         if (!(multiSelect.length > 0)) {
             if (!temp[index]) {
                 Alert.alert(
-                    "Solicitud extraordinaria",
-                    "Permitira solicitar el recurso de manera extraordinaria incluso periodos ya reservados. La solicitud está sujeta a la evaluacion del generente y la posibilidad de liberacion del recurso.",
+                    t("resourceList.alerts.extraordinarySol.title"),
+                    t("resourceList.alerts.extraordinarySol.body"),
                     [
                         {
-                            text: 'Cancelar',
+                            text: t("resourceList.buttons.cancel"),
                             style: 'cancel'
                         },
                         {
-                            text: 'Aceptar',
+                            text: t("resourceList.buttons.accept"),
                             onPress: async () => (
                                 temp[index] = !temp[index],
                                 await getBookDays(index, false),
@@ -619,19 +622,18 @@ function ResourceCard({ onSelect, data, onComplete }) {
         } else {
             if (!multiExtra) {
                 Alert.alert(
-                    "Solicitud extraordinaria",
-                    "Permitira solicitar el recurso de manera extraordinaria incluso periodos ya reservados. La solicitud está sujeta a la evaluacion del generente y la posibilidad de liberacion del recurso.",
-                    [
-                        {
-                            text: 'Cancelar',
-                            style: 'cancel'
-                        },
-                        {
-                            text: 'Aceptar',
-                            onPress: async () => (
-                                setMultiExtra(!multiExtra)),
-                        }
-                    ],
+                    t("resourceList.alerts.extraordinarySol.title"),
+                    t("resourceList.alerts.extraordinarySol.body"), [
+                    {
+                        text: t("resourceList.buttons.cancel"),
+                        style: 'cancel'
+                    },
+                    {
+                        text: t("resourceList.buttons.accept"),
+                        onPress: async () => (
+                            setMultiExtra(!multiExtra)),
+                    }
+                ],
                     { cancelable: false }
                 )
             } else {
@@ -701,7 +703,7 @@ function ResourceCard({ onSelect, data, onComplete }) {
                         }}>
                             <View>
                                 <ButtonStyle disable={multiSelect.length > 0 ? disableButton(element.user_id) :
-                                    false}>Agregar {multiSelect.length > 0 ? multiSelect.length : ""}
+                                    false}>{t("resourceList.buttons.cardbutton")} {multiSelect.length > 0 ? multiSelect.length : ""}
                                 </ButtonStyle>
                             </View>
 
@@ -724,7 +726,7 @@ function ResourceCard({ onSelect, data, onComplete }) {
                                             <View style={{ alignSelf: "flex-end", flexDirection: "column" }}>
                                                 <TouchableWithoutFeedback onPress={() => handleCheck()}>
                                                     <View style={[styles.radiobutton, multiExtra ? styles.selected : '']}>
-                                                        <Text style={[styles.radiobuttonText, multiExtra ? styles.selected : '']} >Extra</Text>
+                                                        <Text style={[styles.radiobuttonText, multiExtra ? styles.selected : '']} >{t("resourceList.extra")}</Text>
                                                         <View style={[styles.outerCircle, multiExtra ? styles.selected : '']}>
                                                             <View style={[styles.innerCircle, multiExtra ? styles.inneSelected : '']}>
                                                             </View>
@@ -792,7 +794,7 @@ function ResourceCard({ onSelect, data, onComplete }) {
                                         <TouchableWithoutFeedback onPress={() => cancelDates(index)}>
                                             <View style={styles.calendarButton}>
                                                 <Text style={styles.calendarButtonText}>
-                                                    Cancelar
+                                                    {t("resourceList.buttons.cancel")}
                                                 </Text>
                                             </View>
                                         </TouchableWithoutFeedback>
@@ -800,7 +802,7 @@ function ResourceCard({ onSelect, data, onComplete }) {
                                         <TouchableWithoutFeedback onPress={() => saveDates(index)}>
                                             <View style={styles.calendarButton}>
                                                 <Text style={styles.calendarButtonText}>
-                                                    Aceptar
+                                                    {t("resourceList.buttons.accept")}
                                                 </Text>
                                             </View>
                                         </TouchableWithoutFeedback>
@@ -813,7 +815,7 @@ function ResourceCard({ onSelect, data, onComplete }) {
                 </TouchableWithoutFeedback >
             ))
         } catch (error) {
-            return <Text>No data found {":("}</Text>
+            return <Text>{t("resourceList.noDataFound")}</Text>
         }
     }
 
@@ -825,7 +827,7 @@ function ResourceCard({ onSelect, data, onComplete }) {
                     showsHorizontalScrollIndicator={false}
                 >
                     {dataG ? (
-                        <Text>Loading...</Text>
+                        <Text>{t("resourceList.loading")}</Text>
                     ) : (
                         card()
                     )}
@@ -833,7 +835,7 @@ function ResourceCard({ onSelect, data, onComplete }) {
             </View >
 
 
-            <ResouceListComplete
+            <ResourceListComplete
                 open={handleComplete}
                 show={complete}
                 data={resourceDates}

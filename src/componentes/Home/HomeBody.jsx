@@ -1,33 +1,37 @@
-import React from "react";
+import React, { useTransition } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import TittleStyle from "../tittlesStyle";
-import HomeSegments from "./HomeSegments";
-import disponibilidadLogo from "../../assets/disponibilidadLogo.png";
-import ReservaLogo from "../../assets/reservaLogo.png";
-import componentesLogo from "../../assets/componentesLogo.png";
-import solicitudLogo from "../../assets/solicitudLogo.png";
-import netRewardsLogo from "../../assets/netRewardsLogo.png";
-import planificacionLogo from "../../assets/planificacionLogo.png";
+import { useTranslation } from "react-i18next";
 
+import componentesLogo from "../../assets/componentesLogo.png";
+import disponibilidadLogo from "../../assets/disponibilidadLogo.png";
+import HomeSegments from "./HomeSegments";
+import planificacionLogo from "../../assets/planificacionLogo.png";
+import ReservaLogo from "../../assets/reservaLogo.png";
+import solicitudLogo from "../../assets/solicitudLogo.png";
+import TittleStyle from "../tittlesStyle";
 import theme from "../../theme";
+import netRewardsLogo from "../../assets/netRewardsLogo.png";
+import '../../helpers/i18n'
 
 const HomeBody = () => {
+    const { t } = useTranslation();
+
     return (
         <View style={{ flex: 4 }}>
             <View>
                 <TittleStyle text='subtittle' fontColor='Orange' >
-                    Portal de Servicios de netLogistiK
+                    {t("home.title")}
                 </TittleStyle>
                 <Text style={[styles.text, {}]}>
-                    Bienvenido a nuestra App
+                    {t("home.subtitle")}
                 </Text>
             </View>
 
             <View style={{ marginTop: 5, padding: 1 }}>
                 <View style={[styles.segmentsRows]}>
                     <HomeSegments
-                        tittle='Disponibilidad'
-                        segText='Conoce la disponibilidad de los recursos para tus proyectos'
+                        tittle={t("home.availabilitySeg.title")}
+                        segText={t("home.availabilitySeg.description")}
                         iconSrc={disponibilidadLogo}
                         name={'Disponibilidad'}
                         firstName={'Prov'}
@@ -35,8 +39,8 @@ const HomeBody = () => {
                     />
                     <View style={styles.separator} />
                     <HomeSegments
-                        tittle='Reserva recursos'
-                        segText='Reserva recursos definiendo las caracteristicas y habilidades que necesitas'
+                        tittle={t("home.bookSeg.title")}
+                        segText={t("home.bookSeg.description")}
                         iconSrc={ReservaLogo}
                         name={'Booking'}
                         firstName={'Prov'}
@@ -44,8 +48,8 @@ const HomeBody = () => {
                     />
                     <View style={styles.separator} />
                     <HomeSegments
-                        tittle='Componentes'
-                        segText='Conoce y adquiere componentes, servicios y addons para tus soluciones'
+                        tittle={t("home.componentSeg.title")}
+                        segText={t("home.componentSeg.description")}
                         iconSrc={componentesLogo}
                         name={'Components'}
                         firstName={'Prov'}
@@ -54,8 +58,8 @@ const HomeBody = () => {
                 </View>
                 <View style={[styles.segmentsRows]}>
                     <HomeSegments
-                        tittle='Soluciones'
-                        segText='Maneja tus solicitudes de manera eficiente'
+                        tittle={t("home.solutionsSeg.title")}
+                        segText={t("home.solutionsSeg.description")}
                         iconSrc={solicitudLogo}
                         name={'Request'}
                         firstName={'Prov'}
@@ -63,8 +67,8 @@ const HomeBody = () => {
                     />
                     <View style={styles.separator} />
                     <HomeSegments
-                        tittle='netRewards'
-                        segText='conoce tu estatus y puntos asignados a tu cuenta'
+                        tittle={t("home.rewardsSeg.title")}
+                        segText={t("home.solutionsSeg.description")}
                         iconSrc={netRewardsLogo}
                         // name={'Booking'}
                         firstName={'Prov'}
@@ -72,8 +76,8 @@ const HomeBody = () => {
                     />
                     <View style={styles.separator} />
                     <HomeSegments
-                        tittle='planificacion'
-                        segText='Realiza la planificacion de recursos'
+                        tittle={t("home.planificationSeg.title")}
+                        segText={t("home.solutionsSeg.description")}
                         iconSrc={planificacionLogo}
                         // name={'Booking'}
                         firstName={'Prov'}
@@ -81,13 +85,6 @@ const HomeBody = () => {
                     />
                 </View>
             </View>
-
-
-            {/* <View style={{ flex: 2, justifyContent: 'center', alignItems: 'center' }}>
-        <TouchableWithoutFeedback onPress={() => navigation.setOptions({ title: 'Update!' })}>
-          <Text>HOME</Text>
-        </TouchableWithoutFeedback>
-      </View> */}
         </View >
     )
 }
