@@ -9,7 +9,7 @@ export default function RequestSeqment({ subtittle, subtext, headers, data, acti
     function count() {
         if (data.length) {
             if (data[0].field4.type == "status") {
-                const P = data.filter(d => d.field4.value == "P").length
+                const P = data.filter(d => d.field4.value == "P" || d.field4.value == "PP").length
                 const A = data.filter(d => d.field4.value == "A").length
                 const R = data.filter(d => d.field4.value == "R").length
 

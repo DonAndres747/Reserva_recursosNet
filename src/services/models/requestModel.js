@@ -60,10 +60,10 @@ class RequestModel {
                 body: JSON.stringify({
                     req_id
                 }),
-            });
+            }); 
             return response;
         } catch (error) {
-            throw error;
+            console.log("error accepting request", error);
         }
     }
 

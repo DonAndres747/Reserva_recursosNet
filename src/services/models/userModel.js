@@ -1,6 +1,9 @@
 import db from "../../../config.json"
+import * as Localization from 'react-native-localize';
 
 class UserModel {
+  deviceLanguage = Localization.getLocales()[0].languageTag;
+
   constructor(id, first_name, last_name, company_id, phone, email, password, password2, country_id) {
     this.id = id
     this.first_name = first_name;
@@ -14,11 +17,13 @@ class UserModel {
   }
 
   async registerUser() {
+    const deviceLanguage = Localization.getLocales()[0].languageTag;
     try {
       const response = await fetch(`http://${db.database.host}:${db.database.port}/user/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept-Language': deviceLanguage
         },
         body: JSON.stringify({
           company_id: this.company_id,
@@ -39,11 +44,13 @@ class UserModel {
 
 
   async loginUser() {
+    const deviceLanguage = Localization.getLocales()[0].languageTag;
     try {
       const response = await fetch(`http://${db.database.host}:${db.database.port}/userLogin/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept-Language': deviceLanguage
         },
         body: JSON.stringify({
           email: this.email,
@@ -57,11 +64,13 @@ class UserModel {
   }
 
   async registerUserPhone(id, phoneToken) {
+    const deviceLanguage = Localization.getLocales()[0].languageTag;
     try {
       const response = await fetch(`http://${db.database.host}:${db.database.port}/registerPhone/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept-Language': deviceLanguage
         },
         body: JSON.stringify({
           user_id: id,

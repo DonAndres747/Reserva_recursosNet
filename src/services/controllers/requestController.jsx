@@ -2,12 +2,15 @@ import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
 import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from "react-i18next";
 
 import RequestModel from "../models/requestModel";
+import '../../helpers/i18n'
 
 export default function RequestController() {
     const requestModel = new RequestModel();
     const navigation = useNavigation();
+    const { t } = useTranslation()
 
     const getRequestByManager = async (type) => {
         try {
@@ -22,7 +25,7 @@ export default function RequestController() {
             switch (response.status) {
                 case 401:
                     await AsyncStorage.clear();
-                    Alert.alert('La sesión ha expirado', '', [{ text: 'Aceptar', onPress: () => navigation.navigate('Login') }]);
+                    Alert.alert(t("globals.sessionExpired"), '', [{ text: 'Aceptar', onPress: () => navigation.navigate('Login') }]);
                     break;
 
                 default:
@@ -31,7 +34,7 @@ export default function RequestController() {
 
             return result.result;
         } catch (error) {
-            console.error("Error fetching data:", error);
+            console.error("Error fetching data:3", error);
             return error
         }
     };
@@ -46,12 +49,12 @@ export default function RequestController() {
             switch (response.status) {
                 case 401:
                     await AsyncStorage.clear();
-                    Alert.alert('La sesión ha expirado', '', [{ text: 'Aceptar', onPress: () => navigation.navigate('Login') }]);
+                    Alert.alert(t("globals.sessionExpired"), '', [{ text: 'Aceptar', onPress: () => navigation.navigate('Login') }]);
                     break;
 
                 case 500:
                     await AsyncStorage.clear();
-                    Alert.alert('Algo a salido mal :(');
+                    Alert.alert(t("globals.somethingWrong"));
                     break;
 
                 default:
@@ -60,37 +63,31 @@ export default function RequestController() {
 
             return result.result;
         } catch (error) {
-            console.error("Error fetching data:", error);
-            return error
+            console.error("Error fetching data:1", error);
         }
     }
 
     const acceptRequest = async (id) => {
         try {
             const token = await AsyncStorage.getItem("token")
-
             const response = await requestModel.acceptRequest(token, id);
-            const result = await response.json();
 
             switch (response.status) {
                 case 401:
                     await AsyncStorage.clear();
-                    Alert.alert('La sesión ha expirado', '', [{ text: 'Aceptar', onPress: () => navigation.navigate('Login') }]);
+                    Alert.alert(t("globals.sessionExpired"), '', [{ text: 'Aceptar', onPress: () => navigation.navigate('Login') }]);
                     break;
 
                 case 500:
-                    await AsyncStorage.clear();
-                    Alert.alert('Algo a salido mal :(');
+                    Alert.alert(t("globals.somethingWrong"));
                     break;
 
                 default:
                     break;
             }
 
-            return result.result;
         } catch (error) {
-            console.error("Error fetching data:", error);
-            return error
+            console.error("Error fetching data:2", error);
         }
     }
 

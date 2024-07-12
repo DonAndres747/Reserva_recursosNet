@@ -143,6 +143,9 @@ const styles = StyleSheet.create({
     stsR: {
         backgroundColor: "red"
     },
+    stsPP: {
+        backgroundColor: theme.colors.naranjaNet
+    },
     cardButton: {
         backgroundColor: theme.colors.azulNet,
         marginVertical: 3,
@@ -156,7 +159,6 @@ const styles = StyleSheet.create({
         textAlign: "center",
         paddingHorizontal: 7,
         paddingVertical: 5,
-
         fontSize: 12
     },
 });

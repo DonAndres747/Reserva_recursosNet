@@ -39,7 +39,7 @@
     }
   },
   "home": {
-    "title": "netLogistiK Services Portal",
+    "title": "NetLogistiK Services portal",
     "subtitle": "Welcome to our App",
     "availabilitySeg": {
       "title": "Availability",
@@ -97,7 +97,14 @@
         "body": "Allows requesting the resource even during reserved periods. The request is subject to manager evaluation and resource availability."
       },
       "reservedRec": "Resources reserved successfully",
-      "recNotReserved": "Resources couldn't be reserved 🙁"
+      "recNotReserved": "Resources couldn't be reserved 🙁",
+      "someRecNotReserved": "The following resources could not be booked",
+      "otherRecReserved": "\n\nAll others were successfully booked",
+      "solRequested": "Extraordinary request processed successfully",
+      "solNotRequested": "Request could not be processed 🙁",
+      "nothingToRequest": "The reserved days correspond to the applicant",
+      "someRequestNotDone": "The following resources could not be booked",
+      "otherReqDone": "\n\nAll others were successfully booked"
     },
     "noDataFound": "No data found 🙁",
     "completeModal": {

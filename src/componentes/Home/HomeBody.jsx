@@ -42,7 +42,7 @@ const HomeBody = () => {
                         tittle={t("home.bookSeg.title")}
                         segText={t("home.bookSeg.description")}
                         iconSrc={ReservaLogo}
-                        name={'Booking'}
+                        // name={'Booking'}
                         firstName={'Prov'}
                         lastName={'1'}
                     />
@@ -51,7 +51,7 @@ const HomeBody = () => {
                         tittle={t("home.componentSeg.title")}
                         segText={t("home.componentSeg.description")}
                         iconSrc={componentesLogo}
-                        name={'Components'}
+                        // name={'Components'}
                         firstName={'Prov'}
                         lastName={'1'}
                     />
