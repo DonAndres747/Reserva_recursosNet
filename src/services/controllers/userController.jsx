@@ -27,6 +27,7 @@ export default function userController() {
         } else {
             try {
                 const userModel = new UserModel(
+                    userModelData.id,
                     userModelData.first_name,
                     userModelData.last_name,
                     userModelData.company_id,

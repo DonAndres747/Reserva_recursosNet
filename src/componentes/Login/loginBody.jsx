@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { View, TextInput, StyleSheet, Text, TouchableWithoutFeedback } from "react-native";
 
 import ButtonStyle from "../buttonsStyle.jsx";
@@ -19,6 +19,7 @@ export default function BodyLogin() {
     const { onChange, userLogin, loading } = userController();
     const { t } = useTranslation();
 
+    const passwordRef = useRef(null);
 
     return (
         <View style={{ flex: 2, justifyContent: 'space-between' }}>
@@ -36,6 +37,7 @@ export default function BodyLogin() {
                     autoCapitalize="none"
                     autoCorrect={false}
                     onChangeText={(value) => onChange("email", value)}
+                    onSubmitEditing={() => passwordRef.current.focus()}
                 />
             </View>
             <View style={styles.row}>
@@ -50,6 +52,7 @@ export default function BodyLogin() {
                     autoCapitalize="none"
                     autoCorrect={false}
                     onChangeText={(value) => onChange("password", value)}
+                    ref={passwordRef}
                 />
                 <TouchableWithoutFeedback onPress={handlePasswordVisibility}>
                     <Icon2 name={rightIcon} size={22} color={theme.colors.azulNet} style={{ borderBottomWidth: 1, marginRight: 12 }} />
@@ -59,7 +62,7 @@ export default function BodyLogin() {
                 <View style={{ marginRight: 10 }}>
                     <Text style={styles.HiperLinks} >
                         {t("login.remeberP")}
-                    </Text>
+                    </Text> 
                 </View>
             </TouchableWithoutFeedback>
             <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center', marginBottom: 10 }}>

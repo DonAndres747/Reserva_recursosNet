@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { View, TextInput, StyleSheet, Text, TouchableWithoutFeedback } from "react-native";
 import { useTranslation } from 'react-i18next';
 
@@ -26,6 +26,13 @@ export default function BodyRegistry() {
 
     const { getAllCountries } = countryController();
     const [countries, setCountries] = useState([]);
+
+    const lastNameRef = useRef(null);
+    const newCompanyRef = useRef(null);
+    const phoneRef = useRef(null);
+    const emailRef = useRef(null);
+    const passwordRef = useRef(null);
+    const confirmPasswordRef = useRef(null);
 
     useEffect(() => {
         getAllCompanies()
@@ -74,7 +81,7 @@ export default function BodyRegistry() {
                 {t("registry.register")}
             </TittleStyle>
             <View style={styles.row}>
-                <Icon name='face' color={theme.colors.azulNet} size={22}></Icon>
+                <Icon name='face' color={theme.colors.azulNet} size={22} />
                 <TextInput
                     label="nombre"
                     returnKeyType="next"
@@ -82,10 +89,11 @@ export default function BodyRegistry() {
                     keyboardType='default'
                     style={[styles.input, styles.marginInput]}
                     onChangeText={(value) => onChange("first_name", value)}
+                    onSubmitEditing={() => lastNameRef.current.focus()}
                 />
             </View>
             <View style={styles.row}>
-                <Icon name='face' color={theme.colors.azulNet} size={22}></Icon>
+                <Icon name='face' color={theme.colors.azulNet} size={22} />
                 <TextInput
                     label="apellido"
                     returnKeyType="next"
@@ -93,29 +101,27 @@ export default function BodyRegistry() {
                     keyboardType='default'
                     style={[styles.input, styles.marginInput]}
                     onChangeText={(value) => onChange("last_name", value)}
+                    ref={lastNameRef}
+                    onSubmitEditing={() => phoneRef.current.focus()}
                 />
             </View>
             <View style={styles.row}>
-                <Icon name='copyright' color={theme.colors.azulNet} size={22}></Icon>
-                <RegistryComboBox data={companies} onSelect={(value) => {
-                    handleSelectCom(value)
-                }} />
+                <Icon name='copyright' color={theme.colors.azulNet} size={22} />
+                <RegistryComboBox data={companies} onSelect={(value) => handleSelectCom(value)} />
             </View>
             <View style={[styles.row, { display: newCompany }]}>
-                <Icon name='copyright' color={theme.colors.azulNet} size={22}></Icon>
+                <Icon name='copyright' color={theme.colors.azulNet} size={22} />
                 <TextInput
                     label="newCompany"
                     returnKeyType="next"
                     placeholder={t("registry.placeholder.newCompany")}
                     keyboardType='default'
                     style={[styles.input, styles.marginInput]}
-                    onChangeText={(value) => {
-                        onNewClient("company_name", value);
-                    }}
+                    onChangeText={(value) => onNewClient("company_name", value)} 
                 />
             </View>
             <View style={styles.row}>
-                <Icon name='call' color={theme.colors.azulNet} size={22}></Icon>
+                <Icon name='call' color={theme.colors.azulNet} size={22} />
                 <TextInput
                     label="celular"
                     returnKeyType="next"
@@ -123,10 +129,12 @@ export default function BodyRegistry() {
                     keyboardType='phone-pad'
                     style={[styles.input, styles.marginInput]}
                     onChangeText={(value) => onChange("phone", value)}
+                    ref={phoneRef}
+                    onSubmitEditing={() => emailRef.current.focus()}
                 />
             </View>
             <View style={styles.row}>
-                <Icon name='alternate-email' color={theme.colors.azulNet} size={22}></Icon>
+                <Icon name='alternate-email' color={theme.colors.azulNet} size={22} />
                 <TextInput
                     label="email"
                     returnKeyType="next"
@@ -134,20 +142,20 @@ export default function BodyRegistry() {
                     keyboardType='email-address'
                     autoCapitalize="none"
                     style={[styles.input, styles.marginInput]}
-                    onChangeText={(value) => {
+                    onChangeText={(value) => { 
                         onChange("email", value);
                         onNewClient("user_email", value);
                     }}
+                    ref={emailRef}
+                    onSubmitEditing={() => passwordRef.current.focus()}
                 />
             </View>
-            <View style={styles.row} >
-                <Icon name='emoji-flags' color={theme.colors.azulNet} size={22}></Icon>
-                <RegistryComboBox data={countries} onSelect={(value) => {
-                    handleSelectCoun(value)
-                }} />
+            <View style={styles.row}>
+                <Icon name='emoji-flags' color={theme.colors.azulNet} size={22} />
+                <RegistryComboBox data={countries} onSelect={(value) => handleSelectCoun(value)} />
             </View>
             <View style={styles.row}>
-                <Icon name='lock' color='black' size={22}></Icon>
+                <Icon name='lock' color='black' size={22} />
                 <TextInput
                     label="password"
                     returnKeyType="next"
@@ -157,19 +165,22 @@ export default function BodyRegistry() {
                     autoCapitalize="none"
                     autoCorrect={false}
                     onChangeText={(value) => onChange("password", value)}
+                    ref={passwordRef}
+                    onSubmitEditing={() => confirmPasswordRef.current.focus()}
                 />
             </View>
             <View style={styles.row}>
-                <Icon name='lock' color='black' size={22}></Icon>
+                <Icon name='lock' color='black' size={22} />
                 <TextInput
                     label="confirmPassword"
-                    returnKeyType="next"
+                    returnKeyType="done"
                     placeholder={t("registry.placeholder.password2")}
                     style={[styles.input, styles.marginInput]}
                     secureTextEntry={true}
                     autoCapitalize="none"
                     autoCorrect={false}
                     onChangeText={(value) => onChange("password2", value)}
+                    ref={confirmPasswordRef}
                 />
             </View>
             <View style={{ alignItems: 'center', marginTop: 45 }}>

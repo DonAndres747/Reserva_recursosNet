@@ -10,7 +10,7 @@ async function initFireBase() {
 
     if (enabled) {
         const token = await messaging().getToken(); 
-        AsyncStorage.setItem("phoneToken", token) 
+        AsyncStorage.setItem("phoneToken", token)
 
         messaging()
             .getInitialNotification()
