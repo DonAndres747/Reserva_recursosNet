@@ -19,7 +19,7 @@ class UserModel {
   async registerUser() {
     const deviceLanguage = Localization.getLocales()[0].languageTag;
     try {
-      const response = await fetch(`http://${db.database.host}:${db.database.port}/user/`, {
+      const response = await fetch(`http://${db.database.host}${db.database.port}/user/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ class UserModel {
   async loginUser() {
     const deviceLanguage = Localization.getLocales()[0].languageTag;
     try {
-      const response = await fetch(`http://${db.database.host}:${db.database.port}/userLogin/`, {
+      const response = await fetch(`https://${db.database.host}/userLogin/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ class UserModel {
   async registerUserPhone(id, phoneToken) {
     const deviceLanguage = Localization.getLocales()[0].languageTag;
     try {
-      const response = await fetch(`http://${db.database.host}:${db.database.port}/registerPhone/`, {
+      const response = await fetch(`https://${db.database.host}/registerPhone/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
