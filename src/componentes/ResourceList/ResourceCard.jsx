@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableWithoutFeedback, StyleSheet, Dimensions, ScrollView, Image, Modal, FlatList } from "react-native";
+import { View, Text, TouchableWithoutFeedback, StyleSheet, Dimensions, ScrollView, Image, Modal, FlatList, Platform } from "react-native";
 import { Alert } from "react-native";
 import { Calendar } from 'react-native-calendars';
 import { useTranslation } from "react-i18next";
@@ -725,7 +725,7 @@ function ResourceCard({ onSelect, data, onComplete }) {
                                         (
                                             <View style={{ alignSelf: "flex-end", flexDirection: "column" }}>
                                                 <TouchableWithoutFeedback onPress={() => handleCheck()}>
-                                                    <View style={[styles.radiobutton, multiExtra ? styles.selected : '']}>
+                                                    <View style={[styles.radiobutton, multiExtra ? [styles.selected, styles.selectedIos] : '']}>
                                                         <Text style={[styles.radiobuttonText, multiExtra ? styles.selected : '']} >{t("resourceList.extra")}</Text>
                                                         <View style={[styles.outerCircle, multiExtra ? styles.selected : '']}>
                                                             <View style={[styles.innerCircle, multiExtra ? styles.inneSelected : '']}>
@@ -747,10 +747,11 @@ function ResourceCard({ onSelect, data, onComplete }) {
                                                 {multiExtra ? (() => {
                                                     const dataList = extraListData();
                                                     return (
-                                                        <View style={[styles.extralist, { height: 33 * dataList.length }]}>
+                                                        <View style={styles.extralist}>
                                                             <FlatList
                                                                 data={dataList}
                                                                 keyExtractor={(item, idx) => idx.toString()}
+                                                                horizontal={Platform.OS == 'ios'}
                                                                 renderItem={({ item }) => (
                                                                     <TouchableWithoutFeedback onPress={() => { handleMultiCheck(item.recIndex) }}>
                                                                         <Text style={[styles.extratext, styles[`extra${item.idx}`], checked[item.recIndex] ? styles.extraSelected : ""]}>
@@ -937,10 +938,11 @@ const styles = StyleSheet.create({
     multi4: { backgroundColor: "#f7dc6f" },
     multi5: { backgroundColor: "#d7bde2" },
     extralist: {
-        width: 90,
+        width: 'auto',
+        height:'auto',
         right: 47,
         backgroundColor: "white",
-        top: 30,
+        top: Platform.OS == 'ios' ? -5 : 30,
         zIndex: 2,
         position: 'absolute',
         borderWidth: 1,
@@ -1013,6 +1015,9 @@ const styles = StyleSheet.create({
     selected: {
         borderColor: theme.colors.naranjaNet,
         color: theme.colors.naranjaNet
+    },
+    selectedIos: {
+        top: Platform.OS == 'ios' ? -30 : 0,
     },
     inneSelected: {
         backgroundColor: theme.colors.naranjaNet

@@ -111,12 +111,13 @@ const styles = StyleSheet.create({
     },
     tableColumns: {
         flexDirection: "column",
-        width: Platform.OS === "ios" ? "90%" : "80%",
+        width: Platform.OS === "ios" ? "85%" : "80%",
         justifyContent: 'center',
         backgroundColor: theme.colors.azulNetTransp,
         paddingHorizontal: 10,
         paddingVertical: 10,
-        borderRadius: 5
+        borderRadius: 5,
+        padding:10
     },
     tableRows: {
         flexDirection: "row",
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
     tableHeader: {
         paddingVertical: 5,
         backgroundColor: "white",
-        width: "30%",
+        width: Platform.OS=='ios'?'27%' :"30%",
         margin: 1,
         justifyContent: "center",
         alignItems: "center",
@@ -139,7 +140,7 @@ const styles = StyleSheet.create({
     tableCell: {
         paddingVertical: 5,
         backgroundColor: "white",
-        width: "30%",
+        width: Platform.OS=='ios'?'27%' :"30%",
         margin: 1,
         justifyContent: "center",
         alignItems: "center",
