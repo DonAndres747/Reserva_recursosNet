@@ -10,6 +10,7 @@ export default function RequestListSeg({ headers, data, action }) {
     const { t } = useTranslation()
 
     useEffect(() => {
+        data.reverse()
         setDataList(data)
     }, [data])
 
@@ -95,7 +96,7 @@ const styles = StyleSheet.create({
         height: "70%",
         borderRadius: 14,
         marginVertical: 3,
-        padding: 2
+        padding: 2,
     },
     listRow: {
         flexDirection: "row",

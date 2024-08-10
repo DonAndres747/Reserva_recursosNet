@@ -18,8 +18,7 @@ export default function AvailabilityTypSeg({ onChange }) {
 
         const checkItems = [];
         updatedStates.forEach((selectedItem, index) => {
-            if (selectedItem) {
-                console.log(array[index].id);
+            if (selectedItem) { 
                 checkItems.push(array[index].id);
             }
         });

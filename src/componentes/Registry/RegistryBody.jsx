@@ -27,8 +27,7 @@ export default function BodyRegistry() {
     const { getAllCountries } = countryController();
     const [countries, setCountries] = useState([]);
 
-    const lastNameRef = useRef(null);
-    const newCompanyRef = useRef(null);
+    const lastNameRef = useRef(null); 
     const phoneRef = useRef(null);
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
@@ -187,7 +186,7 @@ export default function BodyRegistry() {
 
 
                 <TouchableWithoutFeedback onPress={() => {
-                    const newC = (newCompany == "none" ? "false" : true);
+                    const newC = (newCompany == "none" ? false : true);
                     saveData(newC)
                 }}>
                     <View>
