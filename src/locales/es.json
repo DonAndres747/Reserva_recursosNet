@@ -73,7 +73,24 @@
             "selectRecLvl": "Selecciona el nivel del Recurso:",
             "additionalC": "Caracteristicas Adicionales:"
         },
-        "button": "Buscar"
+        "button": "Buscar",
+        "OTHER": {
+            "PPT": "Pasaporte",
+            "VISAEEUU": "Visa EEUU",
+            "VISACAN": "Visa Canadá"
+        },
+        "language": {
+            "ENG": "Inglés",
+            "POR": "Portugués",
+            "FRA": "Francés",
+            "SPA": "Español"
+        },
+        "servtyp": {
+            "CONF": "Configuración",
+            "CONS": "Consultoría",
+            "DEV": "Desarrollo",
+            "TECH": "Técnico"
+        }
     },
     "resourceList": {
         "title": "Recursos Encontrados",

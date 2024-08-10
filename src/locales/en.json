@@ -73,7 +73,24 @@
       "selectRecLvl": "Select the resource level:",
       "additionalC": "Additional Characteristics:"
     },
-    "button": "Search"
+    "button": "Search",
+    "OTHER": {
+      "PPT": "Passport",
+      "VISAEEUU": "Visa USA",
+      "VISACAN": "Visa Canada"
+    },
+    "language": {
+      "ENG": "English",
+      "POR": "Portuguese",
+      "FRA": "French",
+      "SPA": "Spanish"
+    },
+    "servtyp": {
+      "CONF": "Configuration",
+      "CONS": "Consulting",
+      "DEV": "Development",
+      "TECH": "Technical"
+    }
   },
   "resourceList": {
     "title": "Matching resources",
