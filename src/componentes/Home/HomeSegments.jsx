@@ -26,7 +26,7 @@ export default function HomeSegments({ circleV, tittle, segText, iconSrc, name }
             } else if (rolesConfig[user.rol_id]?.includes(name)) {
                 navigation.navigate(name);
             } else {
-                Alert.alert(`El modulo no se encuentra habilidata para su rol por el momento`);
+                Alert.alert(`El modulo no se encuentra habilitado para su rol por el momento`);
             }
         } catch (error) {
             console.error("An error occurred:", error);
