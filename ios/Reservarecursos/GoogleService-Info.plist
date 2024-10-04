@@ -26,5 +26,7 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:496818691954:ios:6842ff05e1725ee51087eb</string>
+	<key>DATABASE_URL</key>
+	<string>https://resevas-net-default-rtdb.firebaseio.com</string>
 </dict>
 </plist>
