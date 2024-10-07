@@ -20,7 +20,8 @@
     "ios": {
       "googleServicesFile": "./GoogleService-info.plist",
       "supportsTablet": true,
-      "bundleIdentifier": "com.net.reservarecursos"
+      "bundleIdentifier": "com.net.reservarecursos",
+      "useNextNotificationApi":true
     },
     "android": {
       "googleServicesFile": "google-services.json",
