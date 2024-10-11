@@ -11,34 +11,20 @@ platform :ios, podfile_properties['ios.deploymentTarget'] || '13.0'
 install! 'cocoapods',
   :deterministic_uuids => false
 
-# Usa cabeceras modulares globalmente
-use_modular_headers!
-
 prepare_react_native_project!
 
-# Si estás usando `react-native-flipper`, tu compilación de iOS fallará cuando `NO_FLIPPER=1` esté establecido.
-# porque `react-native-flipper` depende de (FlipperKit,...), que serán excluidos. Para arreglar esto,
-# también puedes excluir `react-native-flipper` en `react-native.config.js`
-#
-# ```js
-# module.exports = {
-#   dependencies: {
-#     ...(process.env.NO_FLIPPER ? { 'react-native-flipper': { platforms: { ios: null } } } : {}),
-#   }
-# }
-# ```
 flipper_config = FlipperConfiguration.disabled
 if ENV['NO_FLIPPER'] == '1' then
-  # Explicitamente deshabilitado a través de variables de entorno
   flipper_config = FlipperConfiguration.disabled
 elsif podfile_properties.key?('ios.flipper') then
-  # Configura Flipper en Podfile.properties.json
   if podfile_properties['ios.flipper'] == 'true' then
     flipper_config = FlipperConfiguration.enabled(["Debug", "Release"])
   elsif podfile_properties['ios.flipper'] != 'false' then
     flipper_config = FlipperConfiguration.enabled(["Debug", "Release"], { 'Flipper' => podfile_properties['ios.flipper'] })
   end
 end
+
+use_modular_headers!
 
 target 'Reservarecursos' do
   use_expo_modules!
@@ -47,18 +33,19 @@ target 'Reservarecursos' do
   use_frameworks! :linkage => podfile_properties['ios.useFrameworks'].to_sym if podfile_properties['ios.useFrameworks']
   use_frameworks! :linkage => ENV['USE_FRAMEWORKS'].to_sym if ENV['USE_FRAMEWORKS']
 
-  # Las banderas cambian dependiendo de los valores de env.
+  # Flags change depending on the env values.
   flags = get_default_flags()
 
   use_react_native!(
     :path => config[:reactNativePath],
     :hermes_enabled => podfile_properties['expo.jsEngine'] == nil || podfile_properties['expo.jsEngine'] == 'hermes',
     :fabric_enabled => flags[:fabric_enabled],
-    # Una ruta absoluta a la raíz de tu aplicación.
     :app_path => "#{Pod::Config.instance.installation_root}/..",
-    # Ten en cuenta que si tienes use_frameworks! habilitado, Flipper no funcionará si está habilitado
     :flipper_configuration => flipper_config
   )
+
+  pod 'GoogleUtilities', :modular_headers => true
+  pod 'FirebaseCoreInternal', :modular_headers => true
 
   post_install do |installer|
     react_native_post_install(
@@ -68,8 +55,6 @@ target 'Reservarecursos' do
     )
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
 
-    # Esto es necesario para Xcode 14, porque firma los paquetes de recursos por defecto
-    # cuando se construye para dispositivos.
     installer.target_installation_results.pod_target_installation_results
       .each do |pod_name, target_installation_result|
       target_installation_result.resource_bundle_targets.each do |resource_bundle_target|

@@ -20,7 +20,8 @@
     "ios": {
       "googleServicesFile": "./GoogleService-info.plist",
       "supportsTablet": true,
-      "bundleIdentifier": "com.net.reservarecursos"
+      "bundleIdentifier": "com.net.reservarecursos",
+      "buildNumber": "1.0.1"
     },
     "android": {
       "googleServicesFile": "google-services.json",
@@ -44,8 +45,11 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "582bcf80-3d7f-490d-8b11-a16f0cf34449"
+        "projectId": "3b8284da-00f1-41b1-9680-813696eb28f5"
       }
-    }
+    },
+    "plugins": [
+      "expo-build-properties"
+    ]
   }
 }

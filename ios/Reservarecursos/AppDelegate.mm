@@ -1,5 +1,5 @@
 #import "AppDelegate.h"
-#import <Firebase.h>
+
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTLinkingManager.h>
 
@@ -7,12 +7,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  // Configure Firebase
-  if ([FIRApp defaultApp] == nil) {
-    [FIRApp configure];
-  }
-
   self.moduleName = @"main";
+
+  // You can add your custom initial props in the dictionary below.
+  // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
 
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
@@ -44,11 +42,13 @@
   return [super application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 }
 
+// Explicitly define remote notification delegates to ensure compatibility with some third-party libraries
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
 {
   return [super application:application didFailToRegisterForRemoteNotificationsWithError:error];
 }
 
+// Explicitly define remote notification delegates to ensure compatibility with some third-party libraries
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
   return [super application:application didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
